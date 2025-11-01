@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Sitio web para clínica Physica Inc",
   "private": true,
-  "homepage": "https://[tu-usuario].github.io/PhysicaInc",
+  "homepage": "https://LJ-Nava.github.io/PhysicaInc",
   "type": "module",
   "scripts": {
     "dev": "vite",
