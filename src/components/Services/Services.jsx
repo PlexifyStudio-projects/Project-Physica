@@ -1,229 +1,246 @@
+import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   LuActivity,
   LuHeart,
   LuBrain,
-  LuDumbbell,
+  LuTarget,
   LuShield,
   LuUsers,
   LuZap,
   LuClock,
-  LuTarget
+  LuArrowRight,
+  LuSparkles,
+  LuCircleCheck,
+  LuCalendar
 } from 'react-icons/lu';
-import SportsRehabilitationImg from '../../assets/Sports-Rehabilitation.png';
-import ManualTherapyImg from '../../assets/Manual-Therapy.png';
-import OrthopedicPhysicalTherapyImg from '../../assets/Orthopedic-Physical-}Therapy.png';
-import NeurologicalRehabilitationImg from '../../assets/Neurological-Rehabilitation.png';
-import PostSurgicalRecoveryImg from '../../assets/Post-Surgical-Recovery.png';
-import ChronicPainManagementImg from '../../assets/Chronic-Pain-Management.png';
-import GeriatricPhysicalTherapyImg from '../../assets/Geriatric-Physical-Therapy.png';
-import BalanceFallPreventionImg from '../../assets/Balance-&-Fall-Prevention.png';
 import './Services.scss';
 
 function Services() {
+  const [activeService, setActiveService] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const services = [
     {
       id: 'sports-rehabilitation',
       Icon: LuActivity,
       title: 'Sports Rehabilitation',
-      description: 'Evidence-based treatment protocols for athletes and active individuals recovering from sports injuries. Our certified sports therapists use advanced techniques to get you back in the game.',
-      features: ['ACL/MCL Reconstruction Recovery', 'Rotator Cuff Rehabilitation', 'Tennis/Golf Elbow Treatment', 'Running Injury Prevention', 'Performance Optimization'],
-      image: SportsRehabilitationImg
-    },
-    {
-      id: 'orthopedic-therapy',
-      Icon: LuTarget,
-      title: 'Orthopedic Physical Therapy',
-      description: 'Specialized care for musculoskeletal conditions affecting bones, joints, muscles, ligaments, and tendons. We treat both acute injuries and chronic conditions with personalized care plans.',
-      features: ['Post-Surgical Rehabilitation', 'Joint Replacement Recovery', 'Fracture Rehabilitation', 'Arthritis Management', 'Tendonitis Treatment'],
-      image: OrthopedicPhysicalTherapyImg
+      shortDesc: 'Athletic recovery & performance',
+      description: 'Evidence-based treatment protocols for athletes recovering from sports injuries. Our certified sports therapists use advanced techniques to optimize your recovery.',
+      features: ['ACL/MCL Recovery', 'Rotator Cuff Rehab', 'Performance Training'],
+      color: '#4A7C59'
     },
     {
       id: 'manual-therapy',
       Icon: LuUsers,
-      title: 'Manual Therapy & Manipulation',
-      description: 'Hands-on techniques performed by our certified manual therapists to restore mobility, reduce pain, and improve tissue quality. Includes joint mobilization and soft tissue work.',
-      features: ['Joint Mobilization', 'Myofascial Release', 'Trigger Point Therapy', 'Soft Tissue Mobilization', 'Spinal Manipulation'],
-      image: ManualTherapyImg
+      title: 'Manual Therapy',
+      shortDesc: 'Hands-on healing techniques',
+      description: 'Specialized hands-on techniques to restore mobility, reduce pain, and improve tissue quality through joint mobilization and soft tissue work.',
+      features: ['Joint Mobilization', 'Myofascial Release', 'Trigger Point Therapy'],
+      color: '#5B8A72'
     },
     {
-      id: 'neurological-rehabilitation',
+      id: 'orthopedic-therapy',
+      Icon: LuTarget,
+      title: 'Orthopedic Therapy',
+      shortDesc: 'Musculoskeletal expertise',
+      description: 'Comprehensive care for conditions affecting bones, joints, muscles, and tendons. Personalized treatment plans for acute and chronic conditions.',
+      features: ['Joint Replacement', 'Fracture Rehab', 'Arthritis Care'],
+      color: '#6B9B7A'
+    },
+    {
+      id: 'neurological-rehab',
       Icon: LuBrain,
-      title: 'Neurological Rehabilitation',
-      description: 'Comprehensive rehabilitation programs for patients with neurological conditions such as stroke, Parkinson\'s, MS, and spinal cord injuries. Focus on restoring function and independence.',
-      features: ['Stroke Recovery', 'Balance & Gait Training', 'Parkinson\'s Disease Management', 'Multiple Sclerosis Support', 'Vestibular Rehabilitation'],
-      image: NeurologicalRehabilitationImg
+      title: 'Neurological Rehab',
+      shortDesc: 'Restoring function & independence',
+      description: 'Specialized rehabilitation for neurological conditions including stroke, Parkinson\'s, and MS. Focus on restoring independence and quality of life.',
+      features: ['Stroke Recovery', 'Balance Training', 'Gait Rehabilitation'],
+      color: '#4A7C59'
     },
     {
-      id: 'chronic-pain-management',
+      id: 'chronic-pain',
       Icon: LuShield,
-      title: 'Chronic Pain Management',
-      description: 'Multidisciplinary approach to chronic pain conditions using therapeutic exercise, manual therapy, modalities, and patient education to reduce pain and improve quality of life.',
-      features: ['Lower Back Pain Treatment', 'Neck Pain Management', 'Headache/Migraine Relief', 'Fibromyalgia Management', 'Chronic Regional Pain Syndrome'],
-      image: ChronicPainManagementImg
+      title: 'Pain Management',
+      shortDesc: 'Comprehensive pain relief',
+      description: 'Multidisciplinary approach to chronic pain using therapeutic exercise, manual therapy, and patient education to improve quality of life.',
+      features: ['Back Pain Relief', 'Neck Pain Care', 'Migraine Treatment'],
+      color: '#5B8A72'
     },
     {
       id: 'geriatric-therapy',
       Icon: LuHeart,
-      title: 'Geriatric Physical Therapy',
-      description: 'Age-specific rehabilitation focusing on the unique needs of older adults. Our programs address balance, strength, mobility, and fall prevention to maintain independence.',
-      features: ['Fall Prevention Programs', 'Balance Training', 'Osteoporosis Management', 'Joint Replacement Recovery', 'Strength & Mobility Restoration'],
-      image: GeriatricPhysicalTherapyImg
+      title: 'Geriatric Therapy',
+      shortDesc: 'Age-specific rehabilitation',
+      description: 'Specialized programs addressing the unique needs of older adults, focusing on balance, strength, mobility, and fall prevention.',
+      features: ['Fall Prevention', 'Mobility Training', 'Strength Building'],
+      color: '#6B9B7A'
     },
     {
-      id: 'post-surgical-rehab',
+      id: 'post-surgical',
       Icon: LuClock,
-      title: 'Post-Surgical Rehabilitation',
-      description: 'Guided recovery following orthopedic, spinal, or other surgical procedures. We work closely with your surgeon to ensure optimal healing and functional restoration.',
-      features: ['Total Joint Replacement', 'Spinal Surgery Recovery', 'Arthroscopic Surgery Rehab', 'Soft Tissue Repair', 'Post-Op Pain Management'],
-      image: PostSurgicalRecoveryImg
+      title: 'Post-Surgical Care',
+      shortDesc: 'Optimal surgical recovery',
+      description: 'Guided recovery following orthopedic and spinal surgeries. We work with your surgeon to ensure optimal healing and functional restoration.',
+      features: ['Joint Replacement', 'Spine Surgery', 'Arthroscopic Rehab'],
+      color: '#4A7C59'
     },
     {
-      id: 'vestibular-balance',
+      id: 'vestibular',
       Icon: LuZap,
-      title: 'Vestibular & Balance Disorders',
-      description: 'Specialized treatment for dizziness, vertigo, and balance disorders. Our vestibular rehabilitation programs help restore equilibrium and reduce fall risk.',
-      features: ['BPPV Treatment', 'Vertigo Management', 'Dizziness Rehabilitation', 'Gait Training', 'Concussion Recovery'],
-      image: BalanceFallPreventionImg
-    },
-    {
-      id: 'pelvic-floor-therapy',
-      Icon: LuUsers,
-      title: 'Pelvic Floor Rehabilitation',
-      description: 'Confidential, specialized care for pelvic floor dysfunction in both men and women. Our certified pelvic health therapists provide evidence-based treatment in a comfortable setting.',
-      features: ['Incontinence Treatment', 'Pelvic Pain Management', 'Pre/Postpartum Care', 'Post-Prostatectomy Rehab', 'Pelvic Organ Prolapse'],
-      image: 'https://images.pexels.com/photos/7176026/pexels-photo-7176026.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&dpr=2'
+      title: 'Vestibular Therapy',
+      shortDesc: 'Balance & dizziness treatment',
+      description: 'Specialized treatment for dizziness, vertigo, and balance disorders. Our vestibular programs help restore equilibrium and reduce fall risk.',
+      features: ['Vertigo Treatment', 'BPPV Care', 'Concussion Recovery'],
+      color: '#5B8A72'
     }
   ];
 
-  return (
-    <section id="services" className="Services">
-      <div className="Services__container">
-        {/* Hero Header - Modern Split Design */}
-        <div className="Services__hero">
-          <div className="Services__hero-content">
-            <span className="Services__hero-badge">Comprehensive Physical Therapy</span>
-            <h1 className="Services__hero-title">
-              Transform Your <span className="Services__hero-title-highlight">Recovery Journey</span>
-            </h1>
-            <p className="Services__hero-description">
-              Board-certified therapists · Evidence-based protocols · Personalized care plans
-            </p>
-          </div>
-        </div>
+  const featuredService = services[activeService];
+  const FeaturedIcon = featuredService.Icon;
 
-        {/* Bento Grid Layout - Asymmetric Modern Design */}
-        <div className="Services__bento">
-          {/* Feature Card - Large */}
-          {(() => {
-            const FeatureIcon = services[0].Icon;
-            return (
-              <div className="Services__feature-card Services__feature-card--large">
-                <div className="Services__feature-image">
-                  <img src={services[0].image} alt={services[0].title} />
-                  <div className="Services__feature-overlay"></div>
+  return (
+    <section ref={sectionRef} id="services" className={`Services ${isVisible ? 'Services--visible' : ''}`}>
+      {/* Background Elements */}
+      <div className="Services__bg">
+        <div className="Services__bg-gradient"></div>
+        <div className="Services__bg-pattern"></div>
+      </div>
+
+      <div className="Services__container">
+        {/* Header Section */}
+        <header className="Services__header">
+          <span className="Services__label">Our Services</span>
+          <h2 className="Services__title">
+            Expert Physical Therapy
+            <span className="Services__title-accent"> Services</span>
+          </h2>
+          <p className="Services__subtitle">
+            Specialized rehabilitation programs tailored to your unique needs
+          </p>
+          <div className="Services__title-line"></div>
+        </header>
+
+        {/* Main Content - Two Column Layout */}
+        <div className="Services__content">
+          {/* Left - Featured Service Display */}
+          <div className="Services__featured">
+            <div className="Services__featured-card">
+              <div className="Services__featured-header">
+                <div className="Services__featured-icon">
+                  <FeaturedIcon />
                 </div>
-                <div className="Services__feature-content">
-                  <div className="Services__feature-icon">
-                    <FeatureIcon />
-                  </div>
-                  <h3 className="Services__feature-title">{services[0].title}</h3>
-                  <p className="Services__feature-description">{services[0].description}</p>
-                  <div className="Services__feature-tags">
-                    {services[0].features.slice(0, 3).map((feature, idx) => (
-                      <span key={idx} className="Services__feature-tag">{feature}</span>
-                    ))}
-                  </div>
+                <div className="Services__featured-badge">
+                  <LuSparkles />
+                  <span>Featured</span>
                 </div>
               </div>
-            );
-          })()}
 
-          {/* Grid Items - Split Layout */}
-          <div className="Services__split-section">
-            {services.slice(1, 3).map((service, index) => {
-              const IconComponent = service.Icon;
-              return (
-                <div key={service.id} className="Services__split-card">
-                  <div className="Services__split-visual">
-                    <IconComponent className="Services__split-icon" />
-                    <div className="Services__split-number">0{index + 2}</div>
+              <h3 className="Services__featured-title">{featuredService.title}</h3>
+              <p className="Services__featured-desc">{featuredService.description}</p>
+
+              <div className="Services__featured-features">
+                {featuredService.features.map((feature, idx) => (
+                  <div key={idx} className="Services__featured-feature">
+                    <LuCircleCheck />
+                    <span>{feature}</span>
                   </div>
-                  <div className="Services__split-info">
-                    <h4 className="Services__split-title">{service.title}</h4>
-                    <p className="Services__split-text">{service.description.slice(0, 120)}...</p>
-                    <ul className="Services__split-list">
-                      {service.features.slice(0, 2).map((feature, idx) => (
-                        <li key={idx}>→ {feature}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+
+              <Link to={`/services#${featuredService.id}`} className="Services__featured-btn">
+                <span>Learn More</span>
+                <LuArrowRight />
+              </Link>
+            </div>
+
+            {/* Stats Row */}
+            <div className="Services__stats">
+              <div className="Services__stat">
+                <span className="Services__stat-value">98%</span>
+                <span className="Services__stat-label">Success Rate</span>
+              </div>
+              <div className="Services__stat">
+                <span className="Services__stat-value">15+</span>
+                <span className="Services__stat-label">Specialists</span>
+              </div>
+              <div className="Services__stat">
+                <span className="Services__stat-value">24/7</span>
+                <span className="Services__stat-label">Support</span>
+              </div>
+            </div>
           </div>
 
-          {/* Image Gallery Cards */}
-          <div className="Services__gallery">
-            {services.slice(3, 6).map((service, index) => {
-              const IconComponent = service.Icon;
-              return (
-                <div key={service.id} className="Services__gallery-card">
-                  <div className="Services__gallery-image-wrapper">
-                    <img src={service.image} alt={service.title} className="Services__gallery-image" />
-                    <div className="Services__gallery-gradient"></div>
-                  </div>
-                  <div className="Services__gallery-overlay">
-                    <IconComponent className="Services__gallery-icon" />
-                    <h4 className="Services__gallery-title">{service.title}</h4>
-                    <div className="Services__gallery-features">
-                      {service.features.slice(0, 3).map((feature, idx) => (
-                        <span key={idx} className="Services__gallery-badge">✓ {feature}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* Right - Service Grid */}
+          <div className="Services__grid">
+            {services.map((service, index) => {
+              const Icon = service.Icon;
+              const isActive = index === activeService;
 
-          {/* Accent Cards - Modern Minimal */}
-          <div className="Services__accent-section">
-            {services.slice(6, 9).map((service, index) => {
-              const IconComponent = service.Icon;
               return (
-                <div key={service.id} className={`Services__accent-card Services__accent-card--${index + 1}`}>
-                  <div className="Services__accent-header">
-                    <div className="Services__accent-icon-box">
-                      <IconComponent />
-                    </div>
-                    <span className="Services__accent-number">0{index + 7}</span>
+                <Link
+                  key={service.id}
+                  to={`/services#${service.id}`}
+                  className={`Services__card ${isActive ? 'Services__card--active' : ''}`}
+                  onMouseEnter={() => setActiveService(index)}
+                >
+                  <div className="Services__card-number">
+                    {String(index + 1).padStart(2, '0')}
                   </div>
-                  <h4 className="Services__accent-title">{service.title}</h4>
-                  <p className="Services__accent-description">{service.description.slice(0, 100)}...</p>
-                  <div className="Services__accent-highlights">
-                    {service.features.slice(0, 3).map((feature, idx) => (
-                      <div key={idx} className="Services__accent-item">
-                        <span className="Services__accent-bullet"></span>
-                        <span>{feature}</span>
-                      </div>
-                    ))}
+
+                  <div className="Services__card-icon">
+                    <Icon />
                   </div>
-                </div>
+
+                  <div className="Services__card-content">
+                    <h4 className="Services__card-title">{service.title}</h4>
+                    <p className="Services__card-desc">{service.shortDesc}</p>
+                  </div>
+
+                  <div className="Services__card-arrow">
+                    <LuArrowRight />
+                  </div>
+                </Link>
               );
             })}
           </div>
         </div>
 
-        {/* Bottom CTA - Modern Design */}
-        <div className="Services__bottom-cta">
-          <div className="Services__bottom-cta-content">
-            <h3 className="Services__bottom-cta-title">Ready to Start Your Recovery?</h3>
-            <p className="Services__bottom-cta-text">Schedule a consultation with our expert therapists</p>
+        {/* Bottom CTA */}
+        <div className="Services__cta">
+          <div className="Services__cta-content">
+            <h3 className="Services__cta-title">Ready to Start Your Recovery Journey?</h3>
+            <p className="Services__cta-text">
+              Schedule a consultation with our expert therapists and take the first step towards a healthier you.
+            </p>
           </div>
-          <a href="tel:+1234567890" className="Services__bottom-cta-button">
-            Book Appointment
-            <span className="Services__bottom-cta-arrow">→</span>
-          </a>
+          <div className="Services__cta-actions">
+            <Link to="/contact" className="Services__cta-btn Services__cta-btn--primary">
+              <LuCalendar />
+              <span>Book Consultation</span>
+            </Link>
+            <Link to="/services" className="Services__cta-btn Services__cta-btn--secondary">
+              <span>View All Services</span>
+              <LuArrowRight />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

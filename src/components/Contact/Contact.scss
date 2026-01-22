@@ -2,393 +2,752 @@
 @import '../../styles/mixins';
 
 // ========================================
-// CONTACT COMPONENT - BEM Methodology
+// CONTACT COMPONENT - DIRECT CONTACT DESIGN
 // ========================================
 .Contact {
-  @include section-spacing;
-  background-color: $color-bg-primary;
+  position: relative;
+  padding: 120px 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8faf9 0%, #ffffff 50%, #f5f7f6 100%);
 
-  &__container {
-    @include container;
+  @include respond-to(md) {
+    padding: 80px 0;
   }
 
   // ========================================
-  // SECTION HEADER
+  // BACKGROUND ELEMENTS
+  // ========================================
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 40%, rgba($color-secondary, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba($color-accent, 0.03) 0%, transparent 50%);
+  }
+
+  &__bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.015;
+    background-image:
+      linear-gradient(90deg, $color-secondary 1px, transparent 1px),
+      linear-gradient(180deg, $color-secondary 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  &__bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: contactFloat 20s ease-in-out infinite;
+
+    &--1 {
+      top: 10%;
+      right: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba($color-secondary, 0.08) 0%, transparent 70%);
+    }
+
+    &--2 {
+      bottom: 20%;
+      left: -5%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba($color-accent, 0.06) 0%, transparent 70%);
+      animation-delay: -10s;
+    }
+  }
+
+  @keyframes contactFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -20px) scale(1.05); }
+    66% { transform: translate(-10px, 10px) scale(0.95); }
+  }
+
+  // ========================================
+  // CONTAINER
+  // ========================================
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+
+    @include respond-to(md) {
+      padding: 0 20px;
+    }
+  }
+
+  // ========================================
+  // HEADER
   // ========================================
   &__header {
     text-align: center;
-    max-width: $max-width-3xl;
-    margin: 0 auto $spacing-6xl;
+    max-width: 650px;
+    margin: 0 auto 60px;
+    opacity: 0;
+    transform: translateY(30px);
 
-    @include respond-to(md) {
-      margin-bottom: $spacing-4xl;
+    .Contact--visible & {
+      animation: contactFadeUp 0.8s ease forwards;
     }
   }
 
-  &__tagline {
-    display: inline-block;
-    padding: $spacing-xs $spacing-lg;
-    background-color: rgba($color-secondary, 0.1);
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, rgba($color-secondary, 0.1) 0%, rgba($color-secondary, 0.05) 100%);
+    border: 1px solid rgba($color-secondary, 0.15);
+    border-radius: 50px;
+    font-family: $font-secondary;
+    font-size: 12px;
+    font-weight: 600;
     color: $color-secondary;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    letter-spacing: $letter-spacing-wider;
     text-transform: uppercase;
-    border-radius: $radius-pill;
-    margin-bottom: $spacing-lg;
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+
+    svg {
+      font-size: 14px;
+    }
   }
 
   &__title {
-    @include heading-primary;
-    font-size: $font-size-4xl;
-    margin-bottom: $spacing-xl;
-
-    @include respond-to(md) {
-      font-size: $font-size-3xl;
-    }
+    font-family: $font-primary;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: $color-text;
+    line-height: 1.2;
+    margin: 0 0 16px;
   }
 
-  &__description {
-    @include text-elegant;
-    font-size: $font-size-lg;
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+  }
+
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: 16px;
     color: $color-text-light;
-    line-height: $line-height-relaxed;
+    line-height: 1.7;
     margin: 0;
-
-    @include respond-to(md) {
-      font-size: $font-size-base;
-    }
   }
 
   // ========================================
-  // MAIN CONTENT GRID
+  // MAIN CONTACT OPTIONS (Call & WhatsApp)
   // ========================================
-  &__content {
+  &__options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-5xl;
-    margin-bottom: $spacing-6xl;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 
-    @include respond-to(lg) {
+    @include respond-to(sm) {
       grid-template-columns: 1fr;
-      gap: $spacing-4xl;
+      gap: 16px;
     }
   }
 
-  // ========================================
-  // CONTACT INFO SECTION
-  // ========================================
-  &__info {
-    @include flex-column;
-    gap: $spacing-3xl;
-  }
-
-  &__info-cards {
-    @include flex-column;
-    gap: $spacing-lg;
-  }
-
-  &__info-card {
-    @include card-base;
+  &__option-card {
     display: flex;
-    gap: $spacing-lg;
-    padding: $spacing-xl;
-    transition: all $transition-base $ease-out-quad;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 32px;
+    border-radius: 20px;
     text-decoration: none;
-    color: inherit;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateY(20px);
+    position: relative;
+    overflow: hidden;
+
+    .Contact--visible & {
+      animation: contactFadeUp 0.6s ease 0.2s forwards;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
     &:hover {
-      transform: translateX(8px);
-      box-shadow: $shadow-lg;
+      transform: translateY(-6px) scale(1.02);
 
-      .Contact__info-icon-wrapper {
-        background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+      .Contact__option-icon {
         transform: scale(1.1);
+      }
+
+      .Contact__option-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    // Call variant
+    &--call {
+      background: linear-gradient(135deg, $color-secondary 0%, darken($color-secondary, 8%) 100%);
+      box-shadow:
+        0 12px 40px rgba($color-secondary, 0.3),
+        0 4px 12px rgba($color-secondary, 0.2);
+
+      &:hover {
+        box-shadow:
+          0 20px 50px rgba($color-secondary, 0.35),
+          0 8px 20px rgba($color-secondary, 0.25);
+      }
+
+      .Contact__option-icon {
+        background: rgba($color-white, 0.2);
+        color: $color-white;
+      }
+
+      .Contact__option-label,
+      .Contact__option-hint {
+        color: rgba($color-white, 0.85);
+      }
+
+      .Contact__option-value {
+        color: $color-white;
+      }
+
+      .Contact__option-arrow {
+        color: $color-white;
+      }
+    }
+
+    // WhatsApp variant
+    &--whatsapp {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      box-shadow:
+        0 12px 40px rgba(#25D366, 0.3),
+        0 4px 12px rgba(#25D366, 0.2);
+
+      .Contact--visible & {
+        animation-delay: 0.3s;
+      }
+
+      &:hover {
+        box-shadow:
+          0 20px 50px rgba(#25D366, 0.35),
+          0 8px 20px rgba(#25D366, 0.25);
+      }
+
+      .Contact__option-icon {
+        background: rgba($color-white, 0.2);
+        color: $color-white;
+      }
+
+      .Contact__option-label,
+      .Contact__option-hint {
+        color: rgba($color-white, 0.85);
+      }
+
+      .Contact__option-value {
+        color: $color-white;
+      }
+
+      .Contact__option-arrow {
+        color: $color-white;
       }
     }
   }
 
-  &__info-icon-wrapper {
+  &__option-icon {
     width: 60px;
     height: 60px;
     flex-shrink: 0;
-    @include flex-center;
-    background: linear-gradient(135deg, $color-secondary-light 0%, $color-secondary 100%);
-    border-radius: $radius-lg;
-    transition: all $transition-base;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 28px;
+    transition: transform 0.4s ease;
+  }
+
+  &__option-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__option-label {
+    font-family: $font-secondary;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__option-value {
+    font-family: $font-primary;
+    font-size: 22px;
+    font-weight: 700;
+
+    @include respond-to(sm) {
+      font-size: 20px;
+    }
+  }
+
+  &__option-hint {
+    font-family: $font-secondary;
+    font-size: 13px;
+  }
+
+  &__option-arrow {
+    font-size: 24px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+  }
+
+  // ========================================
+  // INFO GRID (Location, Hours, Email)
+  // ========================================
+  &__info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to(sm) {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  &__info-card {
+    background: $color-white;
+    border-radius: 20px;
+    padding: 28px;
+    border: 1px solid rgba($color-secondary, 0.08);
+    box-shadow: 0 4px 24px rgba($color-secondary, 0.06);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+
+    .Contact--visible & {
+      animation: contactFadeUp 0.6s ease 0.4s forwards;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba($color-secondary, 0.1);
+      border-color: rgba($color-secondary, 0.12);
+    }
+
+    &--hours {
+      .Contact--visible & {
+        animation-delay: 0.5s;
+      }
+    }
+
+    &--email {
+      .Contact--visible & {
+        animation-delay: 0.6s;
+      }
+
+      @include respond-to(lg) {
+        grid-column: span 2;
+      }
+
+      @include respond-to(sm) {
+        grid-column: span 1;
+      }
+    }
+  }
+
+  &__info-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba($color-secondary, 0.08);
   }
 
   &__info-icon {
-    font-size: $font-size-2xl;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, $color-secondary 0%, darken($color-secondary, 8%) 100%);
+    border-radius: 14px;
     color: $color-white;
-  }
-
-  &__info-content {
-    flex: 1;
+    font-size: 22px;
+    box-shadow: 0 6px 16px rgba($color-secondary, 0.25);
   }
 
   &__info-title {
-    @include heading-secondary;
-    font-size: $font-size-lg;
+    font-family: $font-primary;
+    font-size: 18px;
+    font-weight: 700;
     color: $color-text;
-    margin: 0 0 $spacing-sm;
-  }
-
-  &__info-detail {
-    @include body-text;
-    font-size: $font-size-sm;
-    color: $color-text-light;
-    margin: $spacing-xs 0;
-    line-height: $line-height-relaxed;
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-
-  // Map Section
-  &__map {
-    position: relative;
-    border-radius: $radius-2xl;
-    overflow: hidden;
-    box-shadow: $shadow-xl;
-    height: 350px;
-  }
-
-  &__map-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  &__map-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba($color-secondary, 0.4) 0%,
-      rgba($color-secondary-dark, 0.3) 100%
-    );
-  }
-
-  &__map-marker {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    @include flex-center;
-    background: $color-white;
-    border-radius: $radius-round;
-    box-shadow: $shadow-2xl, 0 0 0 8px rgba($color-white, 0.3);
-    animation: pulse 2s infinite;
-  }
-
-  &__map-marker-icon {
-    font-size: $font-size-3xl;
-    color: $color-secondary;
-  }
-
-  // ========================================
-  // CONTACT FORM
-  // ========================================
-  &__form-wrapper {
-    @include card-base;
-    padding: $spacing-3xl;
-
-    @include respond-to(md) {
-      padding: $spacing-2xl;
-    }
-  }
-
-  &__form-header {
-    margin-bottom: $spacing-3xl;
-  }
-
-  &__form-title {
-    @include heading-secondary;
-    font-size: $font-size-2xl;
-    color: $color-text;
-    margin-bottom: $spacing-md;
-  }
-
-  &__form-subtitle {
-    @include text-elegant;
-    font-size: $font-size-base;
-    color: $color-text-light;
     margin: 0;
   }
 
-  &__form {
-    @include flex-column;
-    gap: $spacing-xl;
-  }
-
-  &__form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-xl;
-
-    @include respond-to(md) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__form-group {
-    @include flex-column;
-    gap: $spacing-sm;
-  }
-
-  &__form-label {
+  &__info-body {
     display: flex;
+    flex-direction: column;
+  }
+
+  // Location specific
+  &__address {
+    font-family: $font-secondary;
+    font-size: 15px;
+    color: $color-text;
+    line-height: 1.7;
+    margin: 0 0 20px;
+  }
+
+  &__directions-btn {
+    display: inline-flex;
     align-items: center;
-    gap: $spacing-sm;
+    gap: 10px;
+    padding: 12px 20px;
+    background: rgba($color-secondary, 0.08);
+    border-radius: 12px;
     font-family: $font-secondary;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    color: $color-text;
-    text-transform: uppercase;
-    letter-spacing: $letter-spacing-wide;
-  }
-
-  &__form-label-icon {
-    font-size: $font-size-base;
+    font-size: 14px;
+    font-weight: 600;
     color: $color-secondary;
-  }
+    text-decoration: none;
+    transition: all 0.3s ease;
 
-  &__form-input,
-  &__form-textarea {
-    width: 100%;
-    padding: $spacing-lg $spacing-xl;
-    font-family: $font-secondary;
-    font-size: $font-size-base;
-    color: $color-text;
-    background-color: $color-bg-secondary;
-    border: 2px solid $border-color-light;
-    border-radius: $radius-lg;
-    transition: all $transition-base;
-
-    &::placeholder {
-      color: $color-text-lighter;
-    }
-
-    &:focus {
-      outline: none;
-      border-color: $color-secondary;
-      background-color: $color-white;
-      box-shadow: 0 0 0 4px rgba($color-secondary, 0.1);
+    svg {
+      font-size: 18px;
+      transition: transform 0.3s ease;
     }
 
     &:hover {
-      border-color: rgba($color-secondary, 0.3);
-    }
-  }
+      background: rgba($color-secondary, 0.15);
 
-  &__form-textarea {
-    resize: vertical;
-    min-height: 150px;
-    line-height: $line-height-relaxed;
-  }
-
-  &__form-submit {
-    @include button-primary;
-    @include button-hover-lift;
-    @include flex-center;
-    gap: $spacing-md;
-    padding: $spacing-lg $spacing-3xl;
-    font-size: $font-size-base;
-    margin-top: $spacing-lg;
-    cursor: pointer;
-
-    &:hover {
-      .Contact__form-submit-icon {
+      svg:last-child {
         transform: translateX(4px);
       }
     }
   }
 
-  &__form-submit-icon {
-    font-size: $font-size-xl;
-    transition: transform $transition-base;
+  // Hours specific
+  &__hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__hours-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba($color-secondary, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    &--closed {
+      .Contact__hours-time {
+        color: $color-text-muted;
+      }
+    }
+  }
+
+  &__hours-day {
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-text;
+  }
+
+  &__hours-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: 600;
+    color: $color-secondary;
+  }
+
+  &__hours-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: contactPulse 2s infinite;
+  }
+
+  @keyframes contactPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  // Email specific
+  &__email-text {
+    font-family: $font-secondary;
+    font-size: 14px;
+    color: $color-text-light;
+    margin: 0 0 8px;
+  }
+
+  &__email-link {
+    font-family: $font-secondary;
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-secondary;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: block;
+    margin-bottom: 8px;
+
+    &:hover {
+      color: darken($color-secondary, 10%);
+    }
+  }
+
+  &__email-hint {
+    font-family: $font-secondary;
+    font-size: 13px;
+    color: $color-text-muted;
   }
 
   // ========================================
-  // EMERGENCY BANNER
+  // FEATURES
   // ========================================
-  &__emergency {
-    @include flex-between;
-    gap: $spacing-3xl;
-    padding: $spacing-3xl;
-    background: linear-gradient(135deg,
-      rgba($color-secondary, 0.1) 0%,
-      rgba($color-secondary-dark, 0.08) 100%
-    );
-    border: 2px solid rgba($color-secondary, 0.2);
-    border-radius: $radius-2xl;
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+
+    .Contact--visible & {
+      animation: contactFadeUp 0.6s ease 0.7s forwards;
+    }
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to(sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: $color-white;
+    border-radius: 14px;
+    border: 1px solid rgba($color-secondary, 0.08);
+    box-shadow: 0 2px 12px rgba($color-secondary, 0.04);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba($color-secondary, 0.08);
+      border-color: rgba($color-secondary, 0.12);
+    }
+  }
+
+  &__feature-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba($color-secondary, 0.1) 0%, rgba($color-secondary, 0.05) 100%);
+    border-radius: 12px;
+    color: $color-secondary;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  &__feature-text {
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-text;
+  }
+
+  // ========================================
+  // MAP SECTION
+  // ========================================
+  &__map-section {
+    opacity: 0;
+    transform: translateY(30px);
+
+    .Contact--visible & {
+      animation: contactFadeUp 0.8s ease 0.8s forwards;
+    }
+  }
+
+  &__map-wrapper {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 64px rgba($color-secondary, 0.12),
+      0 8px 24px rgba($color-black, 0.06);
+  }
+
+  &__map {
+    position: relative;
+    height: 350px;
+    background: #e5e7eb;
+
+    @include respond-to(md) {
+      height: 280px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__map-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px 32px;
+    background: $color-white;
+    border-top: 1px solid rgba($color-secondary, 0.08);
 
     @include respond-to(md) {
       flex-direction: column;
       text-align: center;
-      padding: $spacing-2xl;
+      gap: 20px;
+      padding: 24px;
     }
   }
 
-  &__emergency-content {
-    flex: 1;
-  }
-
-  &__emergency-title {
-    @include heading-secondary;
-    font-size: $font-size-2xl;
-    color: $color-text;
-    margin-bottom: $spacing-md;
-  }
-
-  &__emergency-text {
-    @include body-text;
-    font-size: $font-size-base;
-    color: $color-text-light;
-    margin: 0;
-    line-height: $line-height-relaxed;
-  }
-
-  &__emergency-button {
-    @include button-base;
-    @include button-hover-lift;
-    padding: $spacing-lg $spacing-2xl;
-    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
-    color: $color-white;
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-    text-decoration: none;
-    white-space: nowrap;
-    box-shadow: $shadow-lg;
-
-    &:hover {
-      background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
-      box-shadow: $shadow-xl, 0 0 24px rgba(#e53e3e, 0.4);
-    }
+  &__map-cta-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 
     @include respond-to(md) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  &__map-cta-icon {
+    font-size: 32px;
+    color: $color-secondary;
+    flex-shrink: 0;
+  }
+
+  &__map-cta-title {
+    font-family: $font-primary;
+    font-size: 20px;
+    font-weight: 700;
+    color: $color-text;
+    margin: 0 0 4px;
+  }
+
+  &__map-cta-text {
+    font-family: $font-secondary;
+    font-size: 14px;
+    color: $color-text-light;
+    margin: 0;
+  }
+
+  &__map-cta-buttons {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+
+    @include respond-to(sm) {
+      flex-direction: column;
       width: 100%;
     }
   }
-}
 
-// Pulse Animation for Map Marker
-@keyframes pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
+  &__map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.4s ease;
+
+    svg {
+      font-size: 20px;
+    }
+
+    @include respond-to(sm) {
+      width: 100%;
+    }
+
+    &--call {
+      background: linear-gradient(135deg, $color-secondary 0%, darken($color-secondary, 8%) 100%);
+      color: $color-white;
+      box-shadow: 0 6px 20px rgba($color-secondary, 0.3);
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba($color-secondary, 0.4);
+      }
+    }
+
+    &--whatsapp {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: $color-white;
+      box-shadow: 0 6px 20px rgba(#25D366, 0.3);
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(#25D366, 0.4);
+      }
+    }
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.05);
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes contactFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

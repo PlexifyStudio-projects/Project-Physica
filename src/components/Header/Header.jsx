@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   LuHouse,
@@ -17,57 +17,16 @@ import {
   LuShield,
   LuClock,
   LuZap,
-  LuMail,
   LuBriefcase,
-  LuFileText,
   LuCircleHelp
 } from 'react-icons/lu';
 import './Header.scss';
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [freezeHeader, setFreezeHeader] = useState(false);
-  const [freezePosition, setFreezePosition] = useState(0);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Get viewport height
-      const viewportHeight = window.innerHeight;
-      // Get current scroll position
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-      // Find the footer element
-      const footer = document.querySelector('.Footer');
-      if (!footer) return;
-
-      // Get footer position
-      const footerTop = footer.offsetTop;
-
-      // Calculate when header should freeze (just before footer)
-      // We want the header to stop ~200px before the footer starts
-      const freezeThreshold = footerTop - 200;
-
-      if (scrollTop > freezeThreshold && !freezeHeader) {
-        // Calculate the exact position where it should freeze
-        setFreezePosition(scrollTop + (viewportHeight * 0.35));
-        setFreezeHeader(true);
-      } else if (scrollTop <= freezeThreshold && freezeHeader) {
-        setFreezeHeader(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    // Also check on resize in case layout changes
-    window.addEventListener('resize', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, [freezeHeader]);
 
   const navigationItems = [
     { id: '/', label: 'Home', icon: LuHouse },
@@ -113,12 +72,9 @@ function Header() {
 
   return (
     <>
-      {/* DESKTOP - Permanent Sidebar Right */}
-      <nav className={`Header ${freezeHeader ? 'Header--frozen' : ''}`}>
-        <div
-          className="Header__sidebar"
-          style={freezeHeader ? { top: `${freezePosition}px` } : {}}
-        >
+      {/* DESKTOP - Compact Sidebar */}
+      <nav className="Header">
+        <div className="Header__sidebar">
           <div className="Header__nav-list">
             {navigationItems.map((item) => {
               const Icon = item.icon;
@@ -150,7 +106,7 @@ function Header() {
                     </Link>
 
                     {/* Services Dropdown */}
-                    {isServicesDropdown && isDropdownOpen && (
+                    {isServicesDropdown && (
                       <div className="Header__dropdown">
                         <div className="Header__dropdown-content">
                           {servicesSubmenu.map((service, index) => {
@@ -171,7 +127,7 @@ function Header() {
                     )}
 
                     {/* Contact Dropdown */}
-                    {isContactDropdown && isDropdownOpen && (
+                    {isContactDropdown && (
                       <div className="Header__dropdown Header__dropdown--contact">
                         <div className="Header__dropdown-content">
                           {contactSubmenu.map((contact, index) => {
@@ -214,7 +170,7 @@ function Header() {
             className="Header__cta-button"
           >
             <LuCalendar />
-            <span>Book Appointment</span>
+            <span>Book Now</span>
           </Link>
         </div>
       </nav>
@@ -228,7 +184,7 @@ function Header() {
         {isMobileMenuOpen ? <LuX size={24} /> : <LuMenu size={24} />}
       </button>
 
-      {/* MOBILE - Slide-in Menu */}
+      {/* MOBILE - Slide-up Menu */}
       <div className={`Header__mobile-menu ${isMobileMenuOpen ? 'Header__mobile-menu--active' : ''}`}>
         <div className="Header__mobile-content">
           {navigationItems.map((item) => {

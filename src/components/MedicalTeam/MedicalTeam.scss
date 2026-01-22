@@ -2,71 +2,594 @@
 @import '../../styles/mixins';
 
 // ========================================
-// MEDICAL TEAM - COMPACT GRID DESIGN
+// MEDICAL TEAM - PREMIUM DESIGN
 // ========================================
 .MedicalTeam {
-  padding: $spacing-3xl 0 $spacing-4xl;
-  background: $color-white;
+  position: relative;
+  padding: $spacing-6xl 0;
+  overflow: hidden;
 
   @include respond-to(md) {
-    padding: $spacing-2xl 0 $spacing-3xl;
-  }
-
-  &__container {
-    @include container;
+    padding: $spacing-4xl 0;
   }
 
   // ========================================
-  // HEADER - Compact
+  // BACKGROUND ELEMENTS
+  // ========================================
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      $color-white 0%,
+      rgba($color-bg-secondary, 0.3) 30%,
+      rgba($color-secondary, 0.03) 60%,
+      $color-white 100%
+    );
+  }
+
+  &__bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(circle at 1px 1px, $color-secondary 1px, transparent 0);
+    background-size: 48px 48px;
+  }
+
+  &__bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: floatOrb 12s ease-in-out infinite;
+
+    &--1 {
+      top: 10%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba($color-secondary, 0.12) 0%, transparent 70%);
+    }
+
+    &--2 {
+      bottom: 20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba($color-accent, 0.08) 0%, transparent 70%);
+      animation-delay: -6s;
+    }
+  }
+
+  @keyframes floatOrb {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(30px, -30px) scale(1.1);
+    }
+  }
+
+  // ========================================
+  // CONTAINER
+  // ========================================
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+
+    @include respond-to(md) {
+      padding: 0 $spacing-lg;
+    }
+  }
+
+  // ========================================
+  // HEADER
   // ========================================
   &__header {
     text-align: center;
-    margin-bottom: $spacing-2xl;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 720px;
+    margin: 0 auto $spacing-4xl;
+    opacity: 0;
+    transform: translateY(30px);
 
-    @include respond-to(md) {
-      margin-bottom: $spacing-xl;
+    .MedicalTeam--visible & {
+      animation: fadeInUp 0.8s ease forwards;
     }
+  }
+
+  &__label {
+    display: inline-block;
+    padding: 10px 24px;
+    background: rgba($color-secondary, 0.08);
+    border: 1px solid rgba($color-secondary, 0.12);
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: 12px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: $spacing-lg;
   }
 
   &__title {
     font-family: $font-primary;
-    font-size: $font-size-3xl;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: $font-weight-bold;
     color: $color-text;
-    margin-bottom: $spacing-md;
     line-height: 1.2;
-
-    @include respond-to(md) {
-      font-size: $font-size-2xl;
-    }
+    margin: 0 0 $spacing-md;
   }
 
   &__title-accent {
     color: $color-secondary;
+    font-style: italic;
   }
 
   &__subtitle {
     font-family: $font-secondary;
-    font-size: $font-size-base;
+    font-size: 16px;
     color: $color-text-light;
-    line-height: 1.6;
-    margin: 0;
+    line-height: 1.7;
+    margin: 0 0 $spacing-lg;
+  }
+
+  &__title-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, $color-secondary, $color-accent);
+    border-radius: $radius-pill;
+    margin: 0 auto;
+  }
+
+  // ========================================
+  // CEO FEATURED SECTION
+  // ========================================
+  &__ceo-section {
+    margin-bottom: $spacing-4xl;
+    opacity: 0;
+    transform: translateY(40px);
+
+    .MedicalTeam--visible & {
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+  }
+
+  &__ceo-card {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: $spacing-3xl;
+    background: $color-white;
+    border-radius: $radius-3xl;
+    padding: $spacing-2xl;
+    box-shadow:
+      0 20px 60px rgba($color-secondary, 0.12),
+      0 8px 24px rgba($color-black, 0.06);
+    border: 1px solid rgba($color-secondary, 0.08);
+    position: relative;
+    overflow: hidden;
+
+    // Premium gradient overlay
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, $color-secondary, $color-accent, $color-secondary-light);
+    }
+
+    // Decorative element
+    &::after {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba($color-secondary, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    @include respond-to(lg) {
+      grid-template-columns: 1fr;
+      gap: $spacing-2xl;
+    }
 
     @include respond-to(md) {
-      font-size: $font-size-sm;
+      padding: $spacing-lg;
+      border-radius: $radius-2xl;
+    }
+  }
+
+  &__ceo-image-wrapper {
+    position: relative;
+
+    @include respond-to(lg) {
+      max-width: 350px;
+      margin: 0 auto;
+    }
+  }
+
+  &__ceo-image-frame {
+    position: relative;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    box-shadow:
+      0 16px 48px rgba($color-secondary, 0.2),
+      0 4px 12px rgba($color-black, 0.08);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 3px solid rgba($color-secondary, 0.2);
+      border-radius: $radius-2xl;
+      z-index: 2;
+      pointer-events: none;
+    }
+  }
+
+  &__ceo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .MedicalTeam__ceo-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__ceo-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 50%,
+      rgba($color-secondary, 0.1) 100%
+    );
+    pointer-events: none;
+  }
+
+  &__ceo-badge {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+    color: $color-white;
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    box-shadow: 0 8px 24px rgba($color-secondary, 0.35);
+    z-index: 3;
+
+    svg {
+      font-size: 16px;
+    }
+  }
+
+  &__ceo-content {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-lg 0;
+
+    @include respond-to(lg) {
+      padding: $spacing-md 0 0;
+    }
+  }
+
+  &__ceo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    @include respond-to(sm) {
+      flex-direction: column;
+    }
+  }
+
+  &__ceo-name-block {
+    flex: 1;
+  }
+
+  &__ceo-name {
+    font-family: $font-primary;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0 0 4px;
+    line-height: 1.2;
+  }
+
+  &__ceo-credentials {
+    font-family: $font-secondary;
+    font-size: 14px;
+    color: $color-secondary;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.02em;
+  }
+
+  &__ceo-since {
+    padding: 8px 16px;
+    background: rgba($color-secondary, 0.08);
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: 12px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    white-space: nowrap;
+  }
+
+  &__ceo-specialty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-accent, 0.08);
+    border-radius: $radius-md;
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+    margin-bottom: $spacing-lg;
+    align-self: flex-start;
+
+    svg {
+      color: $color-secondary;
+      font-size: 18px;
+    }
+  }
+
+  &__ceo-bio {
+    font-family: $font-secondary;
+    font-size: 15px;
+    color: $color-text-light;
+    line-height: 1.8;
+    margin: 0 0 $spacing-lg;
+  }
+
+  &__ceo-quote {
+    position: relative;
+    padding: $spacing-lg $spacing-xl;
+    background: linear-gradient(135deg, rgba($color-secondary, 0.04) 0%, rgba($color-accent, 0.02) 100%);
+    border-left: 4px solid $color-secondary;
+    border-radius: 0 $radius-lg $radius-lg 0;
+    margin: 0 0 $spacing-xl;
+    font-family: $font-primary;
+    font-size: 16px;
+    font-style: italic;
+    color: $color-text;
+    line-height: 1.7;
+  }
+
+  &__ceo-achievements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__ceo-achievement {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: $color-white;
+    border: 1px solid rgba($color-secondary, 0.12);
+    border-radius: $radius-lg;
+    font-family: $font-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+    box-shadow: 0 2px 8px rgba($color-secondary, 0.06);
+    transition: all 0.3s ease;
+
+    svg {
+      color: $color-secondary;
+      font-size: 16px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba($color-secondary, 0.12);
+      border-color: rgba($color-secondary, 0.2);
+    }
+  }
+
+  &__ceo-actions {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: auto;
+
+    @include respond-to(sm) {
+      flex-direction: column;
+    }
+  }
+
+  &__ceo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: $radius-lg;
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    svg {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    &--primary {
+      background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+      color: $color-white;
+      box-shadow: 0 6px 20px rgba($color-secondary, 0.3);
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba($color-secondary, 0.4);
+
+        svg {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    &--secondary {
+      background: $color-white;
+      color: $color-secondary;
+      border: 2px solid rgba($color-secondary, 0.2);
+
+      &:hover {
+        border-color: $color-secondary;
+        background: rgba($color-secondary, 0.04);
+
+        svg {
+          transform: translateX(2px);
+        }
+      }
     }
   }
 
   // ========================================
-  // GRID - 2 Columns Compact
+  // TEAM STATS
+  // ========================================
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-lg;
+    margin-bottom: $spacing-4xl;
+    opacity: 0;
+    transform: translateY(30px);
+
+    .MedicalTeam--visible & {
+      animation: fadeInUp 0.8s ease 0.4s forwards;
+    }
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to(sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__stat {
+    text-align: center;
+    padding: $spacing-xl;
+    background: $color-white;
+    border-radius: $radius-xl;
+    border: 1px solid rgba($color-secondary, 0.08);
+    box-shadow: 0 4px 16px rgba($color-secondary, 0.06);
+    transition: all 0.4s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba($color-secondary, 0.12);
+      border-color: rgba($color-secondary, 0.15);
+    }
+  }
+
+  &__stat-value {
+    display: block;
+    font-family: $font-primary;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  &__stat-label {
+    font-family: $font-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-medium;
+    color: $color-text-light;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  // ========================================
+  // SECTION DIVIDER
+  // ========================================
+  &__divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-3xl;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba($color-secondary, 0.2), transparent);
+    }
+  }
+
+  &__divider-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: rgba($color-secondary, 0.06);
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    svg {
+      font-size: 18px;
+    }
+  }
+
+  // ========================================
+  // TEAM GRID
   // ========================================
   &__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: $spacing-xl;
+    margin-bottom: $spacing-4xl;
+
+    @include respond-to(xl) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
     @include respond-to(md) {
       grid-template-columns: 1fr;
@@ -74,137 +597,285 @@
     }
   }
 
-  // ========================================
-  // CARD - Horizontal Compact Layout
-  // ========================================
   &__card {
-    display: flex;
-    gap: $spacing-lg;
     background: $color-white;
-    border: 1px solid rgba($color-secondary, 0.12);
-    border-radius: $radius-xl;
-    padding: $spacing-lg;
-    box-shadow: 0 2px 8px rgba($color-black, 0.04);
-
-    @include respond-to(md) {
-      flex-direction: column;
-      padding: $spacing-md;
-      gap: $spacing-md;
-    }
-  }
-
-  // Photo Section
-  &__photo-wrapper {
-    flex-shrink: 0;
-    width: 140px;
-    height: 180px;
-    border-radius: $radius-lg;
+    border-radius: $radius-2xl;
     overflow: hidden;
-    background: $color-bg-secondary;
+    box-shadow:
+      0 4px 20px rgba($color-secondary, 0.08),
+      0 1px 4px rgba($color-black, 0.04);
+    border: 1px solid rgba($color-secondary, 0.06);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateY(30px);
 
-    @include respond-to(md) {
-      width: 100%;
-      height: 240px;
+    .MedicalTeam--visible & {
+      animation: fadeInUp 0.6s ease calc(0.5s + var(--delay, 0s)) forwards;
+    }
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow:
+        0 20px 50px rgba($color-secondary, 0.15),
+        0 8px 20px rgba($color-black, 0.08);
+      border-color: rgba($color-secondary, 0.15);
+
+      .MedicalTeam__card-image {
+        transform: scale(1.08);
+      }
+
+      .MedicalTeam__card-overlay {
+        opacity: 1;
+      }
+
+      .MedicalTeam__card-arrow {
+        transform: translateX(4px);
+        color: $color-secondary;
+      }
     }
   }
 
-  &__photo {
+  &__card-image-wrapper {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+
+  &__card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  // Content Section
-  &__content {
-    flex: 1;
+  &__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba($color-secondary, 0.9) 100%
+    );
     display: flex;
-    flex-direction: column;
-    gap: $spacing-xs;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: $spacing-xl;
+    opacity: 0;
+    transition: opacity 0.4s ease;
   }
 
-  &__header-info {
+  &__card-cta {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-2xs;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: $color-white;
+    color: $color-secondary;
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba($color-black, 0.15);
+    transition: all 0.3s ease;
+
+    svg {
+      font-size: 16px;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba($color-black, 0.2);
+    }
   }
 
-  &__name-block {
-    flex: 1;
+  &__card-content {
+    padding: $spacing-lg;
   }
 
-  &__name {
+  &__card-header {
+    margin-bottom: $spacing-sm;
+  }
+
+  &__card-name {
     font-family: $font-primary;
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
     color: $color-text;
-    margin: 0 0 $spacing-2xs 0;
+    margin: 0 0 4px;
     line-height: 1.2;
   }
 
-  &__credentials {
+  &__card-credentials {
     font-family: $font-secondary;
-    font-size: $font-size-xs;
+    font-size: 12px;
     color: $color-secondary;
     font-weight: $font-weight-semibold;
   }
 
-  &__year-badge {
-    padding: $spacing-2xs $spacing-sm;
-    background: rgba($color-secondary, 0.1);
-    border-radius: $radius-pill;
+  &__card-role {
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    margin-bottom: 4px;
+  }
+
+  &__card-specialty {
+    font-family: $font-secondary;
+    font-size: 12px;
+    color: $color-text-light;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__card-bio {
+    font-family: $font-secondary;
+    font-size: 13px;
+    color: $color-text-light;
+    line-height: 1.6;
+    margin: 0 0 $spacing-md;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: $spacing-sm;
+    border-top: 1px solid rgba($color-secondary, 0.08);
+  }
+
+  &__card-since {
     font-family: $font-secondary;
     font-size: 11px;
     font-weight: $font-weight-semibold;
     color: $color-secondary;
-    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  &__role {
-    font-family: $font-secondary;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    color: $color-text;
-    line-height: 1.3;
+  &__card-arrow {
+    color: rgba($color-secondary, 0.3);
+    font-size: 16px;
+    transition: all 0.3s ease;
   }
 
-  &__specialty {
-    font-family: $font-secondary;
-    font-size: $font-size-xs;
-    color: $color-text-light;
-    font-weight: $font-weight-medium;
-    line-height: 1.3;
-    margin-bottom: $spacing-2xs;
+  // ========================================
+  // BOTTOM CTA
+  // ========================================
+  &__bottom-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2xl;
+    padding: $spacing-2xl $spacing-3xl;
+    background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+    border-radius: $radius-2xl;
+    box-shadow:
+      0 16px 48px rgba($color-secondary, 0.3),
+      inset 0 1px 0 rgba($color-white, 0.1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+
+    .MedicalTeam--visible & {
+      animation: fadeInUp 0.8s ease 0.8s forwards;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba($color-white, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    @include respond-to(lg) {
+      flex-direction: column;
+      text-align: center;
+      padding: $spacing-2xl;
+    }
   }
 
-  &__bio {
-    font-family: $font-secondary;
-    font-size: $font-size-xs;
-    color: $color-text-light;
-    line-height: 1.5;
-    margin: 0 0 $spacing-sm 0;
+  &__bottom-cta-content {
     flex: 1;
+    position: relative;
+    z-index: 1;
   }
 
-  &__contact-button {
+  &__bottom-cta-title {
+    font-family: $font-primary;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  &__bottom-cta-text {
+    font-family: $font-secondary;
+    font-size: 15px;
+    color: rgba($color-white, 0.9);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__bottom-cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: $spacing-xs;
-    padding: $spacing-sm $spacing-md;
-    background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-    color: $color-white;
-    border: none;
-    border-radius: $radius-md;
+    gap: 12px;
+    padding: 16px 32px;
+    background: $color-white;
+    color: $color-secondary;
+    border-radius: $radius-lg;
     font-family: $font-secondary;
-    font-size: $font-size-xs;
+    font-size: 15px;
     font-weight: $font-weight-semibold;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba($color-secondary, 0.2);
-    align-self: flex-start;
+    box-shadow: 0 6px 20px rgba($color-black, 0.15);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
 
     svg {
-      flex-shrink: 0;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+
+      &:last-child {
+        opacity: 0.6;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 32px rgba($color-black, 0.2);
+
+      svg:last-child {
+        transform: translateX(4px);
+        opacity: 1;
+      }
+    }
+  }
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

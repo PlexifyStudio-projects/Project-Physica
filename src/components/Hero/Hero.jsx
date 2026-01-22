@@ -1,136 +1,160 @@
 import { useState, useEffect, useRef } from 'react';
+import {
+  LuArrowRight,
+  LuPhone,
+  LuStar,
+  LuUsers,
+  LuAward,
+  LuActivity,
+  LuHeart,
+  LuShield,
+  LuCalendarCheck
+} from 'react-icons/lu';
 import './Hero.scss';
 
 function Hero() {
   const [yearsCount, setYearsCount] = useState(0);
   const [patientsCount, setPatientsCount] = useState(0);
   const [satisfactionCount, setSatisfactionCount] = useState(0);
-  const statsRef = useRef(null);
+  const heroRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-            animateCounter(setYearsCount, 23, 2000);
-            animateCounter(setPatientsCount, 23400, 2000);
-            animateCounter(setSatisfactionCount, 96, 2000);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
+    if (!hasAnimated) {
+      setHasAnimated(true);
+      animateCounter(setYearsCount, 23, 1500);
+      animateCounter(setPatientsCount, 23400, 1500);
+      animateCounter(setSatisfactionCount, 96, 1500);
     }
-
-    return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current);
-      }
-    };
   }, [hasAnimated]);
 
   const animateCounter = (setter, target, duration) => {
     const startTime = Date.now();
-    const endTime = startTime + duration;
-
     const updateCounter = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const currentValue = Math.floor(easeOutQuart * target);
-
-      setter(currentValue);
-
+      setter(Math.floor(easeOutQuart * target));
       if (progress < 1) {
         requestAnimationFrame(updateCounter);
       } else {
         setter(target);
       }
     };
-
     requestAnimationFrame(updateCounter);
   };
 
   return (
-    <section id="home" className="Hero">
-      <div className="Hero__overlay"></div>
+    <section ref={heroRef} className="Hero">
+      {/* Background Image */}
+      <div className="Hero__bg">
+        <img
+          src="https://uchealth-wp-uploads.s3.amazonaws.com/wp-content/uploads/sites/4/2017/01/02160624/uch.jpg"
+          alt="Modern medical facility"
+          className="Hero__bg-img"
+        />
+        <div className="Hero__bg-overlay"></div>
 
-      <div className="Hero__container">
-        <div className="Hero__content">
-          {/* Badge/Tag */}
-          <span className="Hero__badge">Excellence in Physical Therapy Since 2025</span>
+        {/* Floating Cards over image */}
+        <div className="Hero__cards">
+          <div className="Hero__card Hero__card--1">
+            <div className="Hero__card-icon">
+              <LuActivity />
+            </div>
+            <div className="Hero__card-text">
+              <span className="Hero__card-title">Sports Rehab</span>
+              <span className="Hero__card-desc">Athletic recovery</span>
+            </div>
+          </div>
 
-          {/* Main Heading */}
-          <h1 className="Hero__title">
-            Your Recovery,
-            <span className="Hero__title-accent"> Our Mission</span>
+          <div className="Hero__card Hero__card--2">
+            <div className="Hero__card-icon">
+              <LuHeart />
+            </div>
+            <div className="Hero__card-text">
+              <span className="Hero__card-title">Pain Relief</span>
+              <span className="Hero__card-desc">Chronic care</span>
+            </div>
+          </div>
+
+          <div className="Hero__card Hero__card--3">
+            <div className="Hero__card-icon">
+              <LuShield />
+            </div>
+            <div className="Hero__card-text">
+              <span className="Hero__card-title">Post-Surgery</span>
+              <span className="Hero__card-desc">Full recovery</span>
+            </div>
+          </div>
+
+          <div className="Hero__card Hero__card--4">
+            <div className="Hero__card-icon Hero__card-icon--accent">
+              <LuCalendarCheck />
+            </div>
+            <div className="Hero__card-text">
+              <span className="Hero__card-title">Open Today</span>
+              <span className="Hero__card-desc">8am - 6pm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="Hero__wrapper">
+        <div className="Hero__main">
+          <span className="Hero__label">Physical Therapy Excellence</span>
+
+          <h1 className="Hero__heading">
+            Your Journey to <br />
+            <span className="Hero__heading-accent">Recovery</span> Begins Here
           </h1>
 
-          {/* Subtitle */}
-          <p className="Hero__subtitle">
-            Experience exceptional physical therapy delivered with expertise and care.
-            Our specialized team is dedicated to helping you achieve optimal recovery and performance.
+          <p className="Hero__text">
+            Personalized care from board-certified specialists using
+            advanced techniques for your optimal health and mobility.
           </p>
 
-          {/* Call-to-Action Buttons */}
-          <div className="Hero__actions">
-            <a href="tel:+1234567890" className="Hero__button Hero__button--primary">
-              Schedule Appointment
+          {/* Stats Row */}
+          <div className="Hero__stats">
+            <div className="Hero__stat">
+              <span className="Hero__stat-value">{yearsCount}+</span>
+              <span className="Hero__stat-name">Years</span>
+            </div>
+            <div className="Hero__stat">
+              <span className="Hero__stat-value">{patientsCount.toLocaleString()}+</span>
+              <span className="Hero__stat-name">Patients</span>
+            </div>
+            <div className="Hero__stat">
+              <span className="Hero__stat-value">{satisfactionCount}%</span>
+              <span className="Hero__stat-name">Satisfaction</span>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="Hero__cta">
+            <a href="tel:+1234567890" className="Hero__btn Hero__btn--primary">
+              <LuPhone />
+              <span>Book Appointment</span>
+              <LuArrowRight className="Hero__btn-arrow" />
             </a>
-            <a href="#services" className="Hero__button Hero__button--secondary">
+            <a href="#services" className="Hero__btn Hero__btn--secondary">
               Our Services
             </a>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="Hero__trust-indicators">
+          {/* Trust Row */}
+          <div className="Hero__trust">
             <div className="Hero__trust-item">
-              <span className="Hero__trust-icon">✓</span>
-              <span className="Hero__trust-text">Licensed Physical Therapists</span>
-            </div>
-            <div className="Hero__trust-item">
-              <span className="Hero__trust-icon">✓</span>
-              <span className="Hero__trust-text">Advanced Equipment</span>
+              <LuAward />
+              <span>Award Winning</span>
             </div>
             <div className="Hero__trust-item">
-              <span className="Hero__trust-icon">✓</span>
-              <span className="Hero__trust-text">Personalized Treatment Plans</span>
+              <LuStar />
+              <span>4.9 Rating</span>
             </div>
-          </div>
-        </div>
-
-        {/* Hero Image - Modern Medical Facility */}
-        <div className="Hero__image-wrapper">
-          <div className="Hero__image-container">
-            <img
-              src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=1600&h=1200&fit=crop"
-              alt="Physica Inc - Modern Medical Clinic Exterior"
-              className="Hero__image"
-              loading="eager"
-            />
-            <div className="Hero__image-overlay"></div>
-          </div>
-
-          {/* Floating Stats Card */}
-          <div ref={statsRef} className="Hero__stats-card">
-            <div className="Hero__stat">
-              <span className="Hero__stat-number">{yearsCount}+</span>
-              <span className="Hero__stat-label">Years Experience</span>
-            </div>
-            <div className="Hero__stat">
-              <span className="Hero__stat-number">
-                {patientsCount.toLocaleString()}+
-              </span>
-              <span className="Hero__stat-label">Patients Served</span>
-            </div>
-            <div className="Hero__stat">
-              <span className="Hero__stat-number">{satisfactionCount}%</span>
-              <span className="Hero__stat-label">Satisfaction Rate</span>
+            <div className="Hero__trust-item">
+              <LuUsers />
+              <span>Expert Team</span>
             </div>
           </div>
         </div>

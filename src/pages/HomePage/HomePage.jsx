@@ -31,18 +31,27 @@ import BalanceFallPreventionImg from '../../assets/Balance-&-Fall-Prevention.png
 function HomePage() {
   const whyChooseRef = useRef(null);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [typedText1, setTypedText1] = useState('');
+  const [typedText2, setTypedText2] = useState('');
+  const [hasStartedTyping, setHasStartedTyping] = useState(false);
+
+  const fullText1 = "Our purpose is to provide excellent physical therapy services and we consider our patients as strategic partners in their journey to recovery.";
+  const fullText2 = "We understand that the only way to build long-term relationships is by achieving your complete satisfaction. That's why we have certified therapists with over 15 years of experience, state-of-the-art technology, and personalized attention that guarantees proven results.";
 
   useEffect(() => {
     // Intersection Observer for scroll-triggered animations
     const observerOptions = {
-      threshold: 0.2, // Trigger when 20% of section is visible
-      rootMargin: '0px 0px -100px 0px' // Trigger slightly before section is fully visible
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
     };
 
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('HomePage__why-choose--visible');
+          if (!hasStartedTyping) {
+            setHasStartedTyping(true);
+          }
         }
       });
     };
@@ -58,7 +67,39 @@ function HomePage() {
         observer.unobserve(whyChooseRef.current);
       }
     };
-  }, []);
+  }, [hasStartedTyping]);
+
+  // Typewriter effect
+  useEffect(() => {
+    if (!hasStartedTyping) return;
+
+    let index1 = 0;
+    let index2 = 0;
+    const speed = 15; // milliseconds per character
+
+    // Type first paragraph
+    const typeText1 = () => {
+      if (index1 <= fullText1.length) {
+        setTypedText1(fullText1.slice(0, index1));
+        index1++;
+        setTimeout(typeText1, speed);
+      } else {
+        // Start typing second paragraph after first is done
+        typeText2();
+      }
+    };
+
+    // Type second paragraph
+    const typeText2 = () => {
+      if (index2 <= fullText2.length) {
+        setTypedText2(fullText2.slice(0, index2));
+        index2++;
+        setTimeout(typeText2, speed);
+      }
+    };
+
+    typeText1();
+  }, [hasStartedTyping]);
 
   const servicesOverview = [
     {
@@ -113,45 +154,41 @@ function HomePage() {
 
   const whyChooseUs = {
     title: 'What makes us different from other physical therapy clinics?',
-    paragraphs: [
-      'Our purpose is to provide excellent physical therapy services and we consider our patients as strategic partners in their journey to recovery.',
-      'We understand that the only way to build long-term relationships is by achieving your complete satisfaction. That\'s why we have certified therapists with over 15 years of experience, state-of-the-art technology, and personalized attention that guarantees proven results.'
-    ],
     images: [
       {
-        url: 'https://images.pexels.com/photos/5473183/pexels-photo-5473183.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-        title: 'Personalized Treatment',
-        description: 'One-on-one sessions tailored to your recovery goals'
-      },
-      {
-        url: 'https://images.pexels.com/photos/7176325/pexels-photo-7176325.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        url: 'https://images.pexels.com/photos/4506105/pexels-photo-4506105.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
         title: 'Manual Therapy',
-        description: 'Hands-on techniques for pain relief and mobility'
+        description: 'Hands-on techniques for pain relief'
       },
       {
-        url: 'https://images.pexels.com/photos/5473171/pexels-photo-5473171.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-        title: 'Therapeutic Exercise',
-        description: 'Guided movements to restore strength and flexibility'
+        url: 'https://images.pexels.com/photos/5473186/pexels-photo-5473186.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        title: 'Rehabilitation Exercises',
+        description: 'Guided movements to restore strength'
       },
       {
-        url: 'https://images.pexels.com/photos/7176305/pexels-photo-7176305.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-        title: 'Advanced Technology',
-        description: 'State-of-the-art equipment for optimal recovery'
+        url: 'https://images.pexels.com/photos/4506109/pexels-photo-4506109.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        title: 'Spinal Treatment',
+        description: 'Expert care for back and neck pain'
       },
       {
-        url: 'https://images.pexels.com/photos/5473182/pexels-photo-5473182.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-        title: 'Sports Rehabilitation',
-        description: 'Expert care for athletes and active individuals'
+        url: 'https://images.pexels.com/photos/4506219/pexels-photo-4506219.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        title: 'Joint Mobilization',
+        description: 'Restoring mobility and flexibility'
       },
       {
-        url: 'https://images.pexels.com/photos/7176026/pexels-photo-7176026.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-        title: 'Comprehensive Evaluation',
-        description: 'Thorough assessment to create your treatment plan'
+        url: 'https://images.pexels.com/photos/4506217/pexels-photo-4506217.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        title: 'Therapeutic Massage',
+        description: 'Reducing tension and promoting healing'
       },
       {
-        url: 'https://images.pexels.com/photos/5473177/pexels-photo-5473177.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-        title: 'Modern Facilities',
-        description: 'Professional clinic designed for your comfort'
+        url: 'https://images.pexels.com/photos/5473223/pexels-photo-5473223.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        title: 'Stretching Therapy',
+        description: 'Improving range of motion'
+      },
+      {
+        url: 'https://images.pexels.com/photos/4506214/pexels-photo-4506214.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
+        title: 'Recovery Support',
+        description: 'Professional guidance throughout your journey'
       }
     ]
   };
@@ -258,11 +295,14 @@ function HomePage() {
           <div className="HomePage__why-choose-content">
             <div className="HomePage__why-choose-text">
               <h2 className="HomePage__why-choose-title">{whyChooseUs.title}</h2>
-              {whyChooseUs.paragraphs.map((paragraph, index) => (
-                <p key={index} className="HomePage__why-choose-paragraph">
-                  {paragraph}
-                </p>
-              ))}
+              <p className="HomePage__why-choose-paragraph HomePage__why-choose-paragraph--typed">
+                {typedText1}
+                {typedText1.length < fullText1.length && <span className="HomePage__cursor">|</span>}
+              </p>
+              <p className="HomePage__why-choose-paragraph HomePage__why-choose-paragraph--typed">
+                {typedText2}
+                {typedText1.length === fullText1.length && typedText2.length < fullText2.length && <span className="HomePage__cursor">|</span>}
+              </p>
               <Link to="/about" className="HomePage__button HomePage__button--primary">
                 Learn More
               </Link>
@@ -295,188 +335,72 @@ function HomePage() {
           {(() => {
             const testimonials = [
               {
-                name: "Michael Rodriguez",
+                name: "Michael R.",
                 rating: 5,
-                comment: "After my knee surgery, I thought I'd never run again. The therapy team here proved me wrong. Now I'm back to marathon training!",
-                image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "After my knee surgery, I thought I'd never run again. The team here made the impossible possible. Now I'm back to marathon training!",
+                initials: "MR",
+                color: "#4A7C59",
+                highlight: true
               },
               {
-                name: "Jennifer Thompson",
+                name: "Jennifer T.",
                 rating: 5,
-                comment: "The personalized attention I received was incredible. They took time to understand my specific needs and created a perfect recovery plan.",
-                image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "The personalized attention was incredible. They created a perfect recovery plan tailored just for me.",
+                initials: "JT",
+                color: "#5B8A72",
+                highlight: false
               },
               {
-                name: "David Chen",
+                name: "David C.",
                 rating: 5,
-                comment: "Professional, caring, and highly skilled. They helped me recover from a sports injury faster than I expected.",
-                image: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "Professional and highly skilled therapists. Recovered from my sports injury faster than expected!",
+                initials: "DC",
+                color: "#6B9B7A",
+                highlight: false
               },
               {
-                name: "Amanda Martinez",
+                name: "Sarah W.",
                 rating: 5,
-                comment: "Outstanding facility with state-of-the-art equipment. The therapists are knowledgeable and genuinely care about your progress.",
-                image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "My chronic back pain is finally manageable after years of suffering. Can't thank the team enough!",
+                initials: "SW",
+                color: "#7DAF8A",
+                highlight: true
               },
               {
-                name: "Robert Johnson",
+                name: "Robert J.",
                 rating: 5,
-                comment: "I've been to several PT clinics, and this one is by far the best. The results speak for themselves.",
-                image: "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "Best PT clinic I've ever been to. The results truly speak for themselves.",
+                initials: "RJ",
+                color: "#4A7C59",
+                highlight: false
               },
               {
-                name: "Sarah Williams",
+                name: "Amanda M.",
                 rating: 5,
-                comment: "My chronic back pain is finally manageable. I can't thank the team enough for their dedication and expertise.",
-                image: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "Outstanding facility with therapists who genuinely care about your progress and well-being.",
+                initials: "AM",
+                color: "#5B8A72",
+                highlight: false
               },
               {
-                name: "James Anderson",
+                name: "Thomas H.",
                 rating: 5,
-                comment: "Excellent experience from start to finish. The therapists are professional, friendly, and truly know their craft.",
-                image: "https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "From shoulder surgery to full mobility in record time. Their expertise is unmatched!",
+                initials: "TH",
+                color: "#6B9B7A",
+                highlight: true
               },
               {
-                name: "Emily Davis",
-                rating: 4,
-                comment: "Great facility with a welcoming atmosphere. The therapy sessions were effective and the staff made me feel comfortable.",
-                image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Christopher Lee",
+                name: "Linda K.",
                 rating: 5,
-                comment: "After my car accident, I didn't think I'd regain full mobility. Thanks to this team, I'm back to 100%!",
-                image: "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Maria Garcia",
-                rating: 5,
-                comment: "The compassion and expertise here is unmatched. They truly care about helping you achieve your recovery goals.",
-                image: "https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Daniel White",
-                rating: 5,
-                comment: "Highly recommend! The therapists are knowledgeable, patient, and create customized treatment plans that work.",
-                image: "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Lisa Brown",
-                rating: 5,
-                comment: "I came in with severe shoulder pain and left pain-free. The treatment was professional and effective.",
-                image: "https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Kevin Taylor",
-                rating: 5,
-                comment: "The best physical therapy experience I've ever had. The staff goes above and beyond to ensure your success.",
-                image: "https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Patricia Moore",
-                rating: 4,
-                comment: "Very professional environment. The therapists are skilled and the facility is clean and modern.",
-                image: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Thomas Harris",
-                rating: 5,
-                comment: "Outstanding care throughout my recovery. They made the process easier and more effective than I imagined.",
-                image: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Jessica Clark",
-                rating: 5,
-                comment: "After years of chronic pain, I finally found relief here. The therapists are miracle workers!",
-                image: "https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Brian Lewis",
-                rating: 5,
-                comment: "Professional, knowledgeable, and caring staff. They helped me get back to playing golf pain-free.",
-                image: "https://images.pexels.com/photos/1043473/pexels-photo-1043473.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Nancy Robinson",
-                rating: 5,
-                comment: "The personalized care I received was exceptional. Every session was tailored to my specific needs.",
-                image: "https://images.pexels.com/photos/1181695/pexels-photo-1181695.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Steven Walker",
-                rating: 5,
-                comment: "Incredible results in just a few weeks. The team's expertise and dedication is truly impressive.",
-                image: "https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Michelle Young",
-                rating: 5,
-                comment: "Best decision I made for my recovery. The therapists are skilled, patient, and genuinely invested in your success.",
-                image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Richard King",
-                rating: 5,
-                comment: "Top-notch facility with excellent staff. They helped me recover from a work injury and return to my job stronger.",
-                image: "https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Karen Wright",
-                rating: 4,
-                comment: "Great experience overall. The therapists are professional and the treatment plans are well-designed.",
-                image: "https://images.pexels.com/photos/1130641/pexels-photo-1130641.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Joseph Scott",
-                rating: 5,
-                comment: "After my hip replacement, I needed specialized care. This team delivered exceptional results beyond my expectations.",
-                image: "https://images.pexels.com/photos/1121796/pexels-photo-1121796.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Laura Green",
-                rating: 5,
-                comment: "The attention to detail and personalized approach made all the difference in my recovery journey.",
-                image: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Mark Adams",
-                rating: 5,
-                comment: "Professional environment with cutting-edge equipment. The therapists are experts in their field.",
-                image: "https://images.pexels.com/photos/1416530/pexels-photo-1416530.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Sandra Baker",
-                rating: 5,
-                comment: "I've regained mobility I thought was lost forever. This team changed my life!",
-                image: "https://images.pexels.com/photos/1547796/pexels-photo-1547796.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Paul Nelson",
-                rating: 5,
-                comment: "Exceptional care from day one. The staff is friendly, professional, and truly dedicated to patient recovery.",
-                image: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Carol Mitchell",
-                rating: 5,
-                comment: "The best therapy center in the area. Clean facility, modern equipment, and outstanding therapists.",
-                image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Gregory Carter",
-                rating: 4,
-                comment: "Very satisfied with my treatment. The therapists are knowledgeable and create effective recovery plans.",
-                image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
-              },
-              {
-                name: "Rachel Phillips",
-                rating: 5,
-                comment: "Life-changing experience! I'm pain-free and stronger than ever. Thank you to this amazing team!",
-                image: "https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2"
+                comment: "The balance therapy program changed my life. I feel confident and steady again!",
+                initials: "LK",
+                color: "#7DAF8A",
+                highlight: false
               }
             ];
 
-            const itemsPerPage = 3;
+            const itemsPerPage = 4;
             const maxIndex = Math.ceil(testimonials.length / itemsPerPage) - 1;
             const currentTestimonials = testimonials.slice(
               currentTestimonialIndex * itemsPerPage,
@@ -493,25 +417,22 @@ function HomePage() {
 
             return (
               <>
-                <div className="HomePage__testimonials-carousel">
-                  <button
-                    className="HomePage__testimonials-nav HomePage__testimonials-nav--prev"
-                    onClick={handlePrevious}
-                    disabled={currentTestimonialIndex === 0}
-                    aria-label="Previous testimonials"
-                  >
-                    <LuChevronLeft />
-                  </button>
-
-                  <div className="HomePage__testimonials-grid">
+                <div className="HomePage__testimonials-showcase">
+                  <div className="HomePage__testimonials-main">
                     {currentTestimonials.map((testimonial, index) => (
-                      <div key={currentTestimonialIndex * itemsPerPage + index} className="HomePage__testimonial-card">
-                        <div className="HomePage__testimonial-header">
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
+                      <div
+                        key={currentTestimonialIndex * itemsPerPage + index}
+                        className={`HomePage__testimonial-card ${testimonial.highlight ? 'HomePage__testimonial-card--featured' : ''}`}
+                      >
+                        <div className="HomePage__testimonial-quote-icon">"</div>
+                        <p className="HomePage__testimonial-comment">{testimonial.comment}</p>
+                        <div className="HomePage__testimonial-footer">
+                          <div
                             className="HomePage__testimonial-avatar"
-                          />
+                            style={{ backgroundColor: testimonial.color }}
+                          >
+                            {testimonial.initials}
+                          </div>
                           <div className="HomePage__testimonial-info">
                             <h4 className="HomePage__testimonial-name">{testimonial.name}</h4>
                             <div className="HomePage__testimonial-rating">
@@ -528,33 +449,42 @@ function HomePage() {
                             </div>
                           </div>
                         </div>
-                        <p className="HomePage__testimonial-comment">{testimonial.comment}</p>
-                        <span className="HomePage__testimonial-verified">✓ Verified Patient</span>
                       </div>
                     ))}
                   </div>
 
-                  <button
-                    className="HomePage__testimonials-nav HomePage__testimonials-nav--next"
-                    onClick={handleNext}
-                    disabled={currentTestimonialIndex === maxIndex}
-                    aria-label="Next testimonials"
-                  >
-                    <LuChevronRight />
-                  </button>
-                </div>
-
-                <div className="HomePage__testimonials-indicators">
-                  {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                  <div className="HomePage__testimonials-controls">
                     <button
-                      key={index}
-                      className={`HomePage__testimonials-indicator ${
-                        index === currentTestimonialIndex ? 'HomePage__testimonials-indicator--active' : ''
-                      }`}
-                      onClick={() => setCurrentTestimonialIndex(index)}
-                      aria-label={`Go to testimonials page ${index + 1}`}
-                    />
-                  ))}
+                      className="HomePage__testimonials-nav HomePage__testimonials-nav--prev"
+                      onClick={handlePrevious}
+                      disabled={currentTestimonialIndex === 0}
+                      aria-label="Previous testimonials"
+                    >
+                      <LuChevronLeft />
+                    </button>
+
+                    <div className="HomePage__testimonials-indicators">
+                      {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                        <button
+                          key={index}
+                          className={`HomePage__testimonials-indicator ${
+                            index === currentTestimonialIndex ? 'HomePage__testimonials-indicator--active' : ''
+                          }`}
+                          onClick={() => setCurrentTestimonialIndex(index)}
+                          aria-label={`Go to testimonials page ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+
+                    <button
+                      className="HomePage__testimonials-nav HomePage__testimonials-nav--next"
+                      onClick={handleNext}
+                      disabled={currentTestimonialIndex === maxIndex}
+                      aria-label="Next testimonials"
+                    >
+                      <LuChevronRight />
+                    </button>
+                  </div>
                 </div>
               </>
             );

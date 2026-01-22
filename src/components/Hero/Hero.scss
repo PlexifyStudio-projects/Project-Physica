@@ -1,347 +1,371 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-// ========================================
-// HERO COMPONENT - BEM Methodology
-// ========================================
 .Hero {
   position: relative;
-  padding: $spacing-3xl 0;
-  background: linear-gradient(135deg,
-    $color-bg-secondary 0%,
-    $color-primary-light 50%,
-    $color-accent 100%
-  );
-  color: $color-text;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: $color-bg-primary;
   overflow: hidden;
 
-  @include respond-to(md) {
-    padding: $spacing-2xl 0;
-  }
-
-  // Decorative overlay
-  &__overlay {
+  // ========================================
+  // BACKGROUND IMAGE
+  // ========================================
+  &__bg {
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
-    background-image:
-      radial-gradient(circle at 20% 50%, rgba(95, 111, 82, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(95, 111, 82, 0.08) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  &__container {
-    @include container;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-3xl;
-    align-items: center;
-    position: relative;
-    z-index: $z-base;
+    width: 50%;
+    height: 100%;
 
     @include respond-to(lg) {
-      grid-template-columns: 1fr;
-      gap: $spacing-2xl;
+      width: 100%;
+      opacity: 0.15;
+    }
+  }
+
+  &__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      $color-bg-primary 0%,
+      rgba($color-bg-primary, 0.8) 30%,
+      rgba($color-bg-primary, 0.2) 70%,
+      transparent 100%
+    );
+
+    @include respond-to(lg) {
+      background: rgba($color-bg-primary, 0.5);
+    }
+  }
+
+  // ========================================
+  // FLOATING CARDS
+  // ========================================
+  &__cards {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+
+    @include respond-to(lg) {
+      display: none;
+    }
+  }
+
+  &__card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba($color-white, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: $radius-lg;
+    box-shadow: 0 8px 32px rgba($color-black, 0.1);
+    pointer-events: auto;
+    animation: cardFloat 4s ease-in-out infinite;
+
+    &--1 {
+      top: 15%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    &--2 {
+      top: 35%;
+      right: 25%;
+      animation-delay: 0.5s;
+    }
+
+    &--3 {
+      bottom: 35%;
+      left: 5%;
+      animation-delay: 1s;
+    }
+
+    &--4 {
+      bottom: 15%;
+      right: 20%;
+      animation-delay: 1.5s;
+    }
+  }
+
+  @keyframes cardFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  &__card-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color-secondary, 0.1);
+    border-radius: $radius-md;
+    color: $color-secondary;
+    font-size: 18px;
+
+    &--accent {
+      background: $color-secondary;
+      color: $color-white;
+    }
+  }
+
+  &__card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__card-title {
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+  }
+
+  &__card-desc {
+    font-family: $font-secondary;
+    font-size: 11px;
+    color: $color-text-light;
+  }
+
+  // ========================================
+  // WRAPPER
+  // ========================================
+  &__wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+    padding-right: 240px;
+
+    @include respond-to(xl) {
+      padding-right: 220px;
+    }
+
+    @include respond-to(lg) {
+      padding-right: $spacing-xl;
+    }
+
+    @include respond-to(md) {
+      padding: 0 $spacing-lg;
+    }
+  }
+
+  // ========================================
+  // MAIN CONTENT
+  // ========================================
+  &__main {
+    max-width: 540px;
+
+    @include respond-to(lg) {
+      max-width: 100%;
       text-align: center;
     }
   }
 
   // ========================================
-  // CONTENT SECTION
+  // LABEL
   // ========================================
-  &__content {
-    @include flex-column;
-    gap: $spacing-md;
+  &__label {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba($color-secondary, 0.08);
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: 12px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    letter-spacing: 0.03em;
+    margin-bottom: $spacing-lg;
+  }
+
+  // ========================================
+  // HEADING
+  // ========================================
+  &__heading {
+    font-family: $font-primary;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: $font-weight-bold;
+    line-height: 1.15;
+    color: $color-text;
+    margin: 0 0 $spacing-md;
+  }
+
+  &__heading-accent {
+    color: $color-secondary;
+  }
+
+  // ========================================
+  // TEXT
+  // ========================================
+  &__text {
+    font-family: $font-secondary;
+    font-size: 15px;
+    line-height: 1.7;
+    color: $color-text-light;
+    margin: 0 0 $spacing-xl;
+    max-width: 440px;
 
     @include respond-to(lg) {
+      max-width: 100%;
+      margin: 0 auto $spacing-xl;
+    }
+  }
+
+  // ========================================
+  // STATS
+  // ========================================
+  &__stats {
+    display: flex;
+    gap: $spacing-2xl;
+    margin-bottom: $spacing-xl;
+
+    @include respond-to(lg) {
+      justify-content: center;
+    }
+
+    @include respond-to(sm) {
+      gap: $spacing-lg;
+    }
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__stat-value {
+    font-family: $font-primary;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    line-height: 1;
+  }
+
+  &__stat-name {
+    font-family: $font-secondary;
+    font-size: 11px;
+    font-weight: $font-weight-medium;
+    color: $color-text-light;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+
+  // ========================================
+  // CTA
+  // ========================================
+  &__cta {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+
+    @include respond-to(lg) {
+      justify-content: center;
+    }
+
+    @include respond-to(sm) {
+      flex-direction: column;
       align-items: center;
     }
   }
 
-  &__badge {
-    display: inline-block;
-    padding: $spacing-2xs $spacing-md;
-    background-color: rgba($color-secondary, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba($color-secondary, 0.2);
-    border-radius: $radius-pill;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
-    letter-spacing: $letter-spacing-wide;
-    text-transform: uppercase;
-    color: $color-secondary-dark;
-    width: fit-content;
-
-    @include respond-to(lg) {
-      margin: 0 auto;
-    }
-  }
-
-  &__title {
-    font-family: $font-primary;
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    line-height: $line-height-tight;
-    letter-spacing: $letter-spacing-tight;
-    color: $color-text;
-    margin: 0;
-
-    @include respond-to(lg) {
-      font-size: $font-size-2xl;
-    }
-
-    @include respond-to(md) {
-      font-size: $font-size-xl;
-    }
-  }
-
-  &__title-accent {
-    display: block;
-    color: $color-secondary;
-    font-style: italic;
-    margin-top: $spacing-xs;
-  }
-
-  &__subtitle {
-    font-family: $font-secondary;
-    font-size: $font-size-sm;
-    line-height: $line-height-normal;
-    color: $color-text-light;
-    margin: 0;
-    max-width: 480px;
-
-    @include respond-to(lg) {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    @include respond-to(md) {
-      font-size: $font-size-sm;
-    }
-  }
-
-  // ========================================
-  // CALL-TO-ACTION BUTTONS
-  // ========================================
-  &__actions {
-    display: flex;
-    gap: $spacing-md;
-    margin-top: $spacing-xs;
-
-    @include respond-to(md) {
-      flex-direction: column;
-      width: 100%;
-      max-width: 350px;
-      margin: $spacing-xs auto 0;
-    }
-  }
-
-  &__button {
-    font-size: $font-size-sm;
-    padding: $spacing-md $spacing-xl;
-    border-radius: $radius-md;
-    font-weight: $font-weight-semibold;
-    transition: all 0.3s ease;
-    text-decoration: none;
+  &__btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: $radius-md;
     font-family: $font-secondary;
-    letter-spacing: 0.02em;
+    font-size: 14px;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
 
-    @include respond-to(md) {
+    @include respond-to(sm) {
       width: 100%;
-      justify-content: center;
+      max-width: 280px;
     }
 
     &--primary {
-      background-color: $color-secondary !important;
-      color: $color-white !important;
-      border: 2px solid $color-secondary;
+      background: $color-secondary;
+      color: $color-white;
+      border: none;
+
+      &:hover {
+        background: $color-secondary-dark;
+        transform: translateY(-2px);
+
+        .Hero__btn-arrow {
+          transform: translateX(4px);
+        }
+      }
     }
 
     &--secondary {
-      background-color: transparent !important;
-      color: $color-secondary !important;
+      background: transparent;
+      color: $color-secondary;
       border: 2px solid $color-secondary;
+
+      &:hover {
+        background: rgba($color-secondary, 0.05);
+      }
     }
   }
 
+  &__btn-arrow {
+    transition: transform 0.3s ease;
+  }
+
   // ========================================
-  // TRUST INDICATORS
+  // TRUST
   // ========================================
-  &__trust-indicators {
+  &__trust {
     display: flex;
-    gap: $spacing-md;
-    margin-top: $spacing-md;
+    gap: $spacing-lg;
 
     @include respond-to(lg) {
       justify-content: center;
     }
 
-    @include respond-to(md) {
-      flex-direction: column;
-      gap: $spacing-sm;
-      align-items: center;
+    @include respond-to(sm) {
+      flex-wrap: wrap;
+      gap: $spacing-md;
     }
   }
 
   &__trust-item {
     display: flex;
     align-items: center;
-    gap: $spacing-xs;
-  }
-
-  &__trust-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    background-color: rgba($color-secondary, 0.2);
-    border-radius: $radius-round;
-    font-size: 10px;
-    font-weight: $font-weight-bold;
-    color: $color-secondary;
-  }
-
-  &__trust-text {
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
-    color: $color-text;
-    white-space: nowrap;
-
-    @include respond-to(md) {
-      white-space: normal;
-    }
-  }
-
-  // ========================================
-  // IMAGE SECTION
-  // ========================================
-  &__image-wrapper {
-    position: relative;
-
-    @include respond-to(lg) {
-      max-width: 600px;
-      margin: 0 auto;
-      width: 100%;
-    }
-  }
-
-  &__image-container {
-    position: relative;
-    border-radius: $radius-xl;
-    overflow: hidden;
-    box-shadow: $shadow-lg;
-    border: 2px solid rgba($color-secondary, 0.1);
-  }
-
-  &__image {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    display: block;
-  }
-
-  &__image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba($color-primary, 0.1) 0%,
-      transparent 50%,
-      rgba($color-secondary, 0.1) 100%
-    );
-    pointer-events: none;
-  }
-
-  // ========================================
-  // FLOATING STATS CARD
-  // ========================================
-  &__stats-card {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: $spacing-lg;
-    background: rgba($color-white, 0.98);
-    backdrop-filter: blur(20px);
-    padding: $spacing-md $spacing-xl;
-    border-radius: $radius-lg;
-    box-shadow: $shadow-xl;
-    border: 1px solid rgba($color-primary, 0.1);
-    z-index: $z-base;
-
-    @include respond-to(md) {
-      position: relative;
-      bottom: auto;
-      left: auto;
-      transform: none;
-      margin-top: $spacing-xl;
-      flex-direction: column;
-      gap: $spacing-md;
-      padding: $spacing-lg;
-    }
-  }
-
-  &__stat {
-    @include flex-column-center;
-    gap: $spacing-2xs;
-    padding: 0 $spacing-sm;
-    border-right: 1px solid rgba($color-primary, 0.15);
-
-    &:last-child {
-      border-right: none;
-    }
-
-    @include respond-to(md) {
-      flex-direction: row;
-      justify-content: center;
-      border-right: none;
-      border-bottom: 1px solid rgba($color-primary, 0.15);
-      padding: $spacing-sm 0;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
-
-  &__stat-number {
-    font-family: $font-primary;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
-    color: $color-secondary;
-    line-height: 1;
-
-    @include respond-to(md) {
-      font-size: $font-size-xl;
-      margin-right: $spacing-xs;
-    }
-  }
-
-  &__stat-label {
+    gap: 6px;
     font-family: $font-secondary;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
+    font-size: 12px;
     color: $color-text-light;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: $letter-spacing-wide;
-    white-space: nowrap;
 
-    @include respond-to(md) {
-      text-align: left;
-      font-size: $font-size-sm;
+    svg {
+      color: $color-secondary;
+      font-size: 14px;
     }
   }
 }
