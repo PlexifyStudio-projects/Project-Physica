@@ -12,8 +12,10 @@ import {
   LuArrowRight,
   LuSparkles,
   LuCircleCheck,
-  LuCalendar
+  LuCalendar,
+  LuMessageCircle
 } from 'react-icons/lu';
+import { FaWhatsapp } from 'react-icons/fa';
 import './Services.scss';
 
 function Services() {
@@ -180,10 +182,16 @@ function Services() {
                 ))}
               </div>
 
-              <Link to={`/services#${featuredService.id}`} className="Services__featured-btn">
-                <span>Learn More</span>
+              <a
+                href={`https://wa.me/19491234567?text=${encodeURIComponent(`Hello! I'm interested in learning more about your ${featuredService.title} services. Can we schedule a consultation?`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="Services__featured-btn"
+              >
+                <FaWhatsapp />
+                <span>Interested? Let's Talk</span>
                 <LuArrowRight />
-              </Link>
+              </a>
             </div>
 
             {/* Stats Row */}

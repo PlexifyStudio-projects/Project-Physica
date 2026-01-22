@@ -253,27 +253,32 @@
   &__featured-btn {
     display: inline-flex;
     align-items: center;
-    gap: $spacing-sm;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+    gap: 10px;
+    padding: 16px 28px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     color: $color-white;
     border-radius: $radius-lg;
     font-family: $font-secondary;
     font-size: 14px;
     font-weight: $font-weight-semibold;
     text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba($color-secondary, 0.3);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 8px 24px rgba(#25D366, 0.35);
 
     svg {
+      font-size: 20px;
       transition: transform 0.3s ease;
+
+      &:first-child {
+        font-size: 22px;
+      }
     }
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba($color-secondary, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(#25D366, 0.45);
 
-      svg {
+      svg:last-child {
         transform: translateX(4px);
       }
     }
