@@ -38,14 +38,14 @@ function Header() {
   ];
 
   const servicesSubmenu = [
-    { label: 'Sports Rehabilitation', icon: LuActivity },
-    { label: 'Orthopedic Therapy', icon: LuTarget },
-    { label: 'Manual Therapy', icon: LuUsers },
-    { label: 'Neurological Rehab', icon: LuBrain },
-    { label: 'Chronic Pain Management', icon: LuShield },
-    { label: 'Geriatric Therapy', icon: LuHeart },
-    { label: 'Post-Surgical Rehab', icon: LuClock },
-    { label: 'Vestibular & Balance', icon: LuZap }
+    { label: 'Sports Rehabilitation', icon: LuActivity, id: 'sports-rehabilitation' },
+    { label: 'Orthopedic Therapy', icon: LuTarget, id: 'orthopedic-therapy' },
+    { label: 'Manual Therapy', icon: LuUsers, id: 'manual-therapy' },
+    { label: 'Neurological Rehab', icon: LuBrain, id: 'neurological-rehab' },
+    { label: 'Pain Management', icon: LuShield, id: 'chronic-pain' },
+    { label: 'Geriatric Therapy', icon: LuHeart, id: 'geriatric-therapy' },
+    { label: 'Post-Surgical Rehab', icon: LuClock, id: 'post-surgical' },
+    { label: 'Vestibular & Balance', icon: LuZap, id: 'vestibular' }
   ];
 
   const contactSubmenu = [
@@ -114,7 +114,7 @@ function Header() {
                             return (
                               <Link
                                 key={index}
-                                to="/services"
+                                to={`/services?service=${service.id}`}
                                 className="Header__dropdown-item"
                               >
                                 <ServiceIcon className="Header__dropdown-icon" />

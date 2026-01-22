@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   LuActivity,
   LuHeart,
@@ -20,24 +20,9 @@ function Services() {
   const [activeService, setActiveService] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const location = useLocation();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
+  // Services data
   const services = [
     {
       id: 'sports-rehabilitation',
@@ -112,6 +97,36 @@ function Services() {
       color: '#5B8A72'
     }
   ];
+
+  // Read URL parameter and set active service
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const serviceId = params.get('service');
+
+    if (serviceId) {
+      const serviceIndex = services.findIndex(s => s.id === serviceId);
+      if (serviceIndex !== -1) {
+        setActiveService(serviceIndex);
+      }
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const featuredService = services[activeService];
   const FeaturedIcon = featuredService.Icon;
