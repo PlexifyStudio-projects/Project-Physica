@@ -1,0 +1,15 @@
+{
+  "short_name": "Physica Inc",
+  "name": "Physica Inc - Medical Clinic",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#5F6F52",
+  "background_color": "#F5F3E8"
+}
