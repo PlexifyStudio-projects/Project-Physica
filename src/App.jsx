@@ -16,7 +16,7 @@ import './styles/App.scss';
 
 function App() {
   return (
-    <Router basename="/PhysicaInc">
+    <Router basename="/Project-Physica">
       <ScrollToTop />
       <div className="App">
         <Logo />

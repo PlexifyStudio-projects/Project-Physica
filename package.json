@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Professional clinic website for Physica Inc",
   "private": true,
-  "homepage": "https://LJ-Nava.github.io/PhysicaInc",
+  "homepage": "https://plexifystudio-projects.github.io/Project-Physica",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
