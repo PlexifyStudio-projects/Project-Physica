@@ -77,11 +77,13 @@ $hero-ease: cubic-bezier(0.23, 1, 0.32, 1);
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
+    align-items: start;
+    padding-top: 50px;
     max-width: 1440px;
     margin: 0 auto;
     width: 100%;
-    padding: 72px 260px 0 $spacing-4xl;
+    padding-left: $spacing-4xl;
+    padding-right: 260px;
     gap: $spacing-3xl;
 
     @include respond-to(xl) {
