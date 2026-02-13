@@ -1,0 +1,319 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+// Premium easing
+$ease-premium: cubic-bezier(0.23, 1, 0.32, 1);
+
+.CTABanner {
+  position: relative;
+  width: 100%;
+  padding: $spacing-5xl 0;
+  background: linear-gradient(
+    135deg,
+    $color-secondary 0%,
+    $color-secondary-dark 35%,
+    darken($color-secondary-dark, 5%) 70%,
+    darken($color-secondary-dark, 3%) 100%
+  );
+  overflow: hidden;
+
+  @include respond-to(md) {
+    padding: $spacing-4xl 0;
+  }
+
+  // Subtle diagonal-line pattern overlay
+  &__pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      rgba($color-white, 1) 8px,
+      rgba($color-white, 1) 9px
+    );
+    pointer-events: none;
+  }
+
+  // Animated gradient orbs
+  &__accent {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform;
+
+    &--left {
+      top: -140px;
+      left: -100px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(
+        circle,
+        rgba($color-white, 0.07) 0%,
+        rgba($color-accent, 0.03) 40%,
+        transparent 70%
+      );
+      animation: ctaOrbFloat 8s ease-in-out infinite;
+    }
+
+    &--right {
+      bottom: -120px;
+      right: 60px;
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(
+        circle,
+        rgba($color-accent, 0.06) 0%,
+        rgba($color-white, 0.03) 45%,
+        transparent 70%
+      );
+      animation: ctaOrbFloat 10s ease-in-out 2s infinite reverse;
+    }
+  }
+
+  // Shimmer / scan line animation across the section
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($color-white, 0.02) 30%,
+      rgba($color-white, 0.04) 50%,
+      rgba($color-white, 0.02) 70%,
+      transparent 100%
+    );
+    animation: ctaScanLine 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Subtle mesh gradient layer
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba($color-white, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba($color-accent, 0.04) 0%, transparent 40%),
+      radial-gradient(ellipse at 60% 80%, rgba($color-white, 0.02) 0%, transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Container with sidebar-aware padding
+  &__container {
+    @include container;
+    position: relative;
+    z-index: $z-base;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-3xl;
+    padding-right: 240px;
+
+    @include respond-to(xl) {
+      padding-right: 220px;
+    }
+
+    @include respond-to(lg) {
+      padding-right: $spacing-xl;
+    }
+
+    @include respond-to(md) {
+      flex-direction: column;
+      text-align: center;
+      gap: $spacing-xl;
+      padding-right: $spacing-lg;
+    }
+  }
+
+  // Text content block
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__heading {
+    font-family: $font-primary;
+    font-size: clamp($font-size-xl, 3vw, $font-size-3xl);
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    letter-spacing: -0.02em;
+    color: $color-white;
+    margin: 0 0 $spacing-sm;
+
+    @include respond-to(md) {
+      font-size: $font-size-xl;
+    }
+
+    @include respond-to(sm) {
+      font-size: $font-size-lg;
+    }
+  }
+
+  &__heading-accent {
+    font-style: italic;
+    font-family: $font-accent;
+    color: $color-accent;
+    position: relative;
+  }
+
+  &__subtext {
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    font-weight: $font-weight-regular;
+    line-height: $line-height-relaxed;
+    color: rgba($color-white, 0.78);
+    margin: 0;
+    max-width: 520px;
+
+    @include respond-to(md) {
+      font-size: $font-size-base;
+      max-width: none;
+    }
+  }
+
+  // CTA button - glass morphism effect
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md $spacing-2xl;
+    background: rgba($color-white, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: $color-white;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    line-height: 1;
+    text-decoration: none;
+    border: 1px solid rgba($color-white, 0.2);
+    border-radius: $radius-pill;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba($color-white, 0.1);
+    transition:
+      transform 0.5s $ease-premium,
+      box-shadow 0.5s $ease-premium,
+      background-color 0.4s $ease-premium,
+      border-color 0.4s $ease-premium;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+
+    // Internal shimmer on hover
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.12) 50%,
+        transparent 100%
+      );
+      transition: left 0.5s $ease-premium;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      background: rgba($color-white, 0.22);
+      border-color: rgba($color-white, 0.3);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 48px rgba($color-white, 0.06),
+        inset 0 1px 0 rgba($color-white, 0.15);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba($color-white, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-white;
+      outline-offset: 3px;
+    }
+
+    @include respond-to(md) {
+      padding: $spacing-sm $spacing-xl;
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__button-icon {
+    font-size: 1.15em;
+    flex-shrink: 0;
+  }
+
+  &__button-text {
+    letter-spacing: $letter-spacing-wide;
+  }
+
+  &__button-arrow {
+    font-size: 1em;
+    flex-shrink: 0;
+    transition: transform 0.4s $ease-premium;
+
+    .CTABanner__button:hover & {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// ========================================
+// CTA BANNER ANIMATIONS
+// ========================================
+
+// Floating orb movement
+@keyframes ctaOrbFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(15px, -20px) scale(1.05);
+  }
+  50% {
+    transform: translate(-10px, 10px) scale(0.97);
+  }
+  75% {
+    transform: translate(20px, 15px) scale(1.03);
+  }
+}
+
+// Scan line sweep
+@keyframes ctaScanLine {
+  0% {
+    left: -50%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}

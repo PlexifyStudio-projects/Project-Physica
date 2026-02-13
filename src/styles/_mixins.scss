@@ -274,6 +274,23 @@
   }
 }
 
+@mixin sidebar-aware-container {
+  @include container;
+  padding-right: 240px;
+
+  @include respond-to(xl) {
+    padding-right: 220px;
+  }
+
+  @include respond-to(lg) {
+    padding-right: $spacing-xl;
+  }
+
+  @include respond-to(md) {
+    padding-right: $spacing-lg;
+  }
+}
+
 // ========================================
 // SMOOTH ANIMATIONS
 // ========================================

@@ -1,10 +1,2 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
-
-.AboutPage {
-  padding-top: $spacing-4xl;
-
-  @include respond-to(md) {
-    padding-top: $spacing-3xl;
-  }
-}
+// AboutPage — composition page, no additional styles needed.
+// All sections use their own BEM namespaced styles.

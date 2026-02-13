@@ -1,291 +1,216 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+$hero-ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+// ========================================
+// HERO - Full viewport, two-column layout
+// ========================================
 .Hero {
   position: relative;
   height: 100vh;
-  width: 100%;
+  height: 100dvh;
   display: flex;
-  align-items: center;
-  background: $color-bg-primary;
+  flex-direction: column;
   overflow: hidden;
 
+  @include respond-to(lg) {
+    height: 100vh;
+    height: 100dvh;
+  }
+
   // ========================================
-  // BACKGROUND IMAGE
+  // BACKGROUND
   // ========================================
   &__bg {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-
-    @include respond-to(lg) {
-      width: 100%;
-      opacity: 0.15;
-    }
-  }
-
-  &__bg-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  &__bg-overlay {
-    position: absolute;
     inset: 0;
     background: linear-gradient(
-      to right,
+      155deg,
       $color-bg-primary 0%,
-      rgba($color-bg-primary, 0.8) 30%,
-      rgba($color-bg-primary, 0.2) 70%,
-      transparent 100%
+      $color-bg-secondary 40%,
+      $color-bg-accent 100%
     );
-
-    @include respond-to(lg) {
-      background: rgba($color-bg-primary, 0.5);
-    }
+    z-index: 0;
   }
 
-  // ========================================
-  // FLOATING CARDS
-  // ========================================
-  &__cards {
+  &__bg-grain {
     position: absolute;
     inset: 0;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 2;
-
-    @include respond-to(lg) {
-      display: none;
-    }
   }
 
-  &__card {
+  &__bg-orb {
     position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    background: rgba($color-white, 0.95);
-    backdrop-filter: blur(12px);
-    border-radius: $radius-lg;
-    box-shadow: 0 8px 32px rgba($color-black, 0.1);
-    pointer-events: auto;
-    animation: cardFloat 4s ease-in-out infinite;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    will-change: transform;
 
     &--1 {
-      top: 15%;
-      left: 8%;
-      animation-delay: 0s;
+      top: -5%;
+      right: 5%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba($color-secondary, 0.08) 0%, transparent 70%);
+      animation: heroOrb1 24s ease-in-out infinite;
     }
 
     &--2 {
-      top: 35%;
-      right: 25%;
-      animation-delay: 0.5s;
+      bottom: 0;
+      left: 10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba($color-accent, 0.1) 0%, transparent 70%);
+      animation: heroOrb2 20s ease-in-out infinite;
     }
-
-    &--3 {
-      bottom: 35%;
-      left: 5%;
-      animation-delay: 1s;
-    }
-
-    &--4 {
-      bottom: 15%;
-      right: 20%;
-      animation-delay: 1.5s;
-    }
-  }
-
-  @keyframes cardFloat {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-
-  &__card-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba($color-secondary, 0.1);
-    border-radius: $radius-md;
-    color: $color-secondary;
-    font-size: 18px;
-
-    &--accent {
-      background: $color-secondary;
-      color: $color-white;
-    }
-  }
-
-  &__card-text {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  &__card-title {
-    font-family: $font-secondary;
-    font-size: 14px;
-    font-weight: $font-weight-semibold;
-    color: $color-text;
-  }
-
-  &__card-desc {
-    font-family: $font-secondary;
-    font-size: 11px;
-    color: $color-text-light;
   }
 
   // ========================================
-  // WRAPPER
+  // CONTAINER - Two columns
   // ========================================
-  &__wrapper {
+  &__container {
     position: relative;
     z-index: 1;
-    width: 100%;
-    max-width: 1400px;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 $spacing-xl;
-    padding-right: 240px;
+    width: 100%;
+    padding: 72px 260px 0 $spacing-4xl;
+    gap: $spacing-3xl;
 
     @include respond-to(xl) {
-      padding-right: 220px;
+      padding-right: 240px;
+      padding-left: $spacing-3xl;
     }
 
     @include respond-to(lg) {
-      padding-right: $spacing-xl;
+      grid-template-columns: 1fr;
+      padding: 72px $spacing-xl 0;
+      gap: $spacing-md;
+      text-align: center;
+      align-items: center;
+      justify-items: center;
     }
 
     @include respond-to(md) {
-      padding: 0 $spacing-lg;
+      padding: 72px $spacing-lg 0;
     }
   }
 
   // ========================================
-  // MAIN CONTENT
+  // CONTENT
   // ========================================
-  &__main {
-    max-width: 540px;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
     @include respond-to(lg) {
-      max-width: 100%;
-      text-align: center;
+      align-items: center;
     }
   }
 
-  // ========================================
-  // LABEL
-  // ========================================
-  &__label {
-    display: inline-block;
-    padding: 8px 16px;
-    background: rgba($color-secondary, 0.08);
+  // Badge
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: 8px 18px;
+    background: rgba($color-secondary, 0.06);
+    border: 1px solid rgba($color-secondary, 0.1);
     border-radius: $radius-pill;
     font-family: $font-secondary;
-    font-size: 12px;
+    font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     color: $color-secondary;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
     margin-bottom: $spacing-lg;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    animation: heroFadeUp 0.7s $hero-ease 0.1s forwards;
+
+    svg { font-size: 13px; opacity: 0.8; }
+
+    @include respond-to(lg) {
+      margin-bottom: $spacing-md;
+    }
   }
 
-  // ========================================
-  // HEADING
-  // ========================================
+  // Heading
   &__heading {
     font-family: $font-primary;
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(2.2rem, 4.8vw, 3.8rem);
     font-weight: $font-weight-bold;
-    line-height: 1.15;
+    line-height: 1.1;
     color: $color-text;
-    margin: 0 0 $spacing-md;
+    margin: 0 0 $spacing-lg;
+    letter-spacing: -0.03em;
+    opacity: 0;
+    animation: heroFadeUp 0.8s $hero-ease 0.2s forwards;
+
+    @include respond-to(md) {
+      font-size: clamp(2rem, 8vw, 2.8rem);
+    }
+  }
+
+  &__heading-line {
+    display: block;
   }
 
   &__heading-accent {
     color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, $color-secondary, rgba($color-secondary-light, 0.3));
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: heroLineReveal 0.6s $hero-ease 0.9s forwards;
+    }
   }
 
-  // ========================================
-  // TEXT
-  // ========================================
+  // Text
   &__text {
     font-family: $font-secondary;
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: clamp($font-size-sm, 1.5vw, $font-size-base);
+    line-height: 1.8;
     color: $color-text-light;
     margin: 0 0 $spacing-xl;
-    max-width: 440px;
+    max-width: 480px;
+    opacity: 0;
+    animation: heroFadeUp 0.8s $hero-ease 0.35s forwards;
 
     @include respond-to(lg) {
-      max-width: 100%;
-      margin: 0 auto $spacing-xl;
+      max-width: 540px;
     }
   }
 
-  // ========================================
-  // STATS
-  // ========================================
-  &__stats {
-    display: flex;
-    gap: $spacing-2xl;
-    margin-bottom: $spacing-xl;
-
-    @include respond-to(lg) {
-      justify-content: center;
-    }
-
-    @include respond-to(sm) {
-      gap: $spacing-lg;
-    }
-  }
-
-  &__stat {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__stat-value {
-    font-family: $font-primary;
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: $font-weight-bold;
-    color: $color-secondary;
-    line-height: 1;
-  }
-
-  &__stat-name {
-    font-family: $font-secondary;
-    font-size: 11px;
-    font-weight: $font-weight-medium;
-    color: $color-text-light;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 4px;
-  }
-
-  // ========================================
   // CTA
-  // ========================================
   &__cta {
     display: flex;
     gap: $spacing-md;
-    margin-bottom: $spacing-xl;
-
-    @include respond-to(lg) {
-      justify-content: center;
-    }
+    opacity: 0;
+    animation: heroFadeUp 0.8s $hero-ease 0.5s forwards;
 
     @include respond-to(sm) {
       flex-direction: column;
-      align-items: center;
+      width: 100%;
+      max-width: 320px;
     }
   }
 
@@ -293,79 +218,337 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 14px 24px;
-    border-radius: $radius-md;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: $radius-lg;
     font-family: $font-secondary;
-    font-size: 14px;
+    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     text-decoration: none;
-    transition: all 0.3s ease;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.45s $hero-ease;
+    letter-spacing: 0.01em;
 
     @include respond-to(sm) {
       width: 100%;
-      max-width: 280px;
+      padding: 14px 24px;
     }
 
     &--primary {
-      background: $color-secondary;
+      background: linear-gradient(135deg, $color-secondary, $color-secondary-dark);
       color: $color-white;
       border: none;
+      box-shadow: 0 4px 20px rgba($color-secondary, 0.3);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(105deg, transparent 30%, rgba($color-white, 0.2) 50%, transparent 70%);
+        transition: left 0.5s $hero-ease;
+      }
 
       &:hover {
-        background: $color-secondary-dark;
         transform: translateY(-2px);
-
-        .Hero__btn-arrow {
-          transform: translateX(4px);
-        }
+        box-shadow: 0 8px 32px rgba($color-secondary, 0.4);
+        color: $color-white;
+        &::before { left: 100%; }
+        .Hero__btn-arrow { transform: translateX(4px); }
       }
+
+      &:active { transform: translateY(0); }
     }
 
     &--secondary {
-      background: transparent;
+      background: rgba($color-white, 0.7);
       color: $color-secondary;
-      border: 2px solid $color-secondary;
+      border: 1px solid rgba($color-secondary, 0.12);
+      backdrop-filter: blur(12px);
 
       &:hover {
-        background: rgba($color-secondary, 0.05);
+        background: rgba($color-white, 0.95);
+        border-color: rgba($color-secondary, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba($color-secondary, 0.1);
+        .Hero__btn-arrow { transform: translateX(4px); }
       }
+
+      &:active { transform: translateY(0); }
     }
   }
 
   &__btn-arrow {
-    transition: transform 0.3s ease;
+    font-size: 15px;
+    transition: transform 0.35s $hero-ease;
+    flex-shrink: 0;
   }
 
   // ========================================
-  // TRUST
+  // VISUAL / IMAGE SIDE
   // ========================================
-  &__trust {
+  &__visual {
+    position: relative;
+    align-self: stretch;
     display: flex;
-    gap: $spacing-lg;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: heroImageIn 1s $hero-ease 0.3s forwards;
 
     @include respond-to(lg) {
-      justify-content: center;
+      display: none;
+    }
+  }
+
+  &__image-frame {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    box-shadow:
+      0 24px 64px rgba($color-secondary-dark, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba($color-white, 0.1) inset;
+    aspect-ratio: 4 / 5;
+
+    // Glass overlay
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(
+        175deg,
+        rgba($color-white, 0.08) 0%,
+        transparent 35%,
+        transparent 65%,
+        rgba($color-secondary-dark, 0.12) 100%
+      );
+      pointer-events: none;
+    }
+
+    // Inner border
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      z-index: 3;
+      border: 1px solid rgba($color-white, 0.12);
+      border-radius: calc(#{$radius-2xl} - 6px);
+      pointer-events: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 8s $hero-ease;
+    }
+
+    &:hover img {
+      transform: scale(1.06);
+    }
+  }
+
+  // Floating stats card
+  &__stats-card {
+    position: absolute;
+    bottom: $spacing-xl;
+    left: -$spacing-xl;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    padding: $spacing-lg $spacing-xl;
+    background: rgba($color-white, 0.92);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-radius: $radius-xl;
+    border: 1px solid rgba($color-white, 0.6);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.1),
+      0 4px 12px rgba($color-secondary, 0.06);
+    z-index: 4;
+    opacity: 0;
+    animation: heroStatsIn 0.8s $hero-ease 0.8s forwards;
+
+    @include respond-to(xl) {
+      left: -$spacing-md;
+    }
+
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xs;
+  }
+
+  &__stat-number {
+    font-family: $font-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  &__stat-label {
+    font-family: $font-secondary;
+    font-size: 11px;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  &__stat-divider {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba($color-secondary, 0.15),
+      transparent
+    );
+  }
+
+  // ========================================
+  // TRUST BAR - Bottom anchored
+  // ========================================
+  &__trust-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-2xl;
+    padding: $spacing-md $spacing-2xl;
+    border-top: 1px solid rgba($color-secondary, 0.06);
+    opacity: 0;
+    animation: heroFadeUp 0.7s $hero-ease 0.65s forwards;
+
+    @include respond-to(md) {
+      gap: $spacing-lg;
+      padding: $spacing-md $spacing-lg;
     }
 
     @include respond-to(sm) {
-      flex-wrap: wrap;
       gap: $spacing-md;
+      flex-wrap: wrap;
     }
   }
 
   &__trust-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-family: $font-secondary;
-    font-size: 12px;
-    color: $color-text-light;
+    gap: $spacing-sm;
 
-    svg {
-      color: $color-secondary;
-      font-size: 14px;
+    span {
+      font-family: $font-secondary;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+      color: $color-text-light;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
     }
+  }
+
+  &__trust-icon {
+    font-size: 16px;
+    color: $color-secondary;
+    flex-shrink: 0;
+  }
+
+  &__trust-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba($color-secondary, 0.2);
+
+    @include respond-to(sm) {
+      display: none;
+    }
+  }
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes heroFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes heroImageIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes heroStatsIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes heroLineReveal {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes heroOrb1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -20px) scale(1.05); }
+  }
+
+  @keyframes heroOrb2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-20px, -25px) scale(1.04); }
+  }
+
+  // ========================================
+  // REDUCED MOTION
+  // ========================================
+  @media (prefers-reduced-motion: reduce) {
+    &__badge,
+    &__heading,
+    &__text,
+    &__cta,
+    &__visual,
+    &__stats-card,
+    &__trust-bar {
+      opacity: 1 !important;
+      animation: none !important;
+      transform: none !important;
+    }
+
+    &__heading-accent::after {
+      transform: scaleX(1) !important;
+      animation: none !important;
+    }
+
+    &__bg-orb { animation: none !important; }
   }
 }

@@ -1,0 +1,474 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.InsuranceSection {
+  @include section-spacing;
+  position: relative;
+  background: $color-bg-secondary;
+  overflow: hidden;
+
+  // Decorative gradient mesh - top right
+  &::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-secondary, 0.04) 0%,
+      rgba($color-secondary, 0.015) 35%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
+  // Decorative gradient mesh - bottom left
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -180px;
+    left: -100px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-accent, 0.035) 0%,
+      rgba($color-accent, 0.01) 40%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  // ========================================
+  // HEADER
+  // ========================================
+  &__header {
+    max-width: 600px;
+    margin-bottom: $spacing-4xl;
+    opacity: 0;
+    transform: translateY(40px);
+
+    .InsuranceSection--visible & {
+      animation: insuranceReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+  }
+
+  &__indicator {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__indicator-line {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-secondary, $color-secondary-light);
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  &__indicator-label {
+    font-family: $font-secondary;
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    font-weight: $font-weight-bold;
+    line-height: 1.1;
+    color: $color-text;
+    margin: 0 0 $spacing-lg;
+    letter-spacing: -0.02em;
+  }
+
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+  }
+
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    line-height: $line-height-relaxed;
+    color: $color-text-light;
+    margin: 0;
+    max-width: $max-width-prose;
+  }
+
+  // ========================================
+  // CARDS GRID
+  // ========================================
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-xl;
+    margin-bottom: $spacing-4xl;
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
+    }
+
+    @include respond-to(sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ========================================
+  // CARD - Premium glassmorphism + entrance animation
+  // ========================================
+  &__card {
+    position: relative;
+    background: $color-white;
+    border: 1px solid rgba($color-secondary, 0.06);
+    border-radius: $radius-2xl;
+    padding: $spacing-3xl $spacing-2xl $spacing-2xl;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.02),
+      0 4px 12px rgba($color-secondary, 0.03),
+      0 8px 28px rgba($color-secondary, 0.04);
+    transition: all 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+
+    .InsuranceSection--visible & {
+      animation: insuranceCardReveal 0.75s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    // Top accent line reveal
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: $spacing-2xl;
+      right: $spacing-2xl;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        $color-secondary,
+        $color-secondary-light,
+        rgba($color-secondary, 0.15)
+      );
+      border-radius: 0 0 $radius-sm $radius-sm;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    // Glass overlay for hover
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: $radius-2xl;
+      background: linear-gradient(
+        135deg,
+        rgba($color-white, 0.5) 0%,
+        rgba($color-white, 0.1) 50%,
+        rgba($color-secondary, 0.03) 100%
+      );
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    &:hover {
+      transform: translateY(-10px) scale(1);
+      box-shadow:
+        0 4px 8px rgba($color-secondary, 0.04),
+        0 12px 28px rgba($color-secondary, 0.08),
+        0 24px 56px rgba($color-secondary, 0.12),
+        inset 0 1px 0 rgba($color-white, 0.8);
+      border-color: rgba($color-secondary, 0.14);
+
+      &::before {
+        transform: scaleX(1);
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    > * {
+      position: relative;
+      z-index: $z-base;
+    }
+  }
+
+  // ========================================
+  // CARD ICON - Ring/border pulse on hover
+  // ========================================
+  &__card-icon {
+    width: 58px;
+    height: 58px;
+    @include flex-center;
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.1) 0%,
+      rgba($color-secondary, 0.03) 100%
+    );
+    border-radius: $radius-xl;
+    color: $color-secondary;
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-xl;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+
+    // Outer ring that pulses on hover
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: calc(#{$radius-xl} + 4px);
+      border: 2px solid rgba($color-secondary, 0);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    // Inner gradient fill on hover
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        135deg,
+        $color-secondary-light 0%,
+        $color-secondary 50%,
+        $color-secondary-dark 100%
+      );
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .InsuranceSection__card:hover & {
+      color: $color-white;
+      transform: scale(1.08);
+      box-shadow: 0 4px 20px rgba($color-secondary, 0.3);
+
+      &::before {
+        border-color: rgba($color-secondary, 0.25);
+        animation: insurancePulseRing 1.5s ease-in-out infinite;
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__card-title {
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0 0 $spacing-sm;
+    line-height: $line-height-tight;
+    letter-spacing: -0.01em;
+    transition: color 0.35s ease;
+
+    .InsuranceSection__card:hover & {
+      color: $color-secondary-dark;
+    }
+  }
+
+  &__card-text {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    line-height: 1.85;
+    margin: 0;
+  }
+
+  // ========================================
+  // CTA - More visually impactful
+  // ========================================
+  &__cta {
+    @include flex-center;
+    flex-wrap: wrap;
+    gap: $spacing-2xl;
+    margin-bottom: $spacing-3xl;
+    padding: $spacing-2xl $spacing-3xl;
+    background: rgba($color-secondary, 0.03);
+    border-radius: $radius-2xl;
+    border: 1px solid rgba($color-secondary, 0.06);
+    opacity: 0;
+    transform: translateY(20px);
+
+    .InsuranceSection--visible & {
+      animation: insuranceReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.7s forwards;
+    }
+
+    @include respond-to(sm) {
+      flex-direction: column;
+      gap: $spacing-lg;
+      padding: $spacing-xl;
+    }
+  }
+
+  &__cta-text {
+    font-family: $font-primary;
+    font-size: clamp($font-size-lg, 2.5vw, $font-size-xl);
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  &__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-lg $spacing-3xl;
+    background: $color-secondary;
+    color: $color-white;
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow:
+      0 4px 16px rgba($color-secondary, 0.25),
+      0 8px 32px rgba($color-secondary, 0.1);
+    position: relative;
+    overflow: hidden;
+
+    // Shimmer effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.15) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s ease;
+    }
+
+    svg {
+      font-size: $font-size-lg;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: $color-secondary-dark;
+      transform: translateY(-3px);
+      box-shadow:
+        0 8px 24px rgba($color-secondary, 0.3),
+        0 16px 48px rgba($color-secondary, 0.15);
+      color: $color-white;
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+
+  // ========================================
+  // NOTE - Decorative line before it
+  // ========================================
+  &__note {
+    text-align: center;
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    margin: 0;
+    font-style: italic;
+    opacity: 0;
+    position: relative;
+    padding-top: $spacing-lg;
+
+    // Decorative centered line above
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba($color-secondary, 0.25),
+        transparent
+      );
+    }
+
+    .InsuranceSection--visible & {
+      animation: insuranceReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.9s forwards;
+    }
+  }
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes insuranceReveal {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes insuranceCardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes insurancePulseRing {
+    0%, 100% {
+      border-color: rgba($color-secondary, 0.25);
+      transform: scale(1);
+    }
+    50% {
+      border-color: rgba($color-secondary, 0.1);
+      transform: scale(1.06);
+    }
+  }
+}

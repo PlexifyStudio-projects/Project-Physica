@@ -1,0 +1,17 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.Layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 72px;
+
+  @include respond-to(md) {
+    padding-top: 60px;
+  }
+
+  &__main {
+    flex: 1;
+  }
+}

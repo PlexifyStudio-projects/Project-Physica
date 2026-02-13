@@ -1,0 +1,85 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.PlaceholderImage {
+  position: relative;
+  width: 100%;
+  border-radius: $radius-xl;
+  overflow: hidden;
+
+  &__inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Dot pattern background
+  &__dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image: radial-gradient(circle, currentColor 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+  }
+
+  // Inset decorative frame
+  &__frame {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid currentColor;
+    border-radius: $radius-lg;
+    opacity: 0.15;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    @include flex-column-center;
+    gap: $spacing-sm;
+  }
+
+  &__icon {
+    font-size: 2rem;
+    opacity: 0.4;
+    display: flex;
+  }
+
+  &__label {
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.45;
+  }
+
+  // Variant: default (warm beige)
+  &--default {
+    background: linear-gradient(145deg, $color-primary 0%, $color-primary-dark 100%);
+    color: $color-secondary;
+  }
+
+  // Variant: dark (deep sage)
+  &--dark {
+    background: linear-gradient(145deg, $color-secondary 0%, $color-secondary-dark 100%);
+    color: rgba($color-white, 0.7);
+
+    .PlaceholderImage__label {
+      color: rgba($color-white, 0.5);
+    }
+  }
+
+  // Variant: warm (sand accent)
+  &--warm {
+    background: linear-gradient(145deg, #f0ebe0 0%, $color-accent 100%);
+    color: $color-secondary-dark;
+  }
+
+  // Variant: sage (light sage)
+  &--sage {
+    background: linear-gradient(145deg, #e8ede5 0%, $color-accent-light 100%);
+    color: $color-secondary-dark;
+  }
+}

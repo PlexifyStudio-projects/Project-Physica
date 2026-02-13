@@ -1,0 +1,641 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+// ========================================
+// ABOUT SECTION - World-Class Premium Design
+// ========================================
+.AboutSection {
+  position: relative;
+  padding: $spacing-7xl 0 $spacing-6xl;
+  background: linear-gradient(
+    180deg,
+    $color-bg-primary 0%,
+    rgba($color-primary, 0.3) 100%
+  );
+  overflow: hidden;
+
+  @include respond-to(lg) {
+    padding: $spacing-6xl 0 $spacing-5xl;
+  }
+
+  @include respond-to(md) {
+    padding: $spacing-5xl 0 $spacing-4xl;
+  }
+
+  // Premium background decoration - large elegant circle
+  &__bg-accent {
+    position: absolute;
+    top: -350px;
+    right: -350px;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      rgba($color-secondary, 0.06) 0%,
+      rgba($color-secondary, 0.035) 30%,
+      rgba($color-secondary, 0.015) 55%,
+      transparent 75%
+    );
+    pointer-events: none;
+    z-index: 0;
+
+    // Inner ring for extra depth
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 15%;
+      border-radius: 50%;
+      border: 1px solid rgba($color-secondary, 0.04);
+    }
+
+    @include respond-to(lg) {
+      width: 750px;
+      height: 750px;
+      top: -250px;
+      right: -250px;
+    }
+
+    @include respond-to(md) {
+      width: 500px;
+      height: 500px;
+      top: -180px;
+      right: -180px;
+    }
+  }
+
+  // Secondary decorative circle (bottom-left)
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      rgba($color-accent, 0.04) 0%,
+      rgba($color-accent, 0.02) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+
+    @include respond-to(md) {
+      width: 350px;
+      height: 350px;
+      bottom: -120px;
+      left: -120px;
+    }
+  }
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: 1;
+  }
+
+  // ========================================
+  // INTRO SECTION - Dramatic Typography
+  // ========================================
+  &__intro {
+    margin-bottom: $spacing-6xl;
+    opacity: 0;
+    transform: translateY(50px);
+
+    .AboutSection--visible & {
+      animation: aboutReveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    @include respond-to(md) {
+      margin-bottom: $spacing-5xl;
+    }
+  }
+
+  &__intro-label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-3xl;
+
+    @include respond-to(md) {
+      gap: $spacing-md;
+      margin-bottom: $spacing-2xl;
+    }
+  }
+
+  &__intro-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      $color-secondary 0%,
+      $color-secondary-light 100%
+    );
+    border-radius: $radius-pill;
+    position: relative;
+
+    // Animated shimmer on the line
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.4) 50%,
+        transparent 100%
+      );
+      border-radius: inherit;
+      animation: aboutLineShimmer 3s ease-in-out infinite;
+    }
+
+    @include respond-to(md) {
+      width: 40px;
+    }
+  }
+
+  &__intro-text {
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    line-height: 1;
+
+    @include respond-to(md) {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+  }
+
+  &__intro-number {
+    margin-left: auto;
+    font-family: $font-primary;
+    font-size: clamp($font-size-4xl, 5vw, $font-size-5xl);
+    font-weight: $font-weight-bold;
+    color: rgba($color-secondary, 0.05);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    user-select: none;
+
+    @include respond-to(md) {
+      display: none;
+    }
+  }
+
+  // Premium title - dramatic, larger, tighter
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-3xl, 5vw, $font-size-5xl);
+    font-weight: $font-weight-bold;
+    line-height: 1.08;
+    color: $color-text;
+    margin: 0 0 $spacing-3xl;
+    max-width: 750px;
+    letter-spacing: -0.035em;
+
+    @include respond-to(lg) {
+      font-size: clamp($font-size-2xl, 4.5vw, $font-size-4xl);
+    }
+
+    @include respond-to(md) {
+      margin-bottom: $spacing-2xl;
+      letter-spacing: -0.025em;
+    }
+  }
+
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+    font-weight: $font-weight-semibold;
+    position: relative;
+
+    // Decorative underline under accent word
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        $color-secondary 0%,
+        rgba($color-secondary-light, 0.3) 100%
+      );
+      border-radius: $radius-pill;
+      opacity: 0.4;
+    }
+  }
+
+  // Two-column text split with decorative divider
+  &__intro-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-4xl;
+    position: relative;
+
+    // Decorative vertical divider between columns (desktop)
+    &::before {
+      content: '';
+      position: absolute;
+      top: $spacing-xs;
+      bottom: $spacing-xs;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba($color-secondary, 0.15) 20%,
+        rgba($color-secondary, 0.15) 80%,
+        transparent 100%
+      );
+      transform: translateX(-50%);
+    }
+
+    // Decorative dot at divider center
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      border-radius: $radius-round;
+      background: $color-secondary;
+      opacity: 0.2;
+      transform: translate(-50%, -50%);
+    }
+
+    @include respond-to(lg) {
+      gap: $spacing-3xl;
+    }
+
+    @include respond-to(md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-xl;
+
+      // Hide divider on mobile
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  // Lead text with premium accent font
+  &__lead {
+    font-family: $font-accent;
+    font-size: clamp($font-size-base, 1.8vw, $font-size-md);
+    line-height: 1.85;
+    color: $color-text;
+    margin: 0;
+    font-weight: $font-weight-medium;
+    letter-spacing: -0.01em;
+  }
+
+  &__text {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    line-height: 1.85;
+    color: $color-text-light;
+    margin: 0;
+    font-weight: $font-weight-regular;
+  }
+
+  // ========================================
+  // GRID - Image + Value Cards
+  // ========================================
+  &__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: $spacing-5xl;
+    align-items: start;
+
+    @include respond-to(lg) {
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-4xl;
+    }
+
+    @include respond-to(md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-4xl;
+    }
+  }
+
+  // ========================================
+  // PREMIUM IMAGE - Multi-layer Shadow & Glass
+  // ========================================
+  &__image {
+    opacity: 0;
+    transform: translateY(60px);
+
+    .AboutSection--visible & {
+      animation: aboutReveal 1s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+    }
+
+    @include respond-to(md) {
+      order: -1;
+    }
+  }
+
+  &__image-frame {
+    position: relative;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.03) 0%,
+      rgba($color-accent, 0.03) 100%
+    );
+
+    // Multi-layer premium shadow system
+    box-shadow:
+      0 2px 4px rgba($color-secondary, 0.04),
+      0 8px 20px rgba($color-secondary, 0.07),
+      0 24px 60px rgba($color-secondary, 0.12),
+      0 40px 80px rgba($color-secondary, 0.06),
+      0 0 0 1px rgba($color-secondary, 0.04);
+
+    // Inner glass border overlay
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: $radius-2xl;
+      border: 1px solid rgba($color-white, 0.25);
+      z-index: 2;
+      pointer-events: none;
+      transition: border-color 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    &:hover {
+      box-shadow:
+        0 2px 4px rgba($color-secondary, 0.05),
+        0 8px 24px rgba($color-secondary, 0.09),
+        0 28px 70px rgba($color-secondary, 0.14),
+        0 48px 100px rgba($color-secondary, 0.08),
+        0 0 0 1px rgba($color-secondary, 0.06);
+
+      img {
+        transform: scale(1.06);
+      }
+
+      &::before {
+        border-color: rgba($color-white, 0.35);
+      }
+    }
+
+    @include respond-to(md) {
+      border-radius: $radius-xl;
+
+      &::before {
+        border-radius: $radius-xl;
+      }
+    }
+  }
+
+  &__image-accent {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 160px;
+    height: 160px;
+    border-radius: $radius-2xl;
+    background: linear-gradient(
+      135deg,
+      $color-secondary 0%,
+      $color-secondary-dark 100%
+    );
+    opacity: 0.06;
+    z-index: -1;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .AboutSection__image-frame:hover + & {
+      opacity: 0.08;
+      transform: translate(-4px, -4px);
+    }
+
+    @include respond-to(md) {
+      width: 100px;
+      height: 100px;
+      bottom: -12px;
+      right: -12px;
+    }
+  }
+
+  // ========================================
+  // VALUE CARDS - Glass Morphism & Staggered
+  // ========================================
+  &__values {
+    @include flex-column;
+    gap: $spacing-xl;
+  }
+
+  &__value {
+    position: relative;
+    display: flex;
+    gap: $spacing-xl;
+    padding: $spacing-2xl;
+    background: $color-white;
+    border-radius: $radius-xl;
+    border: 1px solid rgba($color-secondary, 0.08);
+    box-shadow:
+      0 2px 12px rgba($color-secondary, 0.04),
+      0 1px 4px rgba($color-secondary, 0.02);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateX(40px);
+    overflow: hidden;
+
+    // Premium gradient accent line on top (thicker, gradient animated)
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        $color-secondary 0%,
+        $color-secondary-light 50%,
+        $color-accent 100%
+      );
+      background-size: 200% 100%;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition:
+        transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+        background-position 0.8s ease;
+    }
+
+    .AboutSection--visible & {
+      animation: aboutSlideIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+
+      // Staggered animation delays using nth-child as fallback
+      &:nth-child(1) {
+        animation-delay: 0.15s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.45s;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-8px) translateX(0);
+      border-color: rgba($color-secondary, 0.12);
+
+      // Glass morphism effect
+      background: rgba($color-white, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow:
+        0 4px 16px rgba($color-secondary, 0.06),
+        0 16px 48px rgba($color-secondary, 0.12),
+        0 24px 64px rgba($color-secondary, 0.08),
+        inset 0 1px 0 rgba($color-white, 0.6);
+
+      &::before {
+        transform: scaleX(1);
+        background-position: 100% 0;
+      }
+
+      .AboutSection__value-icon {
+        background: linear-gradient(
+          135deg,
+          $color-secondary 0%,
+          $color-secondary-dark 100%
+        );
+        color: $color-white;
+        transform: scale(1.08);
+        box-shadow:
+          0 8px 24px rgba($color-secondary, 0.25),
+          0 4px 12px rgba($color-secondary, 0.15);
+      }
+    }
+
+    @include respond-to(md) {
+      padding: $spacing-xl;
+      gap: $spacing-lg;
+    }
+  }
+
+  // Premium icon with animated gradient background on hover
+  &__value-icon {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    @include flex-center;
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.12) 0%,
+      rgba($color-secondary, 0.06) 100%
+    );
+    border-radius: $radius-lg;
+    color: $color-secondary;
+    font-size: 24px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+
+    // Subtle border for refinement
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba($color-secondary, 0.06);
+      transition: border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    @include respond-to(md) {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+  }
+
+  &__value-content {
+    @include flex-column;
+    gap: $spacing-sm;
+    flex: 1;
+  }
+
+  &__value-title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-base, 1.5vw, $font-size-lg);
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    transition: color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .AboutSection__value:hover & {
+      color: $color-secondary-dark;
+    }
+  }
+
+  &__value-text {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    line-height: 1.75;
+    color: $color-text-light;
+    margin: 0;
+  }
+
+  // ========================================
+  // PREMIUM ANIMATIONS
+  // ========================================
+  @keyframes aboutReveal {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes aboutSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes aboutLineShimmer {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+  }
+}

@@ -1,1704 +1,746 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-.HomePage {
-  &__container {
-    @include container;
-  }
+// Premium easing
+$ease-premium: cubic-bezier(0.23, 1, 0.32, 1);
 
-  // ========================================
-  // SERVICES SECTION - Premium Medical Grid
-  // ========================================
-  &__services {
-    padding: $spacing-6xl 0;
-    background: linear-gradient(
-      180deg,
-      $color-white 0%,
-      rgba($color-bg-secondary, 0.4) 30%,
-      rgba($color-bg-secondary, 0.5) 70%,
-      $color-white 100%
-    );
-    position: relative;
-    overflow: hidden;
+// ========================================
+// ABOUT PREVIEW (Home page condensed)
+// ========================================
+.AboutPreview {
+  @include section-spacing;
+  background: $color-bg-primary;
+  position: relative;
+  overflow: hidden;
 
-    // Elegant decorative elements
-    &::before {
-      content: '';
-      position: absolute;
-      top: 10%;
-      right: -10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(
-        circle,
-        rgba($color-secondary, 0.05) 0%,
-        transparent 70%
-      );
-      pointer-events: none;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 15%;
-      left: -5%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(
-        circle,
-        rgba($color-accent, 0.06) 0%,
-        transparent 70%
-      );
-      pointer-events: none;
-    }
-
-    @include respond-to(md) {
-      padding: $spacing-4xl 0;
-    }
-  }
-
-  &__section-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto $spacing-4xl;
-    position: relative;
-    z-index: 1;
-
-    // Decorative line
-    &::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, $color-secondary, $color-accent);
-      margin: $spacing-lg auto 0;
-      border-radius: $radius-pill;
-    }
-  }
-
-  &__tagline {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    padding: $spacing-xs $spacing-lg;
-    background: linear-gradient(135deg,
-      rgba($color-secondary, 0.1) 0%,
-      rgba($color-secondary, 0.05) 100%
-    );
-    color: $color-secondary;
-    font-family: $font-secondary;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-semibold;
-    text-transform: uppercase;
-    letter-spacing: $letter-spacing-wider;
-    border-radius: $radius-pill;
-    margin-bottom: $spacing-lg;
-    border: 1px solid rgba($color-secondary, 0.1);
-  }
-
-  &__title {
-    @include heading-primary;
-    font-size: clamp($font-size-2xl, 4vw, $font-size-3xl);
-    margin-bottom: $spacing-md;
-    color: $color-text;
-    letter-spacing: -0.02em;
-
-    @include respond-to(md) {
-      font-size: $font-size-xl;
-    }
-  }
-
-  &__subtitle {
-    @include body-text;
-    font-size: $font-size-md;
-    color: $color-text-light;
-    line-height: $line-height-relaxed;
-    max-width: 540px;
-    margin: 0 auto;
-  }
-
-  &__services-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: auto;
-    gap: $spacing-md;
-    margin-bottom: $spacing-3xl;
-    position: relative;
-    z-index: 1;
-
-    @include respond-to(lg) {
-      gap: $spacing-sm;
-    }
-
-    @include respond-to(md) {
-      grid-template-columns: 1fr;
-      gap: $spacing-lg;
-    }
-  }
-
-  &__service-card {
-    position: relative;
-    border-radius: $radius-2xl;
-    overflow: hidden;
-    background: $color-white;
-    box-shadow:
-      0 2px 8px rgba($color-secondary, 0.06),
-      0 8px 24px rgba($color-secondary, 0.08);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border: 1px solid rgba($color-secondary, 0.08);
-
-    // Grid positioning for asymmetric layout
-    &:nth-child(1) {
-      grid-column: span 5;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    &:nth-child(2) {
-      grid-column: span 4;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    &:nth-child(3) {
-      grid-column: span 3;
-      grid-row: span 2;
-
-      @include respond-to(lg) {
-        grid-column: span 12;
-        grid-row: span 1;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-
-      .HomePage__service-image {
-        height: 100%;
-        flex: 1;
-      }
-    }
-
-    &:nth-child(4) {
-      grid-column: span 4;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    &:nth-child(5) {
-      grid-column: span 5;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    &:nth-child(6) {
-      grid-column: span 3;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    &:nth-child(7) {
-      grid-column: span 6;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    &:nth-child(8) {
-      grid-column: span 3;
-      grid-row: span 1;
-
-      @include respond-to(lg) {
-        grid-column: span 6;
-      }
-
-      @include respond-to(md) {
-        grid-column: span 1;
-        min-height: 400px;
-      }
-    }
-
-    // Premium hover gradient overlay
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        rgba($color-secondary, 0.02) 0%,
-        rgba($color-accent, 0.03) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    &:hover {
-      transform: translateY(-8px) scale(1.01);
-      box-shadow:
-        0 20px 50px rgba($color-secondary, 0.15),
-        0 8px 20px rgba($color-secondary, 0.1);
-      border-color: rgba($color-secondary, 0.15);
-
-      &::before {
-        opacity: 1;
-      }
-
-      .HomePage__service-image {
-        &::after {
-          opacity: 0.6;
-        }
-
-        img {
-          transform: scale(1.1);
-        }
-      }
-
-      .HomePage__service-icon-overlay {
-        transform: scale(1.08) rotate(3deg);
-        background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-        color: $color-white;
-        box-shadow: 0 8px 24px rgba($color-secondary, 0.35);
-      }
-
-      .HomePage__service-number {
-        transform: translateY(-4px);
-        opacity: 1;
-        text-shadow:
-          0 4px 8px rgba($color-black, 0.3),
-          0 2px 4px rgba($color-black, 0.2);
-      }
-
-      .HomePage__service-title {
-        color: $color-secondary;
-      }
-
-      .HomePage__service-learn-more {
-        color: $color-secondary-dark;
-
-        svg {
-          transform: translateX(5px);
-        }
-      }
-    }
-  }
-
-  &__service-image {
-    position: relative;
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-    flex-shrink: 0;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        180deg,
-        transparent 0%,
-        transparent 40%,
-        rgba($color-secondary, 0.1) 80%,
-        rgba($color-secondary, 0.25) 100%
-      );
-      opacity: 0.5;
-      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-      z-index: 1;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-      will-change: transform;
-    }
-  }
-
-  &__service-icon-overlay {
+  // Subtle background decoration - large organic circle
+  &::before {
+    content: '';
     position: absolute;
-    top: $spacing-md;
-    right: $spacing-md;
-    width: 52px;
-    height: 52px;
-    @include flex-center;
-    background: rgba($color-white, 0.92);
-    backdrop-filter: blur(20px) saturate(180%);
-    color: $color-secondary;
-    border-radius: $radius-lg;
-    font-size: $font-size-xl;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow:
-      0 4px 20px rgba($color-secondary, 0.1),
-      0 2px 8px rgba($color-black, 0.05);
-    z-index: 2;
-    border: 1px solid rgba($color-white, 0.5);
-  }
-
-  &__service-number {
-    position: absolute;
-    top: $spacing-lg;
-    left: $spacing-lg;
-    font-family: $font-primary;
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    color: $color-white;
-    text-shadow:
-      0 3px 10px rgba($color-black, 0.25),
-      0 1px 4px rgba($color-black, 0.2);
-    z-index: 2;
-    opacity: 0.85;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    line-height: 1;
-  }
-
-  &__service-content {
-    padding: $spacing-md $spacing-lg;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-xs;
-    background: $color-white;
-    position: relative;
-    z-index: 2;
-  }
-
-  &__service-title {
-    font-family: $font-primary;
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-    color: $color-text;
-    margin: 0;
-    line-height: 1.2;
-    transition: color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    letter-spacing: -0.01em;
-  }
-
-  &__service-description {
-    @include body-text;
-    color: $color-text-light;
-    font-size: $font-size-xs;
-    line-height: 1.5;
-    margin: 0;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
-
-  &__service-learn-more {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    font-family: $font-secondary;
-    font-size: 11px;
-    font-weight: $font-weight-semibold;
-    color: $color-secondary;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    cursor: pointer;
-    flex-shrink: 0;
-
-    svg {
-      font-size: 12px;
-      transition: transform 0.3s ease;
-    }
-
-    &:hover {
-      color: $color-secondary-dark;
-
-      svg {
-        transform: translateX(4px);
-      }
-    }
-  }
-
-  &__services-cta {
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  // ========================================
-  // QUICK ACTIONS SECTION - Premium Cards
-  // ========================================
-  &__quick-actions {
-    padding: $spacing-5xl 0;
-    background: $color-white;
-    position: relative;
-
-    // Subtle top separator
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba($color-secondary, 0.15), transparent);
-    }
-
-    @include respond-to(md) {
-      padding: $spacing-4xl 0;
-    }
-  }
-
-  &__quick-actions-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-xl;
-
-    @include respond-to(lg) {
-      grid-template-columns: 1fr;
-      gap: $spacing-lg;
-    }
-  }
-
-  &__quick-action-card {
-    display: flex;
-    align-items: center;
-    gap: $spacing-xl;
-    padding: $spacing-2xl $spacing-xl;
-    background: $color-white;
-    border-radius: $radius-2xl;
-    border: 1px solid rgba($color-secondary, 0.08);
-    box-shadow:
-      0 4px 20px rgba($color-secondary, 0.06),
-      0 1px 4px rgba($color-black, 0.04);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-
-    // Premium gradient overlay
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        transparent 0%,
-        rgba($color-secondary, 0.03) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    // Decorative accent line
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 3px;
-      background: linear-gradient(90deg, $color-secondary, $color-accent);
-      transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    @include respond-to(md) {
-      padding: $spacing-xl;
-      gap: $spacing-lg;
-    }
-
-    &:hover {
-      transform: translateY(-6px);
-      box-shadow:
-        0 16px 40px rgba($color-secondary, 0.12),
-        0 4px 12px rgba($color-black, 0.08);
-      border-color: rgba($color-secondary, 0.2);
-
-      &::before {
-        opacity: 1;
-      }
-
-      &::after {
-        width: 100%;
-      }
-
-      .HomePage__quick-action-icon {
-        transform: scale(1.08) rotate(3deg);
-        box-shadow: 0 8px 24px rgba($color-secondary, 0.3);
-      }
-
-      .HomePage__quick-action-arrow {
-        transform: translateX(6px);
-        color: $color-secondary-dark;
-      }
-
-      .HomePage__quick-action-title {
-        color: $color-secondary;
-      }
-    }
-
-    &--primary {
-      .HomePage__quick-action-icon {
-        background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-        box-shadow: 0 4px 16px rgba($color-secondary, 0.25);
-      }
-    }
-
-    &--secondary {
-      .HomePage__quick-action-icon {
-        background: linear-gradient(135deg, $color-accent 0%, darken($color-accent, 12%) 100%);
-        box-shadow: 0 4px 16px rgba($color-accent, 0.25);
-      }
-    }
-
-    &--tertiary {
-      .HomePage__quick-action-icon {
-        background: linear-gradient(135deg, $color-secondary-light 0%, $color-secondary 100%);
-        box-shadow: 0 4px 16px rgba($color-secondary-light, 0.25);
-      }
-    }
-  }
-
-  &__quick-action-icon {
-    flex-shrink: 0;
-    width: 72px;
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: $radius-xl;
-    color: $color-white;
-    font-size: $font-size-2xl;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-
-    @include respond-to(md) {
-      width: 60px;
-      height: 60px;
-      font-size: $font-size-xl;
-    }
-  }
-
-  &__quick-action-content {
-    flex: 1;
-  }
-
-  &__quick-action-title {
-    font-family: $font-primary;
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $color-text;
-    margin-bottom: $spacing-xs;
-    line-height: 1.2;
-    transition: color 0.4s ease;
-
-    @include respond-to(md) {
-      font-size: $font-size-lg;
-    }
-  }
-
-  &__quick-action-description {
-    font-family: $font-secondary;
-    font-size: $font-size-sm;
-    color: $color-text-light;
-    line-height: 1.5;
-    margin: 0;
-
-    @include respond-to(md) {
-      font-size: $font-size-xs;
-    }
-  }
-
-  &__quick-action-arrow {
-    flex-shrink: 0;
-    font-size: $font-size-2xl;
-    color: $color-secondary;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    opacity: 0.7;
-
-    @include respond-to(md) {
-      font-size: $font-size-xl;
-    }
-  }
-
-  // Why Choose Us Section
-  &__why-choose {
-    padding: $spacing-4xl 0;
-    background: linear-gradient(
-      135deg,
-      rgba($color-bg-secondary, 0.3) 0%,
-      rgba($color-white, 1) 100%
-    );
-
-    @include respond-to(md) {
-      padding: $spacing-3xl 0;
-    }
-  }
-
-  &__why-choose-header {
-    text-align: center;
-    margin-bottom: $spacing-2xl;
-
-    // Initial state (hidden)
-    opacity: 0;
-    transform: translateY(40px);
-    transition: none;
-
-    // Animated state (visible)
-    .HomePage__why-choose--visible & {
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-  }
-
-  &__why-choose-content {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: $spacing-3xl;
-    align-items: center;
-
-    @include respond-to(lg) {
-      grid-template-columns: 1fr;
-      gap: $spacing-2xl;
-    }
-  }
-
-  &__why-choose-text {
-    padding: $spacing-2xl;
-    background: rgba($color-secondary, 0.02);
-    border-radius: $radius-xl;
-    border-left: 4px solid $color-secondary;
-
-    // Initial state (hidden)
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: none;
-
-    // Animated state (visible)
-    .HomePage__why-choose--visible & {
-      animation: fadeInLeft 0.8s ease-out 0.2s both;
-    }
-
-    @include respond-to(md) {
-      padding: $spacing-xl;
-    }
-  }
-
-  &__why-choose-title {
-    font-family: $font-primary;
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $color-text;
-    margin-bottom: $spacing-lg;
-    line-height: 1.3;
-
-    @include respond-to(md) {
-      font-size: $font-size-lg;
-    }
-  }
-
-  &__why-choose-paragraph {
-    @include body-text;
-    color: $color-text-light;
-    font-size: $font-size-sm;
-    line-height: 1.8;
-    margin-bottom: $spacing-lg;
-    min-height: 1.8em;
-
-    &:last-of-type {
-      margin-bottom: $spacing-xl;
-    }
-
-    &--typed {
-      min-height: 3em;
-    }
-  }
-
-  &__cursor {
-    display: inline;
-    color: $color-secondary;
-    font-weight: $font-weight-bold;
-    animation: blink 0.7s infinite;
-  }
-
-  @keyframes blink {
-    0%, 50% {
-      opacity: 1;
-    }
-    51%, 100% {
-      opacity: 0;
-    }
-  }
-
-  &__why-choose-images {
-    position: relative;
-
-    // Initial state (hidden)
-    opacity: 0;
-    transform: translateX(40px);
-    transition: none;
-
-    // Animated state (visible)
-    .HomePage__why-choose--visible & {
-      animation: fadeInRight 0.8s ease-out 0.4s both;
-    }
-  }
-
-  &__why-choose-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-md;
-    grid-auto-rows: 200px;
-
-    @include respond-to(md) {
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 180px;
-    }
-  }
-
-  &__why-choose-image {
-    position: relative;
-    border-radius: $radius-lg;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba($color-secondary, 0.15);
-    transition: all 0.4s ease;
-
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba($color-secondary, 0.2);
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    &:hover img {
-      transform: scale(1.05);
-    }
-
-    // Custom grid positioning for 7 images - asymmetric bento layout
-    &:nth-child(1) {
-      grid-column: span 2;
-
-      @include respond-to(md) {
-        grid-column: span 1;
-      }
-    }
-
-    &:nth-child(4) {
-      grid-column: span 2;
-
-      @include respond-to(md) {
-        grid-column: span 1;
-      }
-    }
-
-    // Image 6 and 7 side by side
-    &:nth-child(6),
-    &:nth-child(7) {
-      grid-column: span 1;
-
-      @include respond-to(md) {
-        grid-column: span 1;
-      }
-    }
-  }
-
-
-  // Fade in from bottom animation
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  // Fade in from left
-  @keyframes fadeInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  // Fade in from right
-  @keyframes fadeInRight {
-    from {
-      opacity: 0;
-      transform: translateX(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  // ========================================
-  // TESTIMONIALS SECTION - Premium Social Proof
-  // ========================================
-  &__testimonials {
-    padding: $spacing-7xl 0;
-    background: linear-gradient(
-      135deg,
-      rgba($color-bg-secondary, 0.2) 0%,
-      $color-white 25%,
-      rgba($color-secondary, 0.03) 50%,
-      $color-white 75%,
-      rgba($color-bg-secondary, 0.2) 100%
-    );
-    position: relative;
-    overflow: hidden;
-
-    @include respond-to(md) {
-      padding: $spacing-5xl 0;
-    }
-
-    // Elegant floating orbs
-    &::before {
-      content: '';
-      position: absolute;
-      top: 15%;
-      left: -5%;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba($color-secondary, 0.08) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: floatOrb 8s ease-in-out infinite;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 10%;
-      right: -5%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba($color-accent, 0.06) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: floatOrb 10s ease-in-out infinite reverse;
-    }
-  }
-
-  @keyframes floatOrb {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      transform: translate(20px, -20px) scale(1.1);
-    }
-  }
-
-  &__testimonials-showcase {
-    margin-top: $spacing-4xl;
-  }
-
-  &__testimonials-main {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: $spacing-lg;
-    animation: fadeInCards 0.6s ease-out;
-
-    @include respond-to(xl) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include respond-to(md) {
-      grid-template-columns: 1fr;
-      gap: $spacing-md;
-    }
-  }
-
-  @keyframes fadeInCards {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  &__testimonials-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: $spacing-xl;
-    margin-top: $spacing-3xl;
-  }
-
-  &__testimonials-nav {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: $color-white;
-    border: 2px solid rgba($color-secondary, 0.15);
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
     border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    font-size: $font-size-lg;
-    color: $color-secondary;
-    box-shadow:
-      0 4px 16px rgba($color-secondary, 0.1),
-      0 2px 4px rgba($color-black, 0.04);
-
-    &:hover:not(:disabled) {
-      background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-      color: $color-white;
-      border-color: $color-secondary;
-      transform: scale(1.15);
-      box-shadow: 0 8px 28px rgba($color-secondary, 0.3);
-    }
-
-    &:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      border-color: rgba($color-text-light, 0.1);
-      color: $color-text-muted;
-    }
-
-    @include respond-to(md) {
-      width: 44px;
-      height: 44px;
-      font-size: $font-size-md;
-    }
-  }
-
-  &__testimonials-indicators {
-    display: flex;
-    gap: $spacing-sm;
-  }
-
-  &__testimonials-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba($color-secondary, 0.2);
-    border: none;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    padding: 0;
-
-    &:hover {
-      background: rgba($color-secondary, 0.4);
-      transform: scale(1.3);
-    }
-
-    &--active {
-      background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-      width: 32px;
-      border-radius: $radius-pill;
-      box-shadow: 0 3px 12px rgba($color-secondary, 0.35);
-    }
-  }
-
-  &__testimonial-card {
-    background: $color-white;
-    padding: $spacing-xl;
-    border-radius: $radius-2xl;
-    box-shadow:
-      0 4px 24px rgba($color-secondary, 0.08),
-      0 1px 4px rgba($color-black, 0.03);
-    border: 1px solid rgba($color-secondary, 0.06);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 220px;
-    overflow: hidden;
-
-    // Subtle shimmer effect on hover
-    &::before {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg,
-        transparent 0%,
-        rgba($color-white, 0.4) 50%,
-        transparent 100%
-      );
-      transition: all 0.7s ease;
-      pointer-events: none;
-    }
-
-    // Gradient accent bar
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, $color-secondary, $color-accent, $color-secondary);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    &:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow:
-        0 20px 50px rgba($color-secondary, 0.15),
-        0 8px 20px rgba($color-black, 0.08);
-      border-color: rgba($color-secondary, 0.15);
-
-      &::before {
-        top: 100%;
-        left: 100%;
-      }
-
-      &::after {
-        transform: scaleX(1);
-      }
-
-      .HomePage__testimonial-avatar {
-        transform: scale(1.1) rotate(-5deg);
-        box-shadow: 0 8px 24px rgba($color-secondary, 0.4);
-      }
-
-      .HomePage__testimonial-quote-icon {
-        transform: scale(1.2);
-        opacity: 0.15;
-      }
-    }
-
-    // Featured card styling
-    &--featured {
-      background: linear-gradient(135deg, rgba($color-secondary, 0.02) 0%, $color-white 100%);
-      border-color: rgba($color-secondary, 0.12);
-      box-shadow:
-        0 8px 32px rgba($color-secondary, 0.12),
-        0 2px 8px rgba($color-black, 0.04);
-
-      .HomePage__testimonial-quote-icon {
-        color: $color-secondary;
-        opacity: 0.2;
-      }
-
-      &::after {
-        transform: scaleX(0.3);
-        opacity: 0.5;
-      }
-
-      &:hover::after {
-        transform: scaleX(1);
-        opacity: 1;
-      }
-    }
-
-    @include respond-to(md) {
-      padding: $spacing-lg;
-      min-height: auto;
-    }
-  }
-
-  &__testimonial-quote-icon {
-    position: absolute;
-    top: $spacing-md;
-    right: $spacing-lg;
-    font-family: $font-primary;
-    font-size: 4rem;
-    color: $color-secondary;
-    opacity: 0.08;
-    line-height: 1;
-    transition: all 0.4s ease;
+    background: radial-gradient(
+      circle,
+      rgba($color-secondary, 0.03) 0%,
+      rgba($color-secondary, 0.01) 40%,
+      transparent 70%
+    );
     pointer-events: none;
-
-    @include respond-to(md) {
-      font-size: 3rem;
-    }
   }
 
-  &__testimonial-comment {
-    font-family: $font-secondary;
-    font-size: $font-size-sm;
-    line-height: 1.75;
-    color: $color-text;
-    margin: 0;
-    flex: 1;
-    position: relative;
-    z-index: 1;
-
-    @include respond-to(md) {
-      font-size: $font-size-xs;
-      line-height: 1.65;
-    }
-  }
-
-  &__testimonial-footer {
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
-    margin-top: $spacing-lg;
-    padding-top: $spacing-md;
-    border-top: 1px solid rgba($color-secondary, 0.08);
-  }
-
-  &__testimonial-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: $font-primary;
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-    color: $color-white;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 4px 16px rgba($color-secondary, 0.25);
-
-    @include respond-to(md) {
-      width: 42px;
-      height: 42px;
-      font-size: $font-size-sm;
-    }
-  }
-
-  &__testimonial-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__testimonial-name {
-    font-family: $font-primary;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-bold;
-    color: $color-text;
-    margin: 0 0 2px;
-    line-height: 1.3;
-
-    @include respond-to(md) {
-      font-size: $font-size-xs;
-    }
-  }
-
-  &__testimonial-rating {
-    display: flex;
-    gap: 2px;
-  }
-
-  &__testimonial-star {
-    color: rgba($color-accent, 0.25);
-    font-size: $font-size-sm;
-    transition: all 0.3s ease;
-
-    &--filled {
-      color: #D4AF37;
-      text-shadow: 0 1px 4px rgba(#D4AF37, 0.35);
-    }
-
-    @include respond-to(md) {
-      font-size: $font-size-xs;
-    }
-  }
-
-  // ========================================
-  // CTA Section - Premium Call to Action
-  // ========================================
-  &__cta {
-    position: relative;
-    padding: $spacing-7xl 0;
-    background: linear-gradient(
-      180deg,
-      $color-white 0%,
-      rgba($color-bg-secondary, 0.3) 100%
-    );
-    overflow: hidden;
-
-    @include respond-to(md) {
-      padding: $spacing-5xl 0;
-    }
-  }
-
-  &__cta-background {
+  // Secondary decorative orb bottom-left
+  &::after {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(
-        ellipse 60% 50% at 10% 50%,
-        rgba($color-secondary, 0.08) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 50% 40% at 90% 30%,
-        rgba($color-accent, 0.08) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 40% 30% at 50% 90%,
-        rgba($color-secondary, 0.04) 0%,
-        transparent 50%
-      );
-    z-index: 0;
-
-    // Decorative line
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg,
-        transparent,
-        rgba($color-secondary, 0.1) 20%,
-        rgba($color-secondary, 0.1) 80%,
-        transparent
-      );
-    }
+    bottom: -100px;
+    left: -100px;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-accent, 0.04) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
   }
 
-  &__cta-grid {
-    position: relative;
-    z-index: 1;
+  &__container {
+    @include sidebar-aware-container;
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
+    grid-template-columns: 1fr 1.1fr;
     gap: $spacing-5xl;
     align-items: center;
 
     @include respond-to(lg) {
       grid-template-columns: 1fr;
-      gap: $spacing-4xl;
+      gap: $spacing-3xl;
     }
   }
 
-  // Stats Side
-  &__cta-stats {
+  &__indicator {
     display: flex;
-    flex-direction: column;
-    gap: $spacing-xl;
-  }
-
-  &__cta-stat-card {
-    padding: $spacing-2xl;
-    border-radius: $radius-2xl;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-
-    // Decorative pattern
-    &::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(
-        circle,
-        rgba($color-white, 0.1) 0%,
-        transparent 60%
-      );
-      pointer-events: none;
-    }
-
-    &:hover {
-      transform: translateY(-6px) scale(1.02);
-    }
-
-    &--primary {
-      background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-      box-shadow:
-        0 12px 40px rgba($color-secondary, 0.3),
-        0 4px 12px rgba($color-secondary, 0.2);
-    }
-
-    &--secondary {
-      background: linear-gradient(135deg, $color-accent 0%, darken($color-accent, 15%) 100%);
-      box-shadow:
-        0 12px 40px rgba($color-accent, 0.25),
-        0 4px 12px rgba($color-accent, 0.15);
-    }
-  }
-
-  &__cta-stat-number {
-    display: block;
-    font-family: $font-primary;
-    font-size: $font-size-5xl;
-    font-weight: $font-weight-bold;
-    color: $color-white;
-    line-height: 1;
-    margin-bottom: $spacing-sm;
-    text-shadow: 0 2px 8px rgba($color-black, 0.1);
-
-    @include respond-to(md) {
-      font-size: $font-size-4xl;
-    }
-  }
-
-  &__cta-stat-label {
-    display: block;
-    font-size: $font-size-base;
-    color: rgba($color-white, 0.95);
-    font-weight: $font-weight-medium;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
-  &__cta-testimonial {
-    position: relative;
-    padding: $spacing-2xl;
-    background: rgba($color-white, 0.7);
-    backdrop-filter: blur(20px);
-    border-radius: $radius-2xl;
-    border-left: 4px solid $color-secondary;
-    box-shadow:
-      0 8px 32px rgba($color-secondary, 0.08),
-      0 2px 8px rgba($color-black, 0.04);
-  }
-
-  &__cta-quote-mark {
-    font-family: $font-primary;
-    font-size: 5rem;
-    color: $color-secondary;
-    opacity: 0.15;
-    line-height: 0.5;
-    margin-bottom: $spacing-lg;
-  }
-
-  &__cta-quote-text {
-    font-size: $font-size-md;
-    color: $color-text;
-    line-height: 1.8;
-    margin-bottom: $spacing-lg;
-    font-style: italic;
-  }
-
-  &__cta-quote-author {
-    font-size: $font-size-sm;
-    color: $color-secondary;
-    font-weight: $font-weight-semibold;
-  }
-
-  // Content Side
-  &__cta-content {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-xl;
-  }
-
-  &__cta-badge {
-    display: inline-flex;
-    align-self: flex-start;
     align-items: center;
-    gap: $spacing-xs;
-    padding: $spacing-xs $spacing-lg;
-    background: linear-gradient(135deg,
-      rgba($color-secondary, 0.1) 0%,
-      rgba($color-secondary, 0.05) 100%
-    );
-    color: $color-secondary;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__indicator-line {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-secondary, $color-secondary-light);
+    border-radius: $radius-pill;
+  }
+
+  &__indicator-text {
+    font-family: $font-secondary;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
+    color: $color-secondary;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    border-radius: $radius-pill;
-    border: 1px solid rgba($color-secondary, 0.15);
+    letter-spacing: 0.18em;
   }
 
-  &__cta-title {
-    font-family: $font-primary;
-    font-size: clamp($font-size-3xl, 5vw, $font-size-5xl);
-    font-weight: $font-weight-bold;
-    color: $color-text;
+  &__title {
+    @include heading-primary;
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    margin: 0 0 $spacing-xl;
+    letter-spacing: -0.03em;
     line-height: 1.15;
-    letter-spacing: -0.02em;
 
     @include respond-to(md) {
-      font-size: $font-size-3xl;
+      font-size: $font-size-2xl;
     }
   }
 
-  &__cta-title-highlight {
+  &__title-accent {
     color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
     position: relative;
-    display: inline-block;
 
+    // Subtle underline decoration on the accent word
     &::after {
       content: '';
       position: absolute;
-      bottom: 6px;
+      bottom: 2px;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, $color-secondary, $color-accent);
-      opacity: 0.3;
+      height: 2px;
+      background: linear-gradient(90deg, $color-secondary, rgba($color-secondary, 0.2));
       border-radius: $radius-pill;
     }
   }
 
-  &__cta-description {
-    font-size: $font-size-lg;
+  &__text {
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    font-weight: $font-weight-regular;
     color: $color-text-light;
-    line-height: 1.8;
-    max-width: 560px;
+    line-height: 1.9;
+    margin: 0 0 $spacing-2xl;
+    max-width: $max-width-prose;
 
     @include respond-to(md) {
       font-size: $font-size-base;
     }
   }
 
-  &__cta-actions {
-    display: flex;
-    gap: $spacing-lg;
-    flex-wrap: wrap;
-    margin-top: $spacing-md;
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-decoration: none;
+    transition: all 0.4s $ease-premium;
+    padding: $spacing-sm 0;
+    position: relative;
 
-    @include respond-to(md) {
-      flex-direction: column;
-      gap: $spacing-md;
+    // Underline that expands on hover
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: $color-secondary-dark;
+      transition: width 0.4s $ease-premium;
+      border-radius: $radius-pill;
+    }
+
+    svg {
+      transition: transform 0.4s $ease-premium;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: $color-secondary-dark;
+
+      &::after {
+        width: calc(100% - 28px); // Don't underline the arrow
+      }
+
+      svg {
+        transform: translateX(8px);
+      }
     }
   }
 
-  &__cta-button {
+  // Image column
+  &__image {
+    position: relative;
+
+    @include respond-to(lg) {
+      order: -1;
+    }
+  }
+
+  &__image-frame {
+    position: relative;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 24px 64px rgba($color-secondary, 0.12),
+      0 2px 8px rgba(0, 0, 0, 0.04);
+    aspect-ratio: 4 / 3;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1s $ease-premium;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    // Inner glass border overlay
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba($color-white, 0.15);
+      border-radius: calc(#{$radius-2xl} - 4px);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    // Top-left decorative accent badge
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(
+        135deg,
+        rgba($color-secondary, 0.2) 0%,
+        transparent 60%
+      );
+      border-radius: $radius-2xl 0 $radius-3xl 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+  }
+
+  // Floating decorative badge near image
+  &__image::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-accent, 0.12) 0%,
+      rgba($color-accent, 0.04) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+
+    @include respond-to(md) {
+      width: 80px;
+      height: 80px;
+      bottom: -10px;
+      right: -10px;
+    }
+  }
+
+  // Staggered visibility animations
+  &--visible &__content {
+    animation: aboutFadeUp 0.8s $ease-premium both;
+  }
+
+  &--visible &__image {
+    animation: aboutFadeUp 0.8s $ease-premium 0.25s both;
+  }
+}
+
+// ========================================
+// SERVICES OVERVIEW (Home page cards)
+// ========================================
+.ServicesOverview {
+  @include section-spacing;
+  background: $color-bg-secondary;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle dot pattern in background
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.25;
+    background-image: radial-gradient(
+      circle,
+      rgba($color-secondary, 0.08) 1px,
+      transparent 1px
+    );
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-4xl;
+  }
+
+  &__indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__indicator-line {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-secondary, $color-secondary-light);
+    border-radius: $radius-pill;
+  }
+
+  &__indicator-text {
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  &__title {
+    @include heading-primary;
+    font-size: clamp($font-size-2xl, 3.5vw, $font-size-3xl);
+    margin: 0;
+    letter-spacing: -0.03em;
+
+    @include respond-to(md) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $spacing-xl;
+  }
+
+  &__card {
+    flex: 0 1 calc(33.333% - $spacing-xl);
+    background: $color-white;
+    border-radius: $radius-2xl;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.03),
+      0 8px 32px rgba($color-secondary, 0.06);
+    @include flex-column;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-2xl $spacing-xl $spacing-xl;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba($color-secondary, 0.06);
+    transition: all 0.5s $ease-premium;
+    z-index: 1;
+
+    @include respond-to(lg) {
+      flex: 0 1 calc(50% - $spacing-xl);
+    }
+
+    @include respond-to(sm) {
+      flex: 1 1 100%;
+    }
+
+    // Left accent gradient bar
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, $color-secondary, $color-secondary-light, rgba($color-accent, 0.6));
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.6s $ease-premium;
+    }
+
+    // Warm gradient overlay on hover
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: $radius-2xl;
+      background: linear-gradient(
+        165deg,
+        rgba($color-secondary, 0.03) 0%,
+        rgba($color-accent, 0.04) 50%,
+        rgba($color-secondary, 0.02) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.5s $ease-premium;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow:
+        0 20px 60px rgba($color-secondary, 0.14),
+        0 8px 24px rgba($color-secondary, 0.08),
+        0 0 0 1px rgba($color-secondary, 0.08);
+      border-color: rgba($color-secondary, 0.12);
+
+      &::before {
+        transform: scaleY(1);
+      }
+
+      &::after {
+        opacity: 1;
+      }
+
+      .ServicesOverview__card-number {
+        color: $color-secondary;
+        opacity: 1;
+      }
+
+      .ServicesOverview__card-icon {
+        background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+        color: $color-white;
+        transform: scale(1.08);
+        box-shadow:
+          0 8px 24px rgba($color-secondary, 0.35),
+          0 2px 8px rgba($color-secondary, 0.2);
+      }
+
+      .ServicesOverview__card-title {
+        color: $color-secondary-dark;
+      }
+
+      .ServicesOverview__card-link {
+        color: $color-secondary-dark;
+
+        svg {
+          transform: translateX(6px);
+        }
+      }
+    }
+  }
+
+  &__card-number {
+    font-family: $font-primary;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: rgba($color-secondary, 0.08);
+    line-height: 1;
+    transition: all 0.5s $ease-premium;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__card-icon {
+    @include flex-center;
+    width: 64px;
+    height: 64px;
+    border-radius: $radius-xl;
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.12) 0%,
+      rgba($color-secondary, 0.04) 100%
+    );
+    color: $color-secondary;
+    font-size: 26px;
+    transition: all 0.5s $ease-premium;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__card-title {
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    transition: color 0.4s $ease-premium;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__card-desc {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    color: $color-text-light;
+    line-height: 1.7;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__card-link {
     display: inline-flex;
     align-items: center;
-    gap: $spacing-md;
-    padding: $spacing-lg $spacing-2xl;
-    border-radius: $radius-xl;
+    gap: $spacing-xs;
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    margin-top: auto;
+    padding-top: $spacing-sm;
+    transition: color 0.4s $ease-premium;
+    position: relative;
+    z-index: 1;
+
+    svg {
+      font-size: 14px;
+      transition: transform 0.4s $ease-premium;
+    }
+  }
+
+  &__cta {
+    text-align: center;
+    margin-top: $spacing-3xl;
+  }
+
+  &__cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-white;
     text-decoration: none;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: pointer;
-    border: 2px solid transparent;
+    padding: $spacing-md $spacing-2xl;
+    background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+    border: none;
+    border-radius: $radius-pill;
+    transition: all 0.45s $ease-premium;
+    box-shadow: 0 4px 16px rgba($color-secondary, 0.2);
     position: relative;
     overflow: hidden;
 
-    &--primary {
-      background: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
-      color: $color-white !important;
-      box-shadow:
-        0 8px 24px rgba($color-secondary, 0.35),
-        0 2px 8px rgba($color-secondary, 0.2);
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg,
-          rgba($color-white, 0.15) 0%,
-          transparent 50%,
-          rgba($color-black, 0.05) 100%
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      &:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow:
-          0 16px 40px rgba($color-secondary, 0.4),
-          0 4px 12px rgba($color-secondary, 0.25);
-
-        &::before {
-          opacity: 1;
-        }
-      }
-
-      &:active {
-        transform: translateY(-2px) scale(1);
-      }
+    // Shimmer on hover
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.15) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s $ease-premium;
     }
 
-    &--secondary {
-      background: rgba($color-white, 0.8);
-      backdrop-filter: blur(10px);
-      color: $color-text !important;
-      border-color: rgba($color-secondary, 0.2);
-
-      &:hover {
-        border-color: $color-secondary;
-        background: rgba($color-white, 0.95);
-        color: $color-secondary !important;
-        transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba($color-secondary, 0.15);
-      }
-
-      &:active {
-        transform: translateY(-2px);
-      }
+    svg {
+      transition: transform 0.4s $ease-premium;
     }
-  }
-
-  &__cta-button-icon {
-    font-size: $font-size-xl;
-    filter: grayscale(1) brightness(10);
-  }
-
-  &__cta-button-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-  }
-
-  &__cta-button-label {
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-  }
-
-  &__cta-button-sublabel {
-    font-size: $font-size-xs;
-    opacity: 0.85;
-    font-weight: $font-weight-regular;
-  }
-
-  &__cta-trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $spacing-lg;
-    padding-top: $spacing-xl;
-    border-top: 1px solid rgba($color-secondary, 0.1);
-    margin-top: $spacing-md;
-  }
-
-  &__cta-trust-badge {
-    display: flex;
-    align-items: center;
-    gap: $spacing-xs;
-    font-size: $font-size-sm;
-    color: $color-text-light;
-    font-weight: $font-weight-medium;
-    transition: color 0.3s ease;
 
     &:hover {
-      color: $color-secondary;
+      background: linear-gradient(135deg, $color-secondary-dark 0%, darken($color-secondary-dark, 4%) 100%);
+      box-shadow: 0 8px 28px rgba($color-secondary, 0.3);
+      transform: translateY(-2px);
+
+      &::before {
+        left: 100%;
+      }
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 
-  // Buttons
-  &__button {
-    @include button-primary;
-    padding: $spacing-md $spacing-xl;
-    font-size: $font-size-sm;
-    text-decoration: none;
-    display: inline-flex;
+  // Staggered card visibility animation
+  &--visible .ServicesOverview__card {
+    animation: serviceCardUp 0.6s $ease-premium both;
+  }
+}
+
+// ========================================
+// QUICK INFO STRIP - Premium beige bar
+// ========================================
+.QuickInfo {
+  background: $color-bg-secondary;
+  padding: $spacing-2xl 0;
+  position: relative;
+  border-top: 1px solid rgba($color-secondary, 0.1);
+  border-bottom: 1px solid rgba($color-secondary, 0.1);
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  &__items {
+    display: flex;
     align-items: center;
-    gap: $spacing-xs;
+    justify-content: center;
+    gap: $spacing-3xl;
 
-    &--primary {
-      background: $color-secondary;
-      color: $color-white;
+    @include respond-to(md) {
+      flex-direction: column;
+      gap: $spacing-xl;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    text-decoration: none;
+    color: $color-text;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-lg;
+    transition: all 0.35s $ease-premium;
+
+    &--link {
+      cursor: pointer;
 
       &:hover {
-        background: $color-secondary-dark;
-        transform: translateY(-3px);
-      }
-    }
+        color: $color-secondary-dark;
+        background: rgba($color-secondary, 0.06);
 
-    &--secondary {
-      background: $color-white;
-      color: $color-secondary;
-
-      &:hover {
-        background: rgba($color-white, 0.95);
-        transform: translateY(-3px);
-      }
-    }
-
-    .HomePage__cta & {
-      &--primary {
-        background: $color-white;
-        color: $color-secondary;
-
-        &:hover {
-          background: rgba($color-white, 0.95);
-        }
-      }
-
-      &--secondary {
-        background: transparent;
-        color: $color-white;
-        border: 2px solid $color-white;
-
-        &:hover {
-          background: rgba($color-white, 0.1);
+        .QuickInfo__item-icon {
+          color: $color-secondary-dark;
+          transform: scale(1.1);
         }
       }
     }
+
+    // Non-link items also get subtle hover
+    &:not(&--link):hover {
+      background: rgba($color-secondary, 0.04);
+    }
+
+    @include respond-to(md) {
+      width: 100%;
+      max-width: 320px;
+      justify-content: center;
+    }
+  }
+
+  &__item-icon {
+    font-size: 22px;
+    color: $color-secondary;
+    flex-shrink: 0;
+    transition: all 0.35s $ease-premium;
+  }
+
+  &__item-content {
+    @include flex-column;
+    gap: $spacing-2xs;
+  }
+
+  &__item-label {
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+
+  &__item-value {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    line-height: 1.3;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 40px;
+    background: rgba($color-secondary, 0.15);
+    flex-shrink: 0;
+
+    @include respond-to(md) {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-secondary, 0.15) 50%,
+        transparent 100%
+      );
+    }
+  }
+}
+
+// ========================================
+// SHARED ANIMATIONS
+// ========================================
+@keyframes aboutFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes serviceCardUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Legacy keyframe kept for other components that may reference it
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

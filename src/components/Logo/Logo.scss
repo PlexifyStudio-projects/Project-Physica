@@ -1,193 +1,123 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-// ========================================
-// PREMIUM CENTERED LOGO
-// ========================================
+$ease-premium: cubic-bezier(0.23, 1, 0.32, 1);
+
 .Logo {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(
-    180deg,
-    rgba($color-white, 0.98) 0%,
-    rgba($color-white, 0.96) 100%
-  );
-  backdrop-filter: blur(25px) saturate(200%);
-  box-shadow: 0 2px 24px rgba($color-secondary, 0.08),
-              0 1px 0 rgba($color-secondary, 0.05);
   z-index: $z-fixed;
-  border-bottom: 1px solid rgba($color-secondary, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba($color-white, 0.88);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-bottom: 1px solid rgba($color-secondary, 0.06);
+  transition: all 0.6s $ease-premium;
 
-  // Scrolled state - more transparent and blurry
   &--scrolled {
-    background: linear-gradient(
-      180deg,
-      rgba($color-white, 0.75) 0%,
-      rgba($color-white, 0.7) 100%
-    );
-    backdrop-filter: blur(35px) saturate(200%);
-    box-shadow: 0 4px 32px rgba($color-secondary, 0.12),
-                0 2px 8px rgba($color-secondary, 0.08);
-    border-bottom-color: rgba($color-secondary, 0.12);
+    background: rgba($color-white, 0.75);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    box-shadow:
+      0 4px 30px rgba($color-secondary, 0.06),
+      0 1px 0 rgba($color-secondary, 0.04);
+    border-bottom-color: rgba($color-secondary, 0.08);
 
-    .Logo__container {
-      padding: $spacing-lg $spacing-xl;
+    .Logo__inner {
+      padding: $spacing-sm $spacing-2xl;
 
       @include respond-to(md) {
-        padding: $spacing-md $spacing-lg;
+        padding: $spacing-xs $spacing-lg;
       }
-    }
-
-    .Logo__icon {
-      width: 56px;
-      height: 56px;
-
-      @include respond-to(md) {
-        width: 48px;
-        height: 48px;
-      }
-
-      &::before {
-        opacity: 1;
-      }
-    }
-
-    .Logo__svg {
-      filter: drop-shadow(0 2px 8px rgba($color-secondary, 0.15));
     }
 
     .Logo__name {
-      font-size: $font-size-2xl;
-
-      @include respond-to(md) {
-        font-size: $font-size-xl;
-      }
+      font-size: clamp($font-size-lg, 2vw, $font-size-xl);
     }
 
     .Logo__tagline {
-      font-size: $font-size-xs;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
       opacity: 0.85;
+    }
 
-      @include respond-to(md) {
-        font-size: 0.625rem; // 10px - smaller than xs
-      }
+    .Logo__divider {
+      height: 20px;
+      opacity: 0.4;
     }
   }
 
-  &__container {
+  &__inner {
     @include container;
-    padding: $spacing-xl $spacing-2xl;
-    transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    @include flex-center;
+    padding: $spacing-md $spacing-2xl;
+    transition: padding 0.6s $ease-premium;
 
     @include respond-to(md) {
-      padding: $spacing-lg $spacing-xl;
+      padding: $spacing-sm $spacing-lg;
     }
   }
 
   &__brand {
     @include flex-center;
-    gap: $spacing-xl;
+    gap: $spacing-lg;
+    text-decoration: none;
     position: relative;
-  }
+    transition: opacity 0.3s ease;
 
-  &__icon {
-    width: 70px;
-    height: 70px;
-    flex-shrink: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -8px;
-      background: radial-gradient(
-        circle at center,
-        rgba($color-secondary, 0.08) 0%,
-        transparent 70%
-      );
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.4s ease;
+    &:hover {
+      opacity: 0.85;
     }
-
-    @include respond-to(md) {
-      width: 56px;
-      height: 56px;
-    }
-  }
-
-  &__svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 3px 12px rgba($color-secondary, 0.18));
-    transition: filter 0.3s ease;
-  }
-
-  &__text {
-    text-align: center;
-    position: relative;
   }
 
   &__name {
     font-family: $font-primary;
-    font-size: $font-size-3xl;
+    font-size: clamp($font-size-xl, 2.5vw, $font-size-2xl);
     font-weight: $font-weight-bold;
     color: $color-text;
-    margin: 0;
-    letter-spacing: 0.01em;
-    line-height: 1.1;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    text-shadow: 0 1px 2px rgba($color-secondary, 0.05);
-    background: linear-gradient(
-      135deg,
-      $color-text 0%,
-      darken($color-text, 5%) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    transition: all 0.6s $ease-premium;
 
     @include respond-to(md) {
-      font-size: $font-size-2xl;
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__name-accent {
+    color: $color-secondary;
+    transition: color 0.3s ease;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba($color-accent, 0.6) 30%,
+      rgba($color-accent, 0.6) 70%,
+      transparent 100%
+    );
+    transition: all 0.6s $ease-premium;
+
+    @include respond-to(sm) {
+      display: none;
     }
   }
 
   &__tagline {
-    font-family: $font-accent;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
+    font-family: $font-secondary;
+    font-size: 0.65rem;
+    font-weight: $font-weight-semibold;
     color: $color-secondary;
-    margin: 0;
-    margin-top: $spacing-2xs;
-    letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.9;
-    position: relative;
+    letter-spacing: 0.18em;
+    transition: all 0.6s $ease-premium;
 
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        $color-accent 50%,
-        transparent 100%
-      );
-      opacity: 0.4;
-    }
-
-    @include respond-to(md) {
-      font-size: $font-size-xs;
+    @include respond-to(sm) {
+      display: none;
     }
   }
 }

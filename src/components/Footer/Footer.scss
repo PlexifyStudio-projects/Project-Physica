@@ -1,31 +1,115 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+// ========================================
+// FOOTER - World-Class Premium Medical Aesthetic
+// ========================================
 .Footer {
+  position: relative;
   background: linear-gradient(
     180deg,
-    rgba($color-secondary-dark, 0.95) 0%,
-    darken($color-secondary-dark, 5%) 100%
+    $color-secondary-dark 0%,
+    darken($color-secondary-dark, 6%) 50%,
+    darken($color-secondary-dark, 10%) 100%
   );
-  position: relative;
   overflow: hidden;
-  margin-top: $spacing-5xl;
 
+  // Subtle geometric pattern overlay
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
+    inset: 0;
+    background-image:
+      linear-gradient(
+        30deg,
+        rgba($color-white, 0.03) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        rgba($color-white, 0.03) 87.5%,
+        rgba($color-white, 0.03)
+      ),
+      linear-gradient(
+        150deg,
+        rgba($color-white, 0.03) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        rgba($color-white, 0.03) 87.5%,
+        rgba($color-white, 0.03)
+      ),
+      linear-gradient(
+        30deg,
+        rgba($color-white, 0.03) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        rgba($color-white, 0.03) 87.5%,
+        rgba($color-white, 0.03)
+      ),
+      linear-gradient(
+        150deg,
+        rgba($color-white, 0.03) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        rgba($color-white, 0.03) 87.5%,
+        rgba($color-white, 0.03)
+      );
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Decorative orb — top right
+  &::after {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      rgba($color-accent, 0.06) 0%,
+      rgba($color-secondary-light, 0.03) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // ========================================
+  // TOP ACCENT LINE — Animated gradient shift
+  // ========================================
+  &__accent-line {
+    height: 4px;
     background: linear-gradient(
       90deg,
       transparent 0%,
+      $color-accent 15%,
+      $color-secondary-light 35%,
       $color-accent 50%,
+      $color-secondary 65%,
+      $color-accent 85%,
       transparent 100%
     );
+    background-size: 200% 100%;
+    animation: footerAccentShift 8s ease-in-out infinite alternate;
+    position: relative;
+    z-index: $z-base;
   }
 
+  // ========================================
+  // CONTAINER
+  // ========================================
+  &__container {
+    @include container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  // ========================================
+  // MAIN CONTENT AREA
+  // ========================================
   &__main {
     padding: $spacing-5xl 0 $spacing-4xl;
 
@@ -34,262 +118,390 @@
     }
   }
 
-  &__container {
-    @include container;
-  }
-
-  // Top Section
-  &__top {
+  // ========================================
+  // GRID LAYOUT
+  // ========================================
+  &__grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: $spacing-5xl;
-    margin-bottom: $spacing-4xl;
-
-    @include respond-to(lg) {
-      grid-template-columns: 1fr;
-      gap: $spacing-4xl;
-    }
-  }
-
-  // Brand Section
-  &__brand-section {
-    max-width: 480px;
-  }
-
-  &__brand-title {
-    font-family: $font-primary;
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    color: $color-white;
-    margin-bottom: $spacing-2xs;
-    letter-spacing: -0.02em;
-
-    @include respond-to(md) {
-      font-size: $font-size-2xl;
-    }
-  }
-
-  &__brand-subtitle {
-    font-size: $font-size-sm;
-    color: $color-accent;
-    font-weight: $font-weight-semibold;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: $spacing-lg;
-  }
-
-  &__brand-description {
-    font-size: $font-size-base;
-    color: rgba($color-white, 0.85);
-    line-height: 1.7;
-    margin-bottom: $spacing-xl;
-  }
-
-  &__social {
-    display: flex;
-    gap: $spacing-md;
-  }
-
-  &__social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: $radius-md;
-    background: rgba($color-white, 0.1);
-    color: $color-white;
-    transition: all 0.3s ease;
-    font-size: $font-size-lg;
-
-    &:hover {
-      background: $color-accent;
-      color: $color-secondary-dark;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba($color-accent, 0.4);
-    }
-  }
-
-  // Contact Cards Grid
-  &__contact-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-md;
-
-    @include respond-to(md) {
-      grid-template-columns: 1fr;
-      max-width: 400px;
-    }
-  }
-
-  &__contact-card {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-xs;
-    padding: $spacing-lg;
-    background: rgba($color-white, 0.08);
-    border-radius: $radius-lg;
-    border: 1px solid rgba($color-white, 0.15);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-
-    &:hover {
-      border-color: rgba($color-accent, 0.6);
-      background: rgba($color-white, 0.12);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba($color-black, 0.3);
-    }
-  }
-
-  &__contact-card-icon {
-    font-size: $font-size-xl;
-    color: $color-accent;
-    margin-bottom: $spacing-2xs;
-  }
-
-  &__contact-card-label {
-    font-size: $font-size-xs;
-    color: rgba($color-white, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: $font-weight-semibold;
-  }
-
-  &__contact-card-value {
-    font-size: $font-size-sm;
-    color: $color-white;
-    font-weight: $font-weight-medium;
-  }
-
-  // Divider
-  &__divider {
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba($color-white, 0.2) 50%,
-      transparent 100%
-    );
-    margin: $spacing-3xl 0;
-
-    @include respond-to(md) {
-      margin: $spacing-2xl 0;
-    }
-  }
-
-  // Bottom Section
-  &__bottom-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.8fr 1fr 1fr 1.4fr;
     gap: $spacing-4xl;
 
+    @include respond-to(xl) {
+      grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+      gap: $spacing-3xl;
+    }
+
     @include respond-to(lg) {
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-3xl $spacing-2xl;
+    }
+
+    @include respond-to(md) {
       grid-template-columns: 1fr;
       gap: $spacing-3xl;
     }
   }
 
-  // Navigation
-  &__nav {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
+  // ========================================
+  // BRAND COLUMN — Dramatic name with glow
+  // ========================================
+  &__brand-name {
+    font-family: $font-primary;
+    font-size: clamp($font-size-2xl, 3vw, $font-size-3xl);
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    margin: 0 0 $spacing-2xs;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba($color-white, 0.08);
+    position: relative;
   }
 
-  &__nav-label {
+  &__brand-comma {
+    color: $color-accent;
+    text-shadow: 0 0 16px rgba($color-accent, 0.3);
+  }
+
+  &__brand-tagline {
+    font-family: $font-secondary;
     font-size: $font-size-xs;
-    color: rgba($color-white, 0.5);
+    color: $color-accent;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.15em;
     font-weight: $font-weight-semibold;
+    margin: 0 0 $spacing-xl;
+    text-shadow: 0 0 12px rgba($color-accent, 0.15);
   }
 
-  &__nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $spacing-md;
+  &__brand-text {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.6);
+    line-height: 1.85;
+    margin: 0 0 $spacing-xl;
+    max-width: 340px;
+  }
+
+  // ========================================
+  // SOCIAL LINK — Glass effect with backdrop-filter
+  // ========================================
+  &__social {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+    background: rgba($color-white, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba($color-white, 0.1);
+    border-radius: $radius-lg;
+    color: $color-white;
+    text-decoration: none;
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba($color-white, 0.06);
+
+    svg:first-child {
+      font-size: $font-size-lg;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    &:hover {
+      background: rgba($color-white, 0.12);
+      border-color: rgba($color-accent, 0.4);
+      color: $color-accent;
+      transform: translateY(-3px);
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.15),
+        0 0 20px rgba($color-accent, 0.08),
+        inset 0 1px 0 rgba($color-white, 0.1);
+
+      svg:first-child {
+        filter: drop-shadow(0 0 6px rgba($color-accent, 0.4));
+      }
+    }
+  }
+
+  &__social-arrow {
+    font-size: 12px;
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .Footer__social:hover & {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  // ========================================
+  // COLUMN TITLES
+  // ========================================
+  &__col-title {
+    font-family: $font-secondary;
+    font-size: 10px;
+    font-weight: $font-weight-semibold;
+    color: rgba($color-white, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin: 0 0 $spacing-xl;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid rgba($color-white, 0.06);
+    position: relative;
+
+    // Subtle gradient accent under text
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 24px;
+      height: 1px;
+      background: $color-accent;
+      border-radius: 1px;
+    }
+  }
+
+  // ========================================
+  // NAVIGATION LINKS — Animated underline from left
+  // ========================================
+  &__nav-list {
+    @include flex-column;
+    gap: $spacing-xs;
   }
 
   &__nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    padding: $spacing-sm $spacing-md;
-    background: transparent;
-    border: 1px solid rgba($color-white, 0.2);
-    border-radius: $radius-md;
-    color: $color-white;
-    text-decoration: none;
+    font-family: $font-secondary;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-    transition: all 0.3s ease;
+    color: rgba($color-white, 0.6);
+    text-decoration: none;
+    padding: $spacing-2xs 0;
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    display: inline-block;
+
+    // Animated underline that slides in from left
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, $color-accent, rgba($color-accent, 0.3));
+      transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      border-radius: 1px;
+    }
 
     &:hover {
-      background: rgba($color-accent, 0.15);
-      border-color: $color-accent;
-      color: $color-accent;
-      transform: translateY(-2px);
+      color: $color-white;
+      transform: translateX(4px);
+
+      &::after {
+        width: 100%;
+      }
     }
   }
 
-  &__nav-link-icon {
-    font-size: $font-size-xs;
-    transition: transform 0.3s ease;
-
-    .Footer__nav-link:hover & {
-      transform: translate(2px, -2px);
-    }
-  }
-
-  // Specialties
-  &__specialties {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-  }
-
-  &__specialties-label {
-    font-size: $font-size-xs;
-    color: rgba($color-white, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: $font-weight-semibold;
-  }
-
-  &__specialties-list {
+  // ========================================
+  // SERVICES TAGS — Premium glass pills with hover glow
+  // ========================================
+  &__services-list {
     display: flex;
     flex-wrap: wrap;
-    gap: $spacing-sm;
+    gap: $spacing-xs;
   }
 
-  &__specialty-tag {
+  &__service-tag {
+    display: inline-block;
     padding: $spacing-2xs $spacing-md;
-    background: rgba($color-accent, 0.15);
-    color: $color-accent;
+    background: rgba($color-accent, 0.06);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba($color-accent, 0.1);
+    color: rgba($color-accent, 0.85);
+    font-family: $font-secondary;
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
     border-radius: $radius-pill;
     white-space: nowrap;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      background: rgba($color-accent, 0.14);
+      border-color: rgba($color-accent, 0.3);
+      color: $color-accent;
+      box-shadow:
+        0 2px 12px rgba($color-accent, 0.15),
+        0 0 16px rgba($color-accent, 0.06);
+      transform: translateY(-1px);
+    }
   }
 
-  // Bottom Bar
-  &__bottom-bar {
-    padding: $spacing-xl 0;
-    border-top: 1px solid rgba($color-white, 0.1);
-    background: rgba($color-black, 0.2);
+  // ========================================
+  // CONTACT LIST — Icon glow on hover
+  // ========================================
+  &__contact-list {
+    @include flex-column;
+    gap: $spacing-md;
   }
 
-  &__bottom-bar-content {
+  &__contact-item {
     display: flex;
-    justify-content: center;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.6);
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    line-height: 1.5;
+    padding: $spacing-2xs 0;
+
+    &:hover {
+      color: $color-white;
+
+      .Footer__contact-icon {
+        color: $color-accent;
+        filter: drop-shadow(0 0 8px rgba($color-accent, 0.4));
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__contact-icon {
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: rgba($color-accent, 0.75);
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  // ========================================
+  // BOTTOM BAR — Gradient separator, refined typography
+  // ========================================
+  &__bottom {
+    padding: $spacing-xl 0;
+    position: relative;
+
+    // Premium gradient separator line
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: $max-width-7xl;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.04) 15%,
+        rgba($color-accent, 0.12) 50%,
+        rgba($color-white, 0.04) 85%,
+        transparent 100%
+      );
+    }
+  }
+
+  &__bottom-inner {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
+
+    @include respond-to(md) {
+      flex-direction: column;
+      gap: $spacing-md;
+      text-align: center;
+    }
   }
 
   &__copyright {
-    font-size: $font-size-sm;
-    color: rgba($color-white, 0.6);
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    color: rgba($color-white, 0.35);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  &__made-with {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    color: rgba($color-white, 0.3);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  &__heart {
+    font-size: 12px;
+    color: rgba(#ef4444, 0.65);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    animation: footerHeartbeat 2.5s ease-in-out infinite;
+
+    .Footer__made-with:hover & {
+      color: #ef4444;
+      filter: drop-shadow(0 0 6px rgba(#ef4444, 0.4));
+    }
+  }
+
+  // ========================================
+  // DECORATIVE ORB — Bottom left (additional ambient depth)
+  // ========================================
+  // Using a child selector on __main to avoid pseudo-element conflict
+  &__main::before {
+    content: '';
+    position: absolute;
+    bottom: -120px;
+    left: -100px;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      rgba($color-secondary-light, 0.05) 0%,
+      rgba($color-secondary, 0.02) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes footerAccentShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes footerHeartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(1.2);
+    }
+    30% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.15);
+    }
+    60% {
+      transform: scale(1);
+    }
   }
 }

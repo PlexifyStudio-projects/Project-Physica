@@ -1,162 +1,95 @@
-import { useState, useEffect, useRef } from 'react';
-import {
-  LuArrowRight,
-  LuPhone,
-  LuStar,
-  LuUsers,
-  LuAward,
-  LuActivity,
-  LuHeart,
-  LuShield,
-  LuCalendarCheck
-} from 'react-icons/lu';
+import { Link } from 'react-router-dom';
+import { LuPhone, LuArrowRight, LuMapPin, LuCalendarCheck, LuUsers, LuAward } from 'react-icons/lu';
 import './Hero.scss';
 
 function Hero() {
-  const [yearsCount, setYearsCount] = useState(0);
-  const [patientsCount, setPatientsCount] = useState(0);
-  const [satisfactionCount, setSatisfactionCount] = useState(0);
-  const heroRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  useEffect(() => {
-    if (!hasAnimated) {
-      setHasAnimated(true);
-      animateCounter(setYearsCount, 23, 1500);
-      animateCounter(setPatientsCount, 23400, 1500);
-      animateCounter(setSatisfactionCount, 96, 1500);
-    }
-  }, [hasAnimated]);
-
-  const animateCounter = (setter, target, duration) => {
-    const startTime = Date.now();
-    const updateCounter = () => {
-      const now = Date.now();
-      const progress = Math.min((now - startTime) / duration, 1);
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      setter(Math.floor(easeOutQuart * target));
-      if (progress < 1) {
-        requestAnimationFrame(updateCounter);
-      } else {
-        setter(target);
-      }
-    };
-    requestAnimationFrame(updateCounter);
-  };
-
   return (
-    <section ref={heroRef} className="Hero">
-      {/* Background Image */}
+    <section className="Hero">
+      {/* Background layers */}
       <div className="Hero__bg">
-        <img
-          src="https://uchealth-wp-uploads.s3.amazonaws.com/wp-content/uploads/sites/4/2017/01/02160624/uch.jpg"
-          alt="Modern medical facility"
-          className="Hero__bg-img"
-        />
-        <div className="Hero__bg-overlay"></div>
+        <div className="Hero__bg-grain" aria-hidden="true"></div>
+        <div className="Hero__bg-orb Hero__bg-orb--1" aria-hidden="true"></div>
+        <div className="Hero__bg-orb Hero__bg-orb--2" aria-hidden="true"></div>
+      </div>
 
-        {/* Floating Cards over image */}
-        <div className="Hero__cards">
-          <div className="Hero__card Hero__card--1">
-            <div className="Hero__card-icon">
-              <LuActivity />
-            </div>
-            <div className="Hero__card-text">
-              <span className="Hero__card-title">Sports Rehab</span>
-              <span className="Hero__card-desc">Athletic recovery</span>
-            </div>
+      {/* Main content grid */}
+      <div className="Hero__container">
+        <div className="Hero__content">
+          {/* Location badge */}
+          <div className="Hero__badge">
+            <LuMapPin />
+            <span>Irvine, California</span>
           </div>
 
-          <div className="Hero__card Hero__card--2">
-            <div className="Hero__card-icon">
-              <LuHeart />
-            </div>
-            <div className="Hero__card-text">
-              <span className="Hero__card-title">Pain Relief</span>
-              <span className="Hero__card-desc">Chronic care</span>
-            </div>
+          {/* Headline */}
+          <h1 className="Hero__heading">
+            <span className="Hero__heading-line">Personalized Care</span>
+            <span className="Hero__heading-line">
+              for <em className="Hero__heading-accent">Movement</em>,
+            </span>
+            <span className="Hero__heading-line">Recovery &amp; Independence</span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="Hero__text">
+            Evidence-based physical therapy combined with compassionate,
+            one-on-one care — helping you regain strength and live without limitations.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="Hero__cta">
+            <a href="tel:+19495025520" className="Hero__btn Hero__btn--primary">
+              <LuPhone />
+              <span>Schedule a Visit</span>
+              <LuArrowRight className="Hero__btn-arrow" />
+            </a>
+            <Link to="/services" className="Hero__btn Hero__btn--secondary">
+              <span>Our Services</span>
+              <LuArrowRight className="Hero__btn-arrow" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Image side */}
+        <div className="Hero__visual">
+          <div className="Hero__image-frame">
+            <img
+              src="https://hbconstruction.com/wp-content/uploads/2019/07/Lovelace-Osuna_HB-10web-1920x1220.jpg"
+              alt="Modern physical therapy clinic interior at Physica Inc"
+              loading="eager"
+            />
           </div>
 
-          <div className="Hero__card Hero__card--3">
-            <div className="Hero__card-icon">
-              <LuShield />
+          {/* Floating stats card */}
+          <div className="Hero__stats-card">
+            <div className="Hero__stat">
+              <span className="Hero__stat-number">10+</span>
+              <span className="Hero__stat-label">Years of Experience</span>
             </div>
-            <div className="Hero__card-text">
-              <span className="Hero__card-title">Post-Surgery</span>
-              <span className="Hero__card-desc">Full recovery</span>
-            </div>
-          </div>
-
-          <div className="Hero__card Hero__card--4">
-            <div className="Hero__card-icon Hero__card-icon--accent">
-              <LuCalendarCheck />
-            </div>
-            <div className="Hero__card-text">
-              <span className="Hero__card-title">Open Today</span>
-              <span className="Hero__card-desc">8am - 6pm</span>
+            <div className="Hero__stat-divider"></div>
+            <div className="Hero__stat">
+              <span className="Hero__stat-number">5K+</span>
+              <span className="Hero__stat-label">Patients Treated</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="Hero__wrapper">
-        <div className="Hero__main">
-          <span className="Hero__label">Physical Therapy Excellence</span>
-
-          <h1 className="Hero__heading">
-            Your Journey to <br />
-            <span className="Hero__heading-accent">Recovery</span> Begins Here
-          </h1>
-
-          <p className="Hero__text">
-            Personalized care from board-certified specialists using
-            advanced techniques for your optimal health and mobility.
-          </p>
-
-          {/* Stats Row */}
-          <div className="Hero__stats">
-            <div className="Hero__stat">
-              <span className="Hero__stat-value">{yearsCount}+</span>
-              <span className="Hero__stat-name">Years</span>
-            </div>
-            <div className="Hero__stat">
-              <span className="Hero__stat-value">{patientsCount.toLocaleString()}+</span>
-              <span className="Hero__stat-name">Patients</span>
-            </div>
-            <div className="Hero__stat">
-              <span className="Hero__stat-value">{satisfactionCount}%</span>
-              <span className="Hero__stat-name">Satisfaction</span>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="Hero__cta">
-            <a href="tel:+1234567890" className="Hero__btn Hero__btn--primary">
-              <LuPhone />
-              <span>Book Appointment</span>
-              <LuArrowRight className="Hero__btn-arrow" />
-            </a>
-            <a href="#services" className="Hero__btn Hero__btn--secondary">
-              Our Services
-            </a>
-          </div>
-
-          {/* Trust Row */}
-          <div className="Hero__trust">
-            <div className="Hero__trust-item">
-              <LuAward />
-              <span>Award Winning</span>
-            </div>
-            <div className="Hero__trust-item">
-              <LuStar />
-              <span>4.9 Rating</span>
-            </div>
-            <div className="Hero__trust-item">
-              <LuUsers />
-              <span>Expert Team</span>
-            </div>
-          </div>
+      {/* Bottom trust bar */}
+      <div className="Hero__trust-bar">
+        <div className="Hero__trust-item">
+          <LuCalendarCheck className="Hero__trust-icon" />
+          <span>Mon–Fri 8AM–7PM</span>
+        </div>
+        <div className="Hero__trust-sep" aria-hidden="true"></div>
+        <div className="Hero__trust-item">
+          <LuAward className="Hero__trust-icon" />
+          <span>Licensed Specialists</span>
+        </div>
+        <div className="Hero__trust-sep" aria-hidden="true"></div>
+        <div className="Hero__trust-item">
+          <LuUsers className="Hero__trust-icon" />
+          <span>Insurance Accepted</span>
         </div>
       </div>
     </section>

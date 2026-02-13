@@ -1,0 +1,534 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.HoursSection {
+  @include section-spacing;
+  position: relative;
+  background: $color-bg-secondary;
+  overflow: hidden;
+
+  // Subtle decorative orb
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -150px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-secondary, 0.03) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  // ========================================
+  // SECTION HEADER
+  // ========================================
+  &__header {
+    margin-bottom: $spacing-4xl;
+    opacity: 0;
+    transform: translateY(40px);
+
+    .HoursSection--visible & {
+      animation: hoursFadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+  }
+
+  &__indicator {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__indicator-line {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-secondary, $color-secondary-light);
+    border-radius: 1px;
+  }
+
+  &__indicator-label {
+    font-family: $font-secondary;
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    color: $color-text;
+    margin: 0 0 $spacing-md;
+    letter-spacing: $letter-spacing-tight;
+  }
+
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+  }
+
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    color: $color-text-light;
+    line-height: $line-height-relaxed;
+    margin: 0;
+    max-width: $max-width-3xl;
+  }
+
+  // ========================================
+  // GRID
+  // ========================================
+  &__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: $spacing-3xl;
+    align-items: start;
+
+    @include respond-to(lg) {
+      grid-template-columns: 1fr;
+      gap: $spacing-2xl;
+    }
+  }
+
+  // ========================================
+  // HOURS TABLE CARD - Premium glass header
+  // ========================================
+  &__table-wrapper {
+    background: $color-white;
+    border-radius: $radius-2xl;
+    overflow: hidden;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.02),
+      0 4px 16px rgba($color-secondary, 0.05),
+      0 8px 32px rgba($color-secondary, 0.04);
+    border: 1px solid rgba($color-secondary, 0.06);
+    opacity: 0;
+    transform: translateY(30px);
+
+    .HoursSection--visible & {
+      animation: hoursFadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.15s forwards;
+    }
+  }
+
+  &__table-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-xl $spacing-2xl;
+    border-bottom: 1px solid rgba($color-secondary, 0.06);
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.04) 0%,
+      rgba($color-secondary, 0.01) 50%,
+      rgba($color-accent-light, 0.03) 100%
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: relative;
+
+    // Subtle bottom accent line
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: $spacing-2xl;
+      right: $spacing-2xl;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        rgba($color-secondary, 0.1),
+        rgba($color-secondary, 0.03),
+        transparent
+      );
+    }
+  }
+
+  &__table-header-icon {
+    color: $color-secondary;
+    font-size: $font-size-lg;
+    flex-shrink: 0;
+  }
+
+  &__table-heading {
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__table {
+    padding: $spacing-xs 0;
+  }
+
+  // ========================================
+  // TABLE ROWS
+  // ========================================
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md $spacing-2xl;
+    border-bottom: 1px solid rgba($color-secondary, 0.04);
+    transition: background 0.35s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: rgba($color-secondary, 0.02);
+    }
+
+    // ========================================
+    // TODAY ROW - Dramatic animated gradient
+    // ========================================
+    &--today {
+      position: relative;
+      background: linear-gradient(
+        90deg,
+        rgba($color-secondary, 0.06) 0%,
+        rgba($color-secondary, 0.03) 50%,
+        rgba($color-accent-light, 0.04) 100%
+      );
+      background-size: 200% 100%;
+      animation: hoursTodayShimmer 8s ease-in-out infinite alternate;
+      border-left: 3px solid $color-secondary;
+
+      &:hover {
+        background-size: 200% 100%;
+      }
+
+      .HoursSection__row-day {
+        color: $color-secondary;
+        font-weight: $font-weight-semibold;
+      }
+
+      .HoursSection__row-hours {
+        color: $color-secondary;
+        font-weight: $font-weight-semibold;
+      }
+    }
+
+    &--closed {
+      .HoursSection__row-day {
+        color: $color-text-muted;
+      }
+
+      .HoursSection__row-hours {
+        color: $color-text-muted;
+        font-style: italic;
+      }
+    }
+  }
+
+  &__row-day {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+  }
+
+  // ========================================
+  // DOT INDICATORS - Pulse animation
+  // ========================================
+  &__row-dot {
+    width: 7px;
+    height: 7px;
+    background: #22c55e;
+    border-radius: $radius-round;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+    animation: hoursDotPulse 3s ease-in-out infinite;
+
+    &--closed {
+      background: $color-text-lighter;
+      box-shadow: none;
+      animation: none;
+    }
+  }
+
+  &__row-badge {
+    display: inline-block;
+    padding: 2px $spacing-sm;
+    background: $color-secondary;
+    color: $color-white;
+    border-radius: $radius-pill;
+    font-size: 10px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba($color-secondary, 0.25);
+  }
+
+  &__row-hours {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    color: $color-text;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // ========================================
+  // VISIT CARD - Premium with animated accent
+  // ========================================
+  &__visit-card {
+    position: relative;
+    background: $color-white;
+    border-radius: $radius-2xl;
+    padding: $spacing-3xl;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.02),
+      0 4px 16px rgba($color-secondary, 0.05),
+      0 12px 36px rgba($color-secondary, 0.08);
+    border: 1px solid rgba($color-secondary, 0.06);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+
+    .HoursSection--visible & {
+      animation: hoursFadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+    }
+  }
+
+  // ========================================
+  // VISIT ACCENT STRIPE - Animated gradient shift
+  // ========================================
+  &__visit-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      $color-secondary,
+      $color-secondary-light,
+      $color-accent-light,
+      $color-secondary
+    );
+    background-size: 300% 100%;
+    animation: hoursAccentShift 6s ease-in-out infinite;
+  }
+
+  &__visit-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__visit-header-icon {
+    color: $color-secondary;
+    font-size: $font-size-xl;
+    flex-shrink: 0;
+  }
+
+  &__visit-heading {
+    font-family: $font-primary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__visit-text {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    color: $color-text-light;
+    margin: 0 0 $spacing-xl;
+  }
+
+  // ========================================
+  // VISIT DETAILS - Glass effect
+  // ========================================
+  &__visit-details {
+    @include flex-column;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-2xl;
+    padding: $spacing-xl;
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.03) 0%,
+      rgba($color-secondary, 0.01) 50%,
+      rgba($color-accent-light, 0.02) 100%
+    );
+    border-radius: $radius-xl;
+    border: 1px solid rgba($color-secondary, 0.06);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  &__visit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+  }
+
+  &__visit-item-icon {
+    color: $color-secondary;
+    font-size: $font-size-lg;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__visit-item-content {
+    @include flex-column;
+    gap: $spacing-2xs;
+  }
+
+  &__visit-item-label {
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__visit-item-value {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+    line-height: $line-height-normal;
+
+    &--link {
+      color: $color-secondary;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $color-secondary-dark;
+      }
+    }
+  }
+
+  // ========================================
+  // CTA BUTTON - Shimmer animation on hover
+  // ========================================
+  &__visit-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    width: 100%;
+    justify-content: center;
+    padding: $spacing-lg $spacing-2xl;
+    background: $color-secondary;
+    color: $color-white;
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow:
+      0 4px 16px rgba($color-secondary, 0.25),
+      0 8px 28px rgba($color-secondary, 0.1);
+    position: relative;
+    overflow: hidden;
+
+    // Shimmer animation
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.2) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s ease;
+    }
+
+    svg {
+      font-size: $font-size-lg;
+    }
+
+    &:hover {
+      background: $color-secondary-dark;
+      transform: translateY(-3px);
+      box-shadow:
+        0 8px 24px rgba($color-secondary, 0.3),
+        0 16px 48px rgba($color-secondary, 0.15);
+      color: $color-white;
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes hoursFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hoursDotPulse {
+    0%, 100% {
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+      opacity: 1;
+    }
+    50% {
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes hoursAccentShift {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 0%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+
+  @keyframes hoursTodayShimmer {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+  }
+}

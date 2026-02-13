@@ -1,0 +1,524 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.ProgramsSection {
+  position: relative;
+  padding: $spacing-7xl 0;
+  background: linear-gradient(
+    165deg,
+    $color-secondary-dark 0%,
+    darken($color-secondary-dark, 3%) 25%,
+    darken($color-secondary-dark, 5%) 50%,
+    darken($color-secondary-dark, 7%) 75%,
+    darken($color-secondary-dark, 9%) 100%
+  );
+  overflow: hidden;
+
+  @include respond-to(md) {
+    padding: $spacing-5xl 0;
+  }
+
+  // ========================================
+  // ANIMATED GRADIENT ORBS - Very subtle, premium
+  // ========================================
+  &::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-secondary-light, 0.08) 0%,
+      rgba($color-secondary-light, 0.03) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: programsOrbFloat 20s ease-in-out infinite alternate;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -8%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-accent-light, 0.06) 0%,
+      rgba($color-accent-light, 0.02) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: programsOrbFloat 25s ease-in-out 5s infinite alternate-reverse;
+  }
+
+  // ========================================
+  // DOT-GRID BACKGROUND PATTERN
+  // ========================================
+  &__pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      rgba($color-white, 0.04) 1px,
+      transparent 1px
+    );
+    background-size: 28px 28px;
+    background-position: 0 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // ========================================
+  // CONTAINER
+  // ========================================
+  &__container {
+    @include container;
+    position: relative;
+    z-index: $z-base;
+    padding-right: 240px;
+
+    @include respond-to(xl) {
+      padding-right: 220px;
+    }
+
+    @include respond-to(lg) {
+      padding-right: $spacing-xl;
+    }
+
+    @include respond-to(md) {
+      padding-right: $spacing-lg;
+    }
+  }
+
+  // ========================================
+  // LABEL ROW
+  // ========================================
+  &__label-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+    opacity: 0;
+    transform: translateY(30px);
+
+    .ProgramsSection--visible & {
+      animation: programsReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+  }
+
+  &__label-line {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba($color-white, 0.7),
+      rgba($color-white, 0.3)
+    );
+    border-radius: 2px;
+  }
+
+  &__label-text {
+    font-family: $font-secondary;
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    color: rgba($color-white, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  &__label-number {
+    margin-left: auto;
+    font-family: $font-primary;
+    font-size: $font-size-5xl;
+    font-weight: $font-weight-bold;
+    color: rgba($color-white, 0.04);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  // ========================================
+  // TWO-COLUMN GRID
+  // ========================================
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-5xl;
+    align-items: start;
+    margin-bottom: $spacing-4xl;
+
+    @include respond-to(lg) {
+      grid-template-columns: 1fr;
+      gap: $spacing-3xl;
+    }
+  }
+
+  // ========================================
+  // LEFT COLUMN - Content
+  // ========================================
+  &__content {
+    opacity: 0;
+    transform: translateY(40px);
+
+    .ProgramsSection--visible & {
+      animation: programsReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+    }
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    font-weight: $font-weight-bold;
+    line-height: 1.1;
+    color: $color-white;
+    margin: 0 0 $spacing-xl;
+    letter-spacing: -0.02em;
+
+    @include respond-to(md) {
+      font-size: clamp($font-size-xl, 5vw, $font-size-2xl);
+    }
+  }
+
+  &__title-accent {
+    color: rgba($color-white, 0.7);
+    font-style: italic;
+    font-family: $font-accent;
+    font-weight: $font-weight-regular;
+  }
+
+  &__description {
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    line-height: $line-height-loose;
+    color: rgba($color-white, 0.6);
+    margin: 0;
+    max-width: $max-width-prose;
+    letter-spacing: 0.005em;
+
+    @include respond-to(md) {
+      font-size: $font-size-base;
+      line-height: $line-height-relaxed;
+    }
+  }
+
+  // ========================================
+  // RIGHT COLUMN - Glass-morphism program list
+  // ========================================
+  &__list {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    background: rgba($color-white, 0.07);
+    border-radius: $radius-lg;
+    border: 1px solid rgba($color-white, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateX(30px);
+    cursor: default;
+
+    .ProgramsSection--visible & {
+      animation: programsSlideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{0.2 + ($i * 0.08)}s;
+        }
+      }
+    }
+
+    &:hover {
+      background: rgba($color-white, 0.12);
+      transform: translateX(6px);
+      border-color: rgba($color-white, 0.14);
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba($color-white, 0.08);
+    }
+
+    @include respond-to(md) {
+      padding: $spacing-md $spacing-lg;
+      gap: $spacing-sm;
+    }
+  }
+
+  &__item-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    @include flex-center;
+    background: $color-white;
+    border-radius: $radius-round;
+    color: $color-secondary-dark;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    margin-top: 1px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .ProgramsSection__item:hover & {
+      transform: scale(1.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @include respond-to(md) {
+      width: 26px;
+      height: 26px;
+      font-size: $font-size-xs;
+    }
+  }
+
+  &__item-text {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    color: rgba($color-white, 0.85);
+    line-height: $line-height-normal;
+    margin: 0;
+    padding-top: $spacing-2xs;
+    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .ProgramsSection__item:hover & {
+      color: rgba($color-white, 0.97);
+    }
+
+    @include respond-to(md) {
+      font-size: $font-size-sm;
+      padding-top: 0;
+    }
+  }
+
+  // ========================================
+  // IMAGE - Panoramic with glass overlay frame
+  // ========================================
+  &__image {
+    position: relative;
+    width: 100%;
+    max-height: 320px;
+    border-radius: $radius-xl;
+    overflow: hidden;
+    margin-bottom: $spacing-4xl;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.25),
+      0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba($color-white, 0.08);
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .ProgramsSection--visible & {
+      animation: programsReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+    }
+
+    // Glass overlay frame on top/bottom edges
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: $radius-xl;
+      border: 1px solid rgba($color-white, 0.1);
+      background: linear-gradient(
+        180deg,
+        rgba($color-white, 0.06) 0%,
+        transparent 15%,
+        transparent 85%,
+        rgba($color-black, 0.15) 100%
+      );
+      pointer-events: none;
+      backdrop-filter: blur(0px);
+    }
+
+    &:hover {
+      transform: translateY(0) scale(1);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      max-height: 320px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+      transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    &:hover img {
+      opacity: 0.95;
+    }
+
+    @include respond-to(md) {
+      max-height: 220px;
+      margin-bottom: $spacing-2xl;
+
+      img {
+        max-height: 220px;
+      }
+    }
+  }
+
+  // ========================================
+  // WHO WE TREAT - Refined premium subsection
+  // ========================================
+  &__who {
+    padding-top: $spacing-3xl;
+    border-top: 1px solid rgba($color-white, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+
+    .ProgramsSection--visible & {
+      animation: programsReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
+    }
+
+    @include respond-to(md) {
+      padding-top: $spacing-2xl;
+    }
+  }
+
+  &__who-title {
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: rgba($color-white, 0.5);
+    margin: 0 0 $spacing-lg;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+
+    // Decorative underline accent
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -$spacing-xs;
+      left: 0;
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        rgba($color-white, 0.4),
+        transparent
+      );
+    }
+
+    @include respond-to(md) {
+      font-size: $font-size-xs;
+      margin-bottom: $spacing-md;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+
+    @include respond-to(md) {
+      gap: $spacing-xs;
+    }
+  }
+
+  &__tag {
+    display: inline-block;
+    padding: $spacing-xs $spacing-lg;
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: rgba($color-white, 0.75);
+    border: 1px solid rgba($color-white, 0.15);
+    border-radius: $radius-pill;
+    background: rgba($color-white, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateY(10px);
+    cursor: default;
+
+    .ProgramsSection--visible & {
+      animation: programsTagReveal 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{0.6 + ($i * 0.05)}s;
+        }
+      }
+    }
+
+    &:hover {
+      background: rgba($color-white, 0.12);
+      border-color: rgba($color-white, 0.35);
+      color: $color-white;
+      box-shadow:
+        0 0 12px rgba($color-white, 0.08),
+        0 0 24px rgba($color-white, 0.04);
+      transform: translateY(-2px);
+    }
+
+    @include respond-to(md) {
+      padding: $spacing-2xs $spacing-md;
+      font-size: $font-size-xs;
+    }
+  }
+
+  // ========================================
+  // PREMIUM ANIMATIONS
+  // ========================================
+  @keyframes programsReveal {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes programsSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes programsTagReveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes programsOrbFloat {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(40px, 30px) scale(1.1);
+      opacity: 0.5;
+    }
+  }
+}

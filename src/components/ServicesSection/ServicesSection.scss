@@ -1,0 +1,432 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.ServicesSection {
+  @include section-spacing;
+  position: relative;
+  background: $color-bg-secondary;
+  overflow: hidden;
+
+  // Decorative radial gradient orb - top left
+  &::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-secondary, 0.04) 0%,
+      rgba($color-secondary, 0.015) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  // Decorative radial gradient orb - bottom right
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    right: -150px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($color-accent, 0.04) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: $z-base;
+  }
+
+  // ========================================
+  // HEADER - Premium section intro
+  // ========================================
+  &__header {
+    max-width: 600px;
+    margin-bottom: $spacing-4xl;
+    opacity: 0;
+    transform: translateY(40px);
+
+    .ServicesSection--visible & {
+      animation: servicesReveal 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+  }
+
+  &__indicator {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__indicator-line {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-secondary, $color-secondary-light);
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  &__indicator-label {
+    font-family: $font-secondary;
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    font-weight: $font-weight-bold;
+    line-height: 1.1;
+    color: $color-text;
+    margin: 0 0 $spacing-lg;
+    letter-spacing: -0.02em;
+  }
+
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+  }
+
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    line-height: $line-height-relaxed;
+    color: $color-text-light;
+    margin: 0;
+    max-width: $max-width-prose;
+  }
+
+  // ========================================
+  // CARD GRID - Wider gaps, premium layout
+  // ========================================
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-xl;
+    margin-bottom: $spacing-5xl;
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
+    }
+
+    @include respond-to(sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ========================================
+  // SERVICE CARD - Glass-morphism + multi-layer shadows
+  // ========================================
+  &__card {
+    position: relative;
+    background: $color-white;
+    border: 1px solid rgba($color-secondary, 0.06);
+    border-radius: $radius-2xl;
+    padding: $spacing-3xl $spacing-2xl $spacing-2xl;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.02),
+      0 4px 12px rgba($color-secondary, 0.03),
+      0 8px 32px rgba($color-secondary, 0.04);
+    transition: all 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(28px);
+
+    .ServicesSection--visible & {
+      animation: servicesCardReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    // Top accent line that scales in on hover
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: $spacing-2xl;
+      right: $spacing-2xl;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        $color-secondary,
+        $color-secondary-light,
+        rgba($color-secondary, 0.15)
+      );
+      border-radius: 0 0 $radius-sm $radius-sm;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    // Glass-morphism overlay on hover (pseudo-element)
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: $radius-2xl;
+      background: linear-gradient(
+        135deg,
+        rgba($color-white, 0.6) 0%,
+        rgba($color-white, 0.1) 50%,
+        rgba($color-secondary, 0.03) 100%
+      );
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow:
+        0 4px 8px rgba($color-secondary, 0.04),
+        0 12px 28px rgba($color-secondary, 0.08),
+        0 24px 56px rgba($color-secondary, 0.12),
+        inset 0 1px 0 rgba($color-white, 0.8);
+      border-color: rgba($color-secondary, 0.14);
+
+      &::before {
+        transform: scaleX(1);
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    > * {
+      position: relative;
+      z-index: $z-base;
+    }
+  }
+
+  // ========================================
+  // CARD NUMBER - Large decorative ghost number
+  // ========================================
+  &__card-number {
+    position: absolute;
+    top: $spacing-lg;
+    right: $spacing-lg;
+    font-family: $font-primary;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+    color: rgba($color-secondary, 0.04);
+    letter-spacing: -0.04em;
+    z-index: $z-base;
+    pointer-events: none;
+    user-select: none;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+    .ServicesSection__card:hover & {
+      color: rgba($color-secondary, 0.1);
+      transform: scale(1.08);
+    }
+  }
+
+  // ========================================
+  // CARD ICON - Animated gradient background on hover
+  // ========================================
+  &__card-icon {
+    width: 58px;
+    height: 58px;
+    @include flex-center;
+    background: linear-gradient(
+      135deg,
+      rgba($color-secondary, 0.08) 0%,
+      rgba($color-secondary, 0.02) 100%
+    );
+    border-radius: $radius-xl;
+    color: $color-secondary;
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-xl;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+
+    // Animated gradient background that reveals on hover
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        135deg,
+        rgba($color-secondary-light, 0.4) 0%,
+        $color-secondary 60%,
+        $color-secondary-dark 100%
+      );
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ServicesSection__card:hover & {
+      color: $color-white;
+      transform: scale(1.08);
+      box-shadow:
+        0 4px 16px rgba($color-secondary, 0.3),
+        0 8px 24px rgba($color-secondary, 0.15);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__card-title {
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    margin: 0 0 $spacing-sm;
+    line-height: $line-height-tight;
+    letter-spacing: -0.01em;
+    transition: color 0.35s ease;
+
+    .ServicesSection__card:hover & {
+      color: $color-secondary-dark;
+    }
+  }
+
+  &__card-text {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    line-height: 1.85;
+    margin: 0;
+  }
+
+  // ========================================
+  // BOTTOM CTA - More dramatic typography
+  // ========================================
+  &__cta {
+    @include flex-center;
+    flex-wrap: wrap;
+    gap: $spacing-2xl;
+    opacity: 0;
+    transform: translateY(20px);
+
+    .ServicesSection--visible & {
+      animation: servicesReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards;
+    }
+
+    @include respond-to(sm) {
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+  }
+
+  &__cta-text {
+    font-family: $font-primary;
+    font-size: clamp($font-size-lg, 2.5vw, $font-size-xl);
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  &__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-lg $spacing-3xl;
+    background: $color-secondary;
+    color: $color-white;
+    border-radius: $radius-pill;
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow:
+      0 4px 16px rgba($color-secondary, 0.25),
+      0 8px 32px rgba($color-secondary, 0.1);
+    position: relative;
+    overflow: hidden;
+
+    // Shimmer highlight
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($color-white, 0.15) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s ease;
+    }
+
+    svg {
+      font-size: $font-size-lg;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: $color-secondary-dark;
+      transform: translateY(-3px);
+      box-shadow:
+        0 8px 24px rgba($color-secondary, 0.3),
+        0 16px 48px rgba($color-secondary, 0.15);
+      color: $color-white;
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  @keyframes servicesReveal {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes servicesCardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

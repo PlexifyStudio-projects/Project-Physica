@@ -1,0 +1,266 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+$ease-premium: cubic-bezier(0.23, 1, 0.32, 1);
+
+.PageHero {
+  position: relative;
+  padding: $spacing-7xl 0 $spacing-6xl;
+  background: linear-gradient(
+    165deg,
+    $color-primary 0%,
+    $color-primary-dark 30%,
+    darken($color-primary-dark, 2%) 60%,
+    darken($color-primary-dark, 5%) 100%
+  );
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+
+  @include respond-to(md) {
+    padding: $spacing-5xl 0 $spacing-4xl;
+    min-height: 320px;
+  }
+
+  // Background layer
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+
+    &--1 {
+      width: 700px;
+      height: 700px;
+      top: -300px;
+      right: -200px;
+      background: radial-gradient(circle, rgba($color-secondary-light, 0.1), transparent 60%);
+      animation: pageHeroOrbFloat 22s ease-in-out infinite alternate;
+    }
+
+    &--2 {
+      width: 550px;
+      height: 550px;
+      bottom: -250px;
+      left: -150px;
+      background: radial-gradient(circle, rgba($color-accent, 0.08), transparent 60%);
+      animation: pageHeroOrbFloat 28s ease-in-out infinite alternate-reverse;
+    }
+  }
+
+  // Subtle noise texture
+  &__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  // Background image
+  &__bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.12;
+      filter: grayscale(20%) contrast(1.05);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        165deg,
+        rgba($color-primary, 0.9) 0%,
+        rgba($color-primary-dark, 0.85) 35%,
+        rgba(darken($color-primary-dark, 3%), 0.88) 70%,
+        rgba(darken($color-primary-dark, 5%), 0.92) 100%
+      );
+    }
+  }
+
+  // With image modifier
+  &--with-image {
+    min-height: 440px;
+
+    @include respond-to(md) {
+      min-height: 340px;
+    }
+  }
+
+  // Decorative bottom edge - gradient line
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($color-secondary, 0.2) 15%,
+      rgba($color-secondary, 0.2) 85%,
+      transparent 100%
+    );
+    z-index: 2;
+  }
+
+  // Subtle vertical lines overlay
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image:
+      linear-gradient(90deg, $color-secondary 1px, transparent 1px);
+    background-size: 200px 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__container {
+    @include sidebar-aware-container;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  // Breadcrumb
+  &__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-2xl;
+    opacity: 0;
+    animation: pageHeroFadeIn 0.7s $ease-premium 0.1s forwards;
+  }
+
+  &__breadcrumb-link {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    text-decoration: none;
+    transition: color 0.3s $ease-premium;
+    letter-spacing: 0.02em;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__breadcrumb-sep {
+    font-size: 12px;
+    color: $color-text-muted;
+    opacity: 0.4;
+  }
+
+  &__breadcrumb-current {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: $color-secondary;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.02em;
+  }
+
+  // Title - dramatic and cinematic
+  &__title {
+    font-family: $font-primary;
+    font-size: clamp($font-size-3xl, 6vw, $font-size-5xl);
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin: 0 0 $spacing-xl;
+    max-width: 720px;
+    opacity: 0;
+    animation: pageHeroSlideUp 0.9s $ease-premium 0.2s forwards;
+
+    @include respond-to(md) {
+      font-size: $font-size-3xl;
+    }
+
+    @include respond-to(sm) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__title-accent {
+    color: $color-secondary;
+    font-style: italic;
+    font-family: $font-accent;
+    font-weight: $font-weight-semibold;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, $color-secondary, rgba($color-secondary-light, 0.3));
+      border-radius: $radius-pill;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: pageHeroAccentReveal 0.8s $ease-premium 0.9s forwards;
+    }
+  }
+
+  // Subtitle
+  &__subtitle {
+    font-family: $font-secondary;
+    font-size: $font-size-lg;
+    color: $color-text-light;
+    line-height: $line-height-relaxed;
+    max-width: 580px;
+    margin: 0;
+    opacity: 0;
+    animation: pageHeroFadeIn 0.8s $ease-premium 0.45s forwards;
+
+    @include respond-to(md) {
+      font-size: $font-size-base;
+    }
+  }
+
+  // Animations
+  @keyframes pageHeroFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes pageHeroSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pageHeroAccentReveal {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes pageHeroOrbFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(25px, -18px) scale(1.06); }
+  }
+}
