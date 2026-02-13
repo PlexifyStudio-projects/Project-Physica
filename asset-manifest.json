@@ -1,21 +1,13 @@
 {
   "files": {
-    "main.css": "/Project-Physica/static/css/main.af3e6acf.css",
-    "main.js": "/Project-Physica/static/js/main.48ad75c7.js",
-    "static/media/Sports-Rehabilitation.png": "/Project-Physica/static/media/Sports-Rehabilitation.08d52e64b7dc585b2b5e.png",
-    "static/media/Orthopedic-Physical-}Therapy.png": "/Project-Physica/static/media/Orthopedic-Physical-}Therapy.ee7f79746d7812b1b291.png",
-    "static/media/Chronic-Pain-Management.png": "/Project-Physica/static/media/Chronic-Pain-Management.28c3f39a87b9a6722886.png",
-    "static/media/Neurological-Rehabilitation.png": "/Project-Physica/static/media/Neurological-Rehabilitation.5059271a2cff87a68f41.png",
-    "static/media/Post-Surgical-Recovery.png": "/Project-Physica/static/media/Post-Surgical-Recovery.7d00485d298b660e4710.png",
-    "static/media/Geriatric-Physical-Therapy.png": "/Project-Physica/static/media/Geriatric-Physical-Therapy.5d7892292800d65e6794.png",
-    "static/media/Balance-&-Fall-Prevention.png": "/Project-Physica/static/media/Balance-&-Fall-Prevention.e844d9620a38fb825dfe.png",
-    "static/media/Manual-Therapy.png": "/Project-Physica/static/media/Manual-Therapy.5f065a1e6068c53c67e6.png",
+    "main.css": "/Project-Physica/static/css/main.e5d3e4cc.css",
+    "main.js": "/Project-Physica/static/js/main.45dc6239.js",
     "index.html": "/Project-Physica/index.html",
-    "main.af3e6acf.css.map": "/Project-Physica/static/css/main.af3e6acf.css.map",
-    "main.48ad75c7.js.map": "/Project-Physica/static/js/main.48ad75c7.js.map"
+    "main.e5d3e4cc.css.map": "/Project-Physica/static/css/main.e5d3e4cc.css.map",
+    "main.45dc6239.js.map": "/Project-Physica/static/js/main.45dc6239.js.map"
   },
   "entrypoints": [
-    "static/css/main.af3e6acf.css",
-    "static/js/main.48ad75c7.js"
+    "static/css/main.e5d3e4cc.css",
+    "static/js/main.45dc6239.js"
   ]
 }
